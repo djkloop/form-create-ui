@@ -36,7 +36,7 @@ export default defineComponent({
       list: [],
       tags: [],
       loading: true,
-      defaultActive: "基础组件",
+      defaultActive: ["基础组件", "布局组件"],
       filterData: {}
     });
     /// 拿到左侧列表

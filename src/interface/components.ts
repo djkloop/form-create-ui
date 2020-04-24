@@ -14,7 +14,7 @@ export interface ComponentsResult {
 
 export interface IFcComponentsListState extends ComponentsResult {
   loading: boolean,
-  defaultActive: string,
+  defaultActive: string | string[],
   filterData: {
     [props: string]: ComponentsItem[]
   }
