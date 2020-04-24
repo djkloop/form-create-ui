@@ -9,6 +9,14 @@ async function fetchServerList(state: IFcComponentsListState) {
   >("/api/getComponentsList");
   if (result.data.code === 0) {
     state.list = result.data.result.list;
+    state.tags = result.data.result.tags;
+
+    const obj: any = {}
+
+    state.tags.forEach(item => {
+      obj[item] = state.list.filter(k => k.key === item)
+    })
+    state.filterData  = obj
     state.loading = false;
   } else {
     state.loading = true;

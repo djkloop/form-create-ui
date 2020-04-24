@@ -1,15 +1,20 @@
 export interface ComponentsItem {
   type: string,
   label: string,
-  sort: number
+  sort: number,
+  key: string
 }
 
 export interface ComponentsResult {
-  list: ComponentsItem[]
+  list: ComponentsItem[],
+  tags: string[]
 }
 
 
-export interface IFcComponentsListState {
-  list: ComponentsItem[],
-  loading: boolean
+export interface IFcComponentsListState extends ComponentsResult{
+  loading: boolean,
+  defaultActive: string,
+  filterData: {
+    [props: string]: ComponentsItem[]
+  }
 }

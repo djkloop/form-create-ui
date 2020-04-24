@@ -1,0 +1,29 @@
+.fc-container-box {
+  padding: 0 20px;
+
+  &__collapse {
+    border-bottom: none;
+
+    &__box {
+      ul {
+        padding: 5px;
+        list-style: none;
+        display: flex;
+        margin-bottom: 0;
+        margin-top: 0;
+        flex-wrap: wrap;
+      }
+
+      li {
+        padding: 8px;
+        width: calc(50% - 32px);
+        margin: 3px;
+        cursor: move;
+        user-select: none;
+        border-radius: 3px;
+        box-shadow: 1px 0 0 0 #ccc, 0 1px 0 0 #ccc, 1px 1px 0 0 #ccc, inset 1px 0 0 0 #ccc, inset 0 1px 0 0 #ccc;
+        transition: all .3s;
+      }
+    }
+  }
+}

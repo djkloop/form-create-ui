@@ -1,18 +1,24 @@
 <template>
   <div class="fc-container-box">
-    <el-menu>
-      <template v-if="loading && list.length === 0">
-        正在加载...
-      </template>
-      <template v-else>
-        <el-submenu index="1" v-for="item in list" :key="item.type">
-          <template slot="title">
-            <i class="el-icon-location"></i>
-            <span>{{ item.label }}</span>
-          </template>
-        </el-submenu>
-      </template>
-    </el-menu>
+    <template v-if="loading && list.length === 0">
+      正在加载...
+    </template>
+    <template v-else>
+      <el-collapse v-model="defaultActive" class="fc-container-box__collapse">
+        <el-collapse-item
+          :title="key"
+          :name="key"
+          v-for="(item, key) in filterData"
+          :key="key"
+        >
+          <div class="fc-container-box__collapse__box">
+            <ul>
+              <li v-for="it in item" :key="it.label">{{ it.label }}</li>
+            </ul>
+          </div>
+        </el-collapse-item>
+      </el-collapse>
+    </template>
   </div>
 </template>
 
@@ -25,7 +31,10 @@ export default defineComponent({
   setup() {
     const state = reactive<IFcComponentsListState>({
       list: [],
-      loading: true
+      tags: [],
+      loading: true,
+      defaultActive: "基础组件",
+      filterData: {}
     });
     /// 拿到左侧列表
     fetchServerList(state);
@@ -37,4 +46,15 @@ export default defineComponent({
 });
 </script>
 
-<style></style>
+<style lang="scss">
+.el-collapse-item__content {
+  padding-bottom: 10px !important;
+}
+.el-collapse-item__header {
+  padding: 0 20px;
+}
+</style>
+
+<style lang="scss" scoped>
+@import "fc-components-list.scss";
+</style>
