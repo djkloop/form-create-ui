@@ -1,33 +1,53 @@
 <template>
-  <div>
+  <div class="fc-container-box">
     <el-menu>
-      <el-submenu index="1">
-        <template slot="title">
-          <i class="el-icon-location"></i>
-          <span>导航一</span>
-        </template>
-      </el-submenu>
+      <template v-if="loading">
+        正在加载...
+      </template>
+      <template v-else>
+        <el-submenu index="1" v-for="item in list" :key="item.type">
+          <template slot="title">
+            <i class="el-icon-location"></i>
+            <span>{{ item.label }}</span>
+          </template>
+        </el-submenu>
+      </template>
     </el-menu>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, computed } from "@vue/composition-api";
-import { ComponentsItem } from "@/interface/components";
-import useServerList from "./use-server-list";
+import { defineComponent, reactive, toRefs } from "@vue/composition-api";
+import axios, { AxiosResponse } from "axios";
+import {
+  ComponentsResult,
+  IFcComponentsListState
+} from "@/interface/components";
+import { ResponseHandle } from "@/interface/response";
 export default defineComponent({
   name: "fc-components-list",
   setup() {
-    // let list: ComponentsItem[] = reactive([]);
-    useServerList();
-    // console.log(list);
-    // if (result.data.code === 0) {
-    //   console.log("ok");
-    //   list = results.data.result.list;
-    // }
+    const state = reactive<IFcComponentsListState>({
+      list: [],
+      loading: true
+    });
+
+    async function fetchServerList() {
+      const result = await axios.get<
+        never,
+        AxiosResponse<ResponseHandle<ComponentsResult>>
+      >("/api/getComponentsList");
+      if (result.data.code === 0) {
+        state.list = result.data.result.list;
+      } else {
+        state.loading = true;
+      }
+    }
+
+    fetchServerList();
 
     return {
-      // list
+      ...toRefs(state)
     };
   }
 });

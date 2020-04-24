@@ -4,7 +4,12 @@ export interface ComponentsItem {
   sort: number
 }
 
-
 export interface ComponentsResult {
   list: ComponentsItem[]
+}
+
+
+export interface IFcComponentsListState {
+  list: ComponentsItem[],
+  loading: boolean
 }
