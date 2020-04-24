@@ -54,7 +54,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from "@vue/composition-api";
+import { defineComponent, reactive, onMounted } from "@vue/composition-api";
 import configs from "@/configs/config";
 
 /// components
@@ -69,6 +69,7 @@ export default defineComponent({
   },
   setup() {
     const cfgs = reactive(configs);
+
     return {
       cfgs
     };

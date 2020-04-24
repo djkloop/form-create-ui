@@ -4,10 +4,14 @@ import VueCompositionApi from "@vue/composition-api";
 import ElementUI from "element-ui";
 import "normalize.css";
 import "element-ui/lib/theme-chalk/index.css";
+/// axios
+import axios from "axios";
+import VueAxios from "vue-axios";
 
 function installPlugins() {
   Vue.use(VueCompositionApi);
   Vue.use(ElementUI);
+  Vue.use(VueAxios, axios);
 }
 
 export default installPlugins;
