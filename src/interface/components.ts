@@ -2,6 +2,7 @@ export interface ComponentsItem {
   type: string,
   label: string,
   sort: number,
+  icon: string,
   key: string
 }
 
@@ -11,7 +12,7 @@ export interface ComponentsResult {
 }
 
 
-export interface IFcComponentsListState extends ComponentsResult{
+export interface IFcComponentsListState extends ComponentsResult {
   loading: boolean,
   defaultActive: string,
   filterData: {

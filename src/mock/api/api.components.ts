@@ -16,11 +16,20 @@ const respose: Array<ResponseWithMockJS<ComponentsResult>> = [
                 type: "el-input",
                 label: "单行输入框",
                 key: '基础组件',
+                icon: 'el-icon-edit',
+                sort: 4
+              },
+              {
+                type: "el-input",
+                label: "单行输入框1",
+                key: '基础组件',
+                icon: 'el-icon-edit',
                 sort: 4
               },
               {
                 type: "el-row",
                 label: "卡片布局",
+                icon: 'el-icon-edit',
                 key: '布局组件',
                 sort: 4
               }

@@ -13,7 +13,10 @@
         >
           <div class="fc-container-box__collapse__box">
             <ul>
-              <li v-for="it in item" :key="it.label">{{ it.label }}</li>
+              <li v-for="it in item" :key="it.label">
+                <i :class="it.icon"></i>
+                {{ it.label }}
+              </li>
             </ul>
           </div>
         </el-collapse-item>
