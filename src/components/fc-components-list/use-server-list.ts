@@ -1,5 +1,9 @@
 import { ResponseHandle } from "@/interface/response";
-import { ComponentsResult, IFcComponentsListState } from "@/interface/components";
+import {
+  ComponentsResult,
+  IFcComponentsListState,
+  ComponentsItem,
+} from "@/interface/components";
 import axios, { AxiosResponse } from "axios";
 
 async function fetchServerList(state: IFcComponentsListState) {
@@ -11,12 +15,12 @@ async function fetchServerList(state: IFcComponentsListState) {
     state.list = result.data.result.list;
     state.tags = result.data.result.tags;
 
-    const obj: any = {}
+    const obj: { [props: string]: ComponentsItem[] } = {};
 
     state.tags.forEach(item => {
-      obj[item] = state.list.filter(k => k.key === item)
-    })
-    state.filterData  = obj
+      obj[item] = state.list.filter(k => k.key === item);
+    });
+    state.filterData = obj;
     state.loading = false;
   } else {
     state.loading = true;
