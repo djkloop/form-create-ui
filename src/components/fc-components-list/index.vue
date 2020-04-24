@@ -1,7 +1,7 @@
 <template>
   <div class="fc-container-box">
     <el-menu>
-      <template v-if="loading">
+      <template v-if="loading && list.length === 0">
         正在加载...
       </template>
       <template v-else>
@@ -18,12 +18,8 @@
 
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from "@vue/composition-api";
-import axios, { AxiosResponse } from "axios";
-import {
-  ComponentsResult,
-  IFcComponentsListState
-} from "@/interface/components";
-import { ResponseHandle } from "@/interface/response";
+import { IFcComponentsListState } from "@/interface/components";
+import fetchServerList from "./use-server-list";
 export default defineComponent({
   name: "fc-components-list",
   setup() {
@@ -31,20 +27,8 @@ export default defineComponent({
       list: [],
       loading: true
     });
-
-    async function fetchServerList() {
-      const result = await axios.get<
-        never,
-        AxiosResponse<ResponseHandle<ComponentsResult>>
-      >("/api/getComponentsList");
-      if (result.data.code === 0) {
-        state.list = result.data.result.list;
-      } else {
-        state.loading = true;
-      }
-    }
-
-    fetchServerList();
+    /// 拿到左侧列表
+    fetchServerList(state);
 
     return {
       ...toRefs(state)
