@@ -5,6 +5,10 @@
 </template>
 
 <script lang="ts">
+/**
+ * @author: djkloop
+ * @desc: 用来生成form-item
+ */
 import { defineComponent, toRefs } from "@vue/composition-api";
 import { FormItemProps } from "@/interface/components";
 import { useGetters } from "@u3u/vue-hooks";
