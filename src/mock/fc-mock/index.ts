@@ -24,7 +24,7 @@ const CustomExtends = {
   Generator,
   Repeat,
   Mock,
-  Random: Mock.Random
+  Random: Mock.Random,
 };
 
 const extend = (prop, value) => {
@@ -37,18 +37,18 @@ const wired = ({ url, type, body }) => ({
   params: qs.parse(url.split("?").length > 1 ? url.split("?")[1] : ""),
   body: JSON.parse(body),
   url: qs.parse(url.split("?")[0]),
-  ...CustomExtends
+  ...CustomExtends,
 });
 
 const setup = (path, method, handle) => {
   Mock.mock(
     RegExp(path),
     method,
-    typeof handle === "function" ? o => handle(wired(o)) : handle
+    typeof handle === "function" ? (o) => handle(wired(o)) : handle
   );
 };
 
-const load = collection => {
+const load = (collection) => {
   collection.map(({ path, method, handle }) => {
     if (method === "*") {
       method = [
@@ -60,13 +60,13 @@ const load = collection => {
         "connect",
         "options",
         "trace",
-        "patch"
+        "patch",
       ];
     }
     if (typeof method === "string" && method.indexOf("|") > -1)
       method = method.split("|");
     if (method instanceof Array) {
-      method.map(item => setup(path, item, handle));
+      method.map((item) => setup(path, item, handle));
     } else {
       setup(path, method, handle);
     }

@@ -1,5 +1,7 @@
 import Vue from "vue";
 import VueCompositionApi from "@vue/composition-api";
+import hooks from "@u3u/vue-hooks";
+
 /// element-ui
 import ElementUI from "element-ui";
 import "normalize.css";
@@ -12,6 +14,7 @@ function installPlugins() {
   Vue.use(VueCompositionApi);
   Vue.use(ElementUI);
   Vue.use(VueAxios, axios);
+  Vue.use(hooks);
 }
 
 export default installPlugins;

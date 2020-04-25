@@ -8,18 +8,18 @@ const routes: Array<RouteConfig> = [
   {
     path: "/",
     name: "Home",
-    component: Home
+    component: Home,
   },
   {
     path: "/choose-ui/:ui",
     name: "ChooseUI",
     component: () =>
-      import(/* webpackChunkName: "choose-ui" */ "@/views/choose-ui/index.vue")
-  }
+      import(/* webpackChunkName: "choose-ui" */ "@/views/choose-ui/index.vue"),
+  },
 ];
 
 const router = new VueRouter({
-  routes
+  routes,
 });
 
 export default router;

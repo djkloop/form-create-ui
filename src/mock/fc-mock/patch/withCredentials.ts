@@ -1,6 +1,9 @@
 /* eslint-disable prefer-rest-params */
+
+import { AnyType } from "@/interface/common";
+
 /* eslint-disable prefer-spread */
-export default function(Mock: any) {
+export default function(Mock: AnyType) {
   // http://cnine.me/note/FrontEnd/mock-lose-cookies-dbg.html
   Mock.XHR.prototype.__send = Mock.XHR.prototype.send;
   Mock.XHR.prototype.send = function() {

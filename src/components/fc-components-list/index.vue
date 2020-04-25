@@ -11,11 +11,16 @@
         >
           <div class="fc-container-box__collapse__box">
             <!-- 拖拽组件 -->
-            <draggable tag="ul" :value="item">
+            <draggable
+              tag="ul"
+              :value="item"
+              v-bind="draggableOptions"
+              @start="setType($event, item)"
+            >
               <li
                 v-for="(it, idx) in item"
                 :key="it.label"
-                @dragstart="generateUniqueKey(item, idx)"
+                @dragstart="genKey(idx)"
               >
                 <i :class="it.icon"></i>
                 {{ it.label }}
@@ -29,11 +34,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from "@vue/composition-api";
+import {
+  defineComponent,
+  reactive,
+  toRefs,
+  watch,
+  ref,
+  computed,
+} from "@vue/composition-api";
 import draggable from "vuedraggable";
-import { IFcComponentsListState } from "@/interface/components";
-import { generateUniqueKey } from "./fc-components.utils";
+import { IFcComponentsListState, ComponentsItem } from "@/interface/components";
+import { AnyType } from "@/interface/common";
+import { generateUniqueKey, setChooseType } from "./fc-components.utils";
 import fetchServerList from "./use-server-list";
+
 export default defineComponent({
   name: "fc-components-list",
   components: {
@@ -43,16 +57,30 @@ export default defineComponent({
     const state = reactive<IFcComponentsListState>({
       list: [],
       tags: [],
+      chooseType: "",
       loading: true,
       defaultActive: ["基础组件", "布局组件"],
       filterData: {},
+      draggableOptions: {
+        group: { name: "form-draggable", pull: "clone", put: false },
+        sort: false,
+        animation: 180,
+        ghostClass: "moving",
+      },
     });
+
     /// 拿到左侧列表
     fetchServerList(state);
+    /// 生成uniqukey
+    const genKey = (idx: number) => generateUniqueKey(state, idx);
+    /// 设置当前选中的type
+    const setType = (e: AnyType, item: ComponentsItem[]) =>
+      setChooseType(e, state, item);
 
     return {
       ...toRefs(state),
-      generateUniqueKey,
+      genKey,
+      setType,
     };
   },
 });
