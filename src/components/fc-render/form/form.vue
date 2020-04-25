@@ -10,7 +10,7 @@
         <i class="el-icon-delete"></i>
       </div>
       <div class="fc-drage-components-form__item">
-        <component :is="item.type" :key="item.uniqueKey" :data-key="item.uniqueKey" />
+        <component :is="item.type" :key="item.uniqueKey" :data-key="item.uniqueKey" :type="item.attrs.type" />
       </div>
       <div class="fc-drage-components-form__keys" v-text="item.uniqueKey || '暂无key'"></div>
     </div>

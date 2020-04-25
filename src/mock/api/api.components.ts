@@ -1,3 +1,11 @@
+/*
+ * @Author       : djkloop
+ * @Date         : 2020-04-24 23:25:04
+ * @LastEditors  : djkloop
+ * @LastEditTime : 2020-04-26 01:43:18
+ * @Description  : mocks数据
+ * @FilePath     : /form-create-ui/src/mock/api/api.components.ts
+ */
 import { ResponseWithMockJS } from "@/interface/response";
 import { ComponentsResult } from "@/interface/components";
 
@@ -19,6 +27,9 @@ const respose: Array<ResponseWithMockJS<ComponentsResult>> = [
               icon: "el-icon-edit",
               model: "", // 数据字段
               sort: 4,
+              attrs: {
+                type: "text",
+              },
             },
             {
               type: "el-input",
@@ -27,6 +38,9 @@ const respose: Array<ResponseWithMockJS<ComponentsResult>> = [
               model: "", // 数据字段
               icon: "el-icon-edit",
               sort: 4,
+              attrs: {
+                type: "textarea",
+              },
             },
             {
               type: "el-row",
