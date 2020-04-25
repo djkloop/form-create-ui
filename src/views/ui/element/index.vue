@@ -2,7 +2,7 @@
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
  * @LastEditors  : djkloop
- * @LastEditTime : 2020-04-26 01:24:30
+ * @LastEditTime : 2020-04-26 01:34:00
  * @Description  : 转化fc-item
  * @FilePath     : /form-create-ui/src/views/ui/element/index.vue
  -->
@@ -18,7 +18,7 @@
       :list="getMainList"
     >
       <!-- fc-item -->
-      <transition-group type="transition" name="flip-list">
+      <transition-group tag="div" type="transition" name="flip-list">
         <form-item
           class="fc-drage-move"
           :item="item"

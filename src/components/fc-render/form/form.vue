@@ -5,7 +5,7 @@
     @click.stop="handleActiveItem"
   >
     <div class="fc-drage-components-form__container fc-drage-container">
-      <div class="fc-drage-components-form__tools" v-if="item.uniqueKey === getSelectItem.uniqueKey">
+      <div class="fc-drage-components-form__tools" :class="{ 'fc-active': item.uniqueKey === getSelectItem.uniqueKey }">
         <i class="el-icon-document-copy"></i>
         <i class="el-icon-delete"></i>
       </div>

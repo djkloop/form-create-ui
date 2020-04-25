@@ -13,6 +13,7 @@ $border-width: 5px;
     overflow: hidden;
     transition: all 0.5s;
     min-height: 36px;
+    margin: 0 0 5px;
 
     &:hover {
       background: linear-gradient(to right, $primary-hover-bg-color-50, $primary-color-50);
@@ -70,6 +71,7 @@ $border-width: 5px;
     &-form {
       &__container {
         cursor: pointer;
+        transition: all 0.3s;
       }
       &__tools {
         float: right;
@@ -79,6 +81,12 @@ $border-width: 5px;
         margin-right: -10px;
         margin-bottom: 5px;
         border-radius: 0 0 0 15px;
+        opacity: 0;
+        transition: all 0.3s;
+
+        &.fc-active {
+          opacity: 1;
+        }
         i {
           margin: 0 3px 0 5px;
           color: #ffffff;
