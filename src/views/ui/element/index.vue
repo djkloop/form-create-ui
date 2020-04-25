@@ -1,3 +1,11 @@
+<!--
+ * @Author       : djkloop
+ * @Date         : 2020-04-24 23:25:04
+ * @LastEditors  : djkloop
+ * @LastEditTime : 2020-04-25 18:18:02
+ * @Description  : 转化fc-item
+ * @FilePath     : /form-create-ui/src/views/ui/element/index.vue
+ -->
 <template>
   <div class="fc-main fc-main-element">
     <h1 class="no-fc-item" v-show="isHitText">从左侧控件列表添加</h1>
@@ -9,6 +17,7 @@
       @add="handleAddItem"
       v-model="getMainList"
     >
+      <!-- fc-item -->
       <form-item :item="item" v-for="item in getMainList" :key="item.uniqueKey + '__item__parent'" />
     </draggable>
   </div>
