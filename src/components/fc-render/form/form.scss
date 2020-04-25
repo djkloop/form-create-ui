@@ -1,38 +1,96 @@
 $prefix: "fc";
-$primary-color: #4b90f0;
-$primary-hover-bg-color: #9feac0;
+$primary-color: rgb(75, 144, 240);
+$primary-color-50: rgba(75, 144, 240, 50%);
+$primary-hover-bg-color: rgb(159, 234, 191);
+$primary-hover-bg-color-50: rgba(159, 234, 191, 50%);
+$border-width: 5px;
 
 .#{$prefix}-drage {
   &-move-box {
     position: relative;
     box-sizing: border-box;
-    padding: 8px;
+    padding: 10px;
     overflow: hidden;
     transition: all 0.5s;
     min-height: 36px;
 
     &:hover {
-      background: $primary-hover-bg-color;
+      background: linear-gradient(to right, $primary-hover-bg-color-50, $primary-color-50);
     }
 
-    &::before {
-      position: absolute;
-      top: 0;
-      right: -100%;
+    &::before,
+    &::after,
+    .fc-drage-container::before,
+    .fc-drage-container::after {
       content: "";
-      height: 2px;
-      width: 100%;
+      height: $border-width;
+      width: 0;
+      position: absolute;
       background: $primary-color;
-      transition: all 0.3s;
+      transition: all 0.4s;
+    }
+
+    .fc-drage-container::before,
+    .fc-drage-container::after {
+      width: $border-width;
+      height: 0;
+    }
+
+    &::before,
+    .fc-drage-container::before {
+      top: 0;
+      left: 0;
+      transition-duration: 0.6s;
+    }
+
+    &::after,
+    .fc-drage-container::after {
+      right: 0;
+      bottom: 0;
+      transition-duration: 0.6s;
     }
 
     &.fc-active {
-      &::before {
-        right: 0;
+      &::before,
+      &::after {
+        width: 100%;
       }
 
-      background: $primary-hover-bg-color;
+      .fc-drage-container::before,
+      .fc-drage-container::after {
+        height: 100%;
+      }
+
+      background: linear-gradient(to right, $primary-hover-bg-color-50, $primary-color-50);
       outline-offset: 0;
+    }
+  }
+
+  &-components {
+    &-form {
+      &__container {
+        cursor: pointer;
+      }
+      &__tools {
+        float: right;
+        background-color: $primary-color;
+        padding: 5px 10px;
+        margin-top: -10px;
+        margin-right: -10px;
+        margin-bottom: 5px;
+        border-radius: 0 0 0 15px;
+        i {
+          margin: 0 3px 0 5px;
+          color: #ffffff;
+        }
+      }
+      &__keys {
+        font-size: 14px;
+        color: $primary-color;
+        text-transform: uppercase;
+        text-align: right;
+        padding: 5px 0 0;
+      }
     }
   }
 }

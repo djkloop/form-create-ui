@@ -4,7 +4,16 @@
     :class="{ 'fc-active': item.uniqueKey === getSelectItem.uniqueKey }"
     @click.stop="handleActiveItem"
   >
-    <component :is="item.type" :key="item.uniqueKey" :data-key="item.uniqueKey" />
+    <div class="fc-drage-components-form__container fc-drage-container">
+      <div class="fc-drage-components-form__tools" v-if="item.uniqueKey === getSelectItem.uniqueKey">
+        <i class="el-icon-document-copy"></i>
+        <i class="el-icon-delete"></i>
+      </div>
+      <div class="fc-drage-components-form__item">
+        <component :is="item.type" :key="item.uniqueKey" :data-key="item.uniqueKey" />
+      </div>
+      <div class="fc-drage-components-form__keys" v-text="item.uniqueKey || '暂无key'"></div>
+    </div>
   </div>
 </template>
 
@@ -20,7 +29,7 @@ export default defineComponent<FormItemProps, AnyType>({
       type: Object,
     },
   },
-  setup(props) {
+  setup(props, ctx) {
     const updateTime = ref(0);
 
     const storeGet = {
@@ -33,9 +42,13 @@ export default defineComponent<FormItemProps, AnyType>({
 
     const handleActiveItem = () => {
       const newTime = new Date().getTime();
-      if (newTime - updateTime.value < 100) {
+      if (newTime - updateTime.value < 400) {
+        ctx.root.$toast.warning("您点击的太快了~400毫秒内只能点击一次呦~", {
+          timeout: 5000,
+        });
         return;
       }
+      updateTime.value = newTime;
 
       storeMutations.setCurrentItem(props.item);
     };

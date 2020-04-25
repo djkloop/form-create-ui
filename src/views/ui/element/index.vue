@@ -2,7 +2,7 @@
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
  * @LastEditors  : djkloop
- * @LastEditTime : 2020-04-25 23:04:20
+ * @LastEditTime : 2020-04-26 01:24:30
  * @Description  : 转化fc-item
  * @FilePath     : /form-create-ui/src/views/ui/element/index.vue
  -->
@@ -15,10 +15,17 @@
       tag="div"
       v-bind="draggableOptions"
       @add="handleAddItem"
-      v-model="getMainList"
+      :list="getMainList"
     >
       <!-- fc-item -->
-      <form-item :item="item" v-for="item in getMainList" :key="item.uniqueKey + '__item__parent'" />
+      <transition-group type="transition" name="flip-list">
+        <form-item
+          class="fc-drage-move"
+          :item="item"
+          v-for="item in getMainList"
+          :key="item.uniqueKey + '__item__parent'"
+        />
+      </transition-group>
     </draggable>
   </div>
 </template>
@@ -41,8 +48,8 @@ export default defineComponent({
     const draggableOptions = ref({
       group: "fc-draggable",
       ghostClass: "moving",
-      animation: 180,
-      handle: ".drag-move",
+      animation: 300,
+      handle: ".fc-drage-move",
     });
     const storeGetters = {
       ...useGetters("common", ["getMainList"]),
@@ -61,6 +68,11 @@ export default defineComponent({
   },
 });
 </script>
+<style lang="scss" scoped>
+.flip-list-move {
+  transition: transform 0.5s;
+}
+</style>
 
 <style lang="scss" scoped>
 @import "ui-element.scss";

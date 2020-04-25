@@ -1,3 +1,11 @@
+<!--
+ * @Author       : djkloop
+ * @Date         : 2020-04-24 23:25:04
+ * @LastEditors  : djkloop
+ * @LastEditTime : 2020-04-26 00:45:17
+ * @Description  : 基础布局
+ * @FilePath     : /form-create-ui/src/layouts/basic-layout.vue
+ -->
 <template>
   <el-container class="fc-container">
     <el-header class="fc-container-header">
@@ -62,6 +70,13 @@ export default defineComponent({
   },
 });
 </script>
+<style lang="scss">
+.fc-container-main__section {
+  .el-main {
+    padding: 20px 0;
+  }
+}
+</style>
 
 <style lang="scss" scoped>
 @import "basic-layout.scss";
