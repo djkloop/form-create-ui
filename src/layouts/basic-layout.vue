@@ -13,36 +13,22 @@
     </el-header>
     <el-container class="fc-container-main">
       <div class="fc-container-main__box">
-        <el-row type="flex" :gutter="20">
+        <el-row type="flex">
           <!-- xs-24 sm-24 md-6 lg-6 xl-5 -->
-          <el-col
-            class="fc-container-main__components"
-            :md="6"
-            :lg="6"
-            :xl="5"
-            :sm="24"
-            :xs="24"
-          >
+          <el-col class="fc-container-main__components" :md="6" :lg="6" :xl="5" :sm="24" :xs="24">
             <el-aside style="width:auto;">
               <fc-components-list />
             </el-aside>
           </el-col>
           <!-- xs-24 sm-24 md-18 lg-18 xl-19 -->
           <el-col :md="12" :lg="12" :xl="14" :xs="24" :sm="24">
-            <el-container>
+            <el-container class="fc-container-main__section">
               <el-main><router-view /></el-main>
               <!-- <el-footer>Footer</el-footer> -->
             </el-container>
           </el-col>
           <!-- xs-24 sm-24 md-6 lg-6 xl-5 -->
-          <el-col
-            class="fc-container-main__components"
-            :md="6"
-            :lg="6"
-            :xl="5"
-            :sm="24"
-            :xs="24"
-          >
+          <el-col class="fc-container-main__components" :md="6" :lg="6" :xl="5" :sm="24" :xs="24">
             <el-aside style="width:auto;">
               <fc-components-props />
             </el-aside>
@@ -54,7 +40,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, onMounted } from "@vue/composition-api";
+import { defineComponent, reactive } from "@vue/composition-api";
 import configs from "@/configs/config";
 
 /// components
@@ -65,15 +51,15 @@ export default defineComponent({
   name: "BaseLayout",
   components: {
     FcComponentsList,
-    FcComponentsProps
+    FcComponentsProps,
   },
   setup() {
     const cfgs = reactive(configs);
 
     return {
-      cfgs
+      cfgs,
     };
-  }
+  },
 });
 </script>
 

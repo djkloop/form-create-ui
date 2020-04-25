@@ -3,25 +3,11 @@
     <template v-if="loading && list.length === 0">正在加载...</template>
     <template v-else>
       <el-collapse v-model="defaultActive" class="fc-container-box__collapse">
-        <el-collapse-item
-          :title="key"
-          :name="key"
-          v-for="(item, key) in filterData"
-          :key="key"
-        >
+        <el-collapse-item :title="key" :name="key" v-for="(item, key) in filterData" :key="key">
           <div class="fc-container-box__collapse__box">
             <!-- 拖拽组件 -->
-            <draggable
-              tag="ul"
-              :value="item"
-              v-bind="draggableOptions"
-              @start="setType($event, item)"
-            >
-              <li
-                v-for="(it, idx) in item"
-                :key="it.label"
-                @dragstart="genKey(idx)"
-              >
+            <draggable tag="ul" :value="item" v-bind="draggableOptions" @start="setType($event, item)">
+              <li v-for="(it, idx) in item" :key="it.label" @dragstart="genKey(idx)">
                 <i :class="it.icon"></i>
                 {{ it.label }}
               </li>
@@ -34,14 +20,7 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  reactive,
-  toRefs,
-  watch,
-  ref,
-  computed,
-} from "@vue/composition-api";
+import { defineComponent, reactive, toRefs } from "@vue/composition-api";
 import draggable from "vuedraggable";
 import { IFcComponentsListState, ComponentsItem } from "@/interface/components";
 import { AnyType } from "@/interface/common";
@@ -62,7 +41,7 @@ export default defineComponent({
       defaultActive: ["基础组件", "布局组件"],
       filterData: {},
       draggableOptions: {
-        group: { name: "form-draggable", pull: "clone", put: false },
+        group: { name: "fc-draggable", pull: "clone", put: false },
         sort: false,
         animation: 180,
         ghostClass: "moving",
@@ -74,8 +53,7 @@ export default defineComponent({
     /// 生成uniqukey
     const genKey = (idx: number) => generateUniqueKey(state, idx);
     /// 设置当前选中的type
-    const setType = (e: AnyType, item: ComponentsItem[]) =>
-      setChooseType(e, state, item);
+    const setType = (e: AnyType, item: ComponentsItem[]) => setChooseType(e, state, item);
 
     return {
       ...toRefs(state),

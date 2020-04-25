@@ -1,4 +1,4 @@
-import { AnyType } from "./common";
+import { AnyType, IDraggableOptions } from "./common";
 
 export interface ComponentsItem {
   type: string;
@@ -21,5 +21,5 @@ export interface IFcComponentsListState extends ComponentsResult {
   filterData: {
     [props: string]: ComponentsItem[];
   };
-  draggableOptions: AnyType;
+  draggableOptions: IDraggableOptions;
 }
