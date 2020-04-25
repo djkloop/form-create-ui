@@ -1,4 +1,4 @@
-import { AnyType, IDraggableOptions } from "./common";
+import { IDraggableOptions } from "./common";
 
 export interface ComponentsItem {
   type: string;
@@ -7,6 +7,11 @@ export interface ComponentsItem {
   icon: string;
   key: string;
   uniqueKey?: string;
+  model?: string;
+}
+
+export interface FormItemProps {
+  item?: ComponentsItem;
 }
 
 export interface ComponentsResult {
@@ -22,4 +27,5 @@ export interface IFcComponentsListState extends ComponentsResult {
     [props: string]: ComponentsItem[];
   };
   draggableOptions: IDraggableOptions;
+  selectCurrentItem: Partial<ComponentsItem>;
 }

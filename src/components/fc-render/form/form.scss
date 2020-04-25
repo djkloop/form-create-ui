@@ -1,0 +1,38 @@
+$prefix: "fc";
+$primary-color: #4b90f0;
+$primary-hover-bg-color: #9feac0;
+
+.#{$prefix}-drage {
+  &-move-box {
+    position: relative;
+    box-sizing: border-box;
+    padding: 8px;
+    overflow: hidden;
+    transition: all 0.5s;
+    min-height: 36px;
+
+    &:hover {
+      background: $primary-hover-bg-color;
+    }
+
+    &::before {
+      position: absolute;
+      top: 0;
+      right: -100%;
+      content: "";
+      height: 2px;
+      width: 100%;
+      background: $primary-color;
+      transition: all 0.3s;
+    }
+
+    &.fc-active {
+      &::before {
+        right: 0;
+      }
+
+      background: $primary-hover-bg-color;
+      outline-offset: 0;
+    }
+  }
+}

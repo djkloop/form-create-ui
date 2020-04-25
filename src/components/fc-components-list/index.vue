@@ -7,7 +7,7 @@
           <div class="fc-container-box__collapse__box">
             <!-- 拖拽组件 -->
             <draggable tag="ul" :value="item" v-bind="draggableOptions" @start="setType($event, item)">
-              <li v-for="(it, idx) in item" :key="it.label" @dragstart="genKey(idx)">
+              <li v-for="(it, idx) in item" @click="setClickItem(it)" :key="it.label" @dragstart="genKey(idx)">
                 <i :class="it.icon"></i>
                 {{ it.label }}
               </li>
@@ -24,8 +24,10 @@ import { defineComponent, reactive, toRefs } from "@vue/composition-api";
 import draggable from "vuedraggable";
 import { IFcComponentsListState, ComponentsItem } from "@/interface/components";
 import { AnyType } from "@/interface/common";
-import { generateUniqueKey, setChooseType } from "./fc-components.utils";
 import fetchServerList from "./use-server-list";
+/// 代替以前的methods
+/// 这里可以优化的更好
+import { generateUniqueKey, setChooseType, setClickHandleItem } from "./fc-components.utils";
 
 export default defineComponent({
   name: "fc-components-list",
@@ -40,6 +42,7 @@ export default defineComponent({
       loading: true,
       defaultActive: ["基础组件", "布局组件"],
       filterData: {},
+      selectCurrentItem: {},
       draggableOptions: {
         group: { name: "fc-draggable", pull: "clone", put: false },
         sort: false,
@@ -54,11 +57,14 @@ export default defineComponent({
     const genKey = (idx: number) => generateUniqueKey(state, idx);
     /// 设置当前选中的type
     const setType = (e: AnyType, item: ComponentsItem[]) => setChooseType(e, state, item);
+    /// 设置click的item
+    const setClickItem = (it: ComponentsItem) => setClickHandleItem(state, it);
 
     return {
       ...toRefs(state),
       genKey,
       setType,
+      setClickItem,
     };
   },
 });

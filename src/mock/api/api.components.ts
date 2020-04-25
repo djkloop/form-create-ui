@@ -17,12 +17,14 @@ const respose: Array<ResponseWithMockJS<ComponentsResult>> = [
               label: "单行输入框",
               key: "基础组件",
               icon: "el-icon-edit",
+              model: "", // 数据字段
               sort: 4,
             },
             {
               type: "el-input",
               label: "多行输入框",
               key: "基础组件",
+              model: "", // 数据字段
               icon: "el-icon-edit",
               sort: 4,
             },
@@ -31,6 +33,7 @@ const respose: Array<ResponseWithMockJS<ComponentsResult>> = [
               label: "卡片布局",
               icon: "el-icon-c-scale-to-original",
               key: "布局组件",
+              model: "", // 数据字段
               sort: 4,
             },
           ],
