@@ -2,7 +2,7 @@
  * @Author       : djkloop
  * @Date         : 2020-04-25 01:21:14
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-26 15:04:35
+ * @LastEditTime  : 2020-04-26 15:12:24
  * @Description  : fc-components工具方法(用来替代vue2中的methods的)
  * @FilePath      : /form-create-ui/src/components/fc-components-list/fc-components.utils.ts
  */
@@ -31,7 +31,6 @@ export const setChooseType = (e: AnyType, state: IFcComponentsListState, list: C
 
 /// 设置当前选中的item
 export const setClickHandleItem = (item: ComponentsItem, state?: IFcComponentsListState) => {
-  console.log('item', item)
   const deepItem = clonedeep(item);
   if (state) {
     state.selectCurrentItem = deepItem;
@@ -46,8 +45,6 @@ export const setClickHandleItem = (item: ComponentsItem, state?: IFcComponentsLi
     ...useMutations("common", ["setCurrentItem", "setMainList"]),
   };
 
-  /// 如果是拖动到主区域则不需要添加会触发add事件
-  /// 只有点击左侧的列表的时候才会触发push操作
   setStore.setMainList(deepItem);
   setStore.setCurrentItem(deepItem);
 };
