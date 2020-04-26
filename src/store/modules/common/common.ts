@@ -1,3 +1,11 @@
+/*
+ * @Author        : djkloop
+ * @Date          : 2020-04-26 11:45:07
+ * @LastEditors   : djkloop
+ * @LastEditTime  : 2020-04-26 14:49:30
+ * @Description   : 全局store
+ * @FilePath      : /form-create-ui/src/store/modules/common/common.ts
+ */
 import { Module } from "vuex";
 import { ICommonState } from "./common.interface";
 import { AnyType } from "@/interface/common";

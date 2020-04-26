@@ -1,10 +1,10 @@
 <!--
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
- * @LastEditors  : djkloop
- * @LastEditTime : 2020-04-26 00:45:17
+ * @LastEditors   : djkloop
+ * @LastEditTime  : 2020-04-26 12:14:09
  * @Description  : 基础布局
- * @FilePath     : /form-create-ui/src/layouts/basic-layout.vue
+ * @FilePath      : /form-create-ui/src/layouts/basic-layout.vue
  -->
 <template>
   <el-container class="fc-container">
@@ -73,7 +73,7 @@ export default defineComponent({
 <style lang="scss">
 .fc-container-main__section {
   .el-main {
-    padding: 20px 0;
+    padding: 10px;
   }
 }
 </style>

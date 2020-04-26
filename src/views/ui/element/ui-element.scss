@@ -19,6 +19,10 @@ $color: #bfbfbf;
 
   &-draggable-box {
     height: 100%;
+
+    &-transition {
+      height: 100%;
+    }
   }
 
   // &-#{$ui-lib} {

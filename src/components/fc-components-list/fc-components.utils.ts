@@ -1,42 +1,53 @@
 /*
  * @Author       : djkloop
  * @Date         : 2020-04-25 01:21:14
- * @LastEditors  : djkloop
- * @LastEditTime : 2020-04-26 00:57:45
+ * @LastEditors   : djkloop
+ * @LastEditTime  : 2020-04-26 15:04:35
  * @Description  : fc-components工具方法(用来替代vue2中的methods的)
- * @FilePath     : /form-create-ui/src/components/fc-components-list/fc-components.utils.ts
+ * @FilePath      : /form-create-ui/src/components/fc-components-list/fc-components.utils.ts
  */
 import { ComponentsItem, IFcComponentsListState } from "@/interface/components";
 import { AnyType } from "@/interface/common";
-import deep from "lodash.clonedeep";
+import clonedeep from "lodash.clonedeep";
 import { useMutations } from "@u3u/vue-hooks";
-import dayjs from "dayjs";
-
-const generateUniqueKeyUtils = (t: string) => t + "__" + dayjs(new Date().getTime()).format("YYYY_MM_DD_HH_mm_ss");
+import Utils from "@/utils/utils";
 
 /// 生成唯一key
 export const generateUniqueKey = (state: IFcComponentsListState, idx: number) => {
-  const uniqueKey = generateUniqueKeyUtils(state.list[idx].type);
-  const cloneItem = deep(state.list[idx]);
+  const uniqueKey = Utils.generateUniqueKeyUtils(state.list[idx].tag);
+  const cloneItem = clonedeep(state.list[idx]);
+  const key = cloneItem.key;
   cloneItem["uniqueKey"] = uniqueKey;
   state.list[idx] = cloneItem;
+  /// filterData 需要重新设置
+  /// 要不然在主选框区域add事件拿不到uniqueKey
+  state.filterData[key][idx] = cloneItem;
 };
 
 /// 当前选中的值
 export const setChooseType = (e: AnyType, state: IFcComponentsListState, list: ComponentsItem[]) => {
-  state.chooseType = list[e.oldIndex].type;
+  state.chooseType = list[e.oldIndex].tag;
 };
 
 /// 设置当前选中的item
-export const setClickHandleItem = (state: IFcComponentsListState, item: ComponentsItem) => {
-  const deepItem = deep(item);
-  state.selectCurrentItem = deepItem;
-  if (!deepItem.uniqueKey) {
-    state.selectCurrentItem.uniqueKey = deepItem.uniqueKey = generateUniqueKeyUtils(deepItem.type);
+export const setClickHandleItem = (item: ComponentsItem, state?: IFcComponentsListState) => {
+  console.log('item', item)
+  const deepItem = clonedeep(item);
+  if (state) {
+    state.selectCurrentItem = deepItem;
+    if (!deepItem.uniqueKey) {
+      state.selectCurrentItem.uniqueKey = deepItem.uniqueKey = Utils.generateUniqueKeyUtils(deepItem.tag);
+    }
+  } else if (!deepItem.uniqueKey) {
+    deepItem.uniqueKey = Utils.generateUniqueKeyUtils(deepItem.tag);
   }
+
   const setStore = {
     ...useMutations("common", ["setCurrentItem", "setMainList"]),
   };
-  setStore.setCurrentItem(deepItem);
+
+  /// 如果是拖动到主区域则不需要添加会触发add事件
+  /// 只有点击左侧的列表的时候才会触发push操作
   setStore.setMainList(deepItem);
+  setStore.setCurrentItem(deepItem);
 };

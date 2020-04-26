@@ -1,3 +1,12 @@
+<!--
+ * @Author        : djkloop
+ * @Date          : 2020-04-26 11:45:07
+ * @LastEditors   : djkloop
+ * @LastEditTime  : 2020-04-26 14:32:42
+ * @Description   : 头部注释
+ * @FilePath      : /form-create-ui/src/components/fc-components-list/index.vue
+ -->
+
 <template>
   <div class="fc-container-box">
     <template v-if="loading && list.length === 0">正在加载...</template>
@@ -6,7 +15,7 @@
         <el-collapse-item :title="key" :name="key" v-for="(item, key) in filterData" :key="key">
           <div class="fc-container-box__collapse__box">
             <!-- 拖拽组件 -->
-            <draggable tag="ul" :value="item" v-bind="draggableOptions" @start="setType($event, item)">
+            <draggable tag="ul" :value="item" v-bind="draggableOptions" @start="setType($event, item, key)">
               <li v-for="(it, idx) in item" @click="setClickItem(it)" :key="it.label" @dragstart="genKey(idx)">
                 <i :class="it.icon"></i>
                 {{ it.label }}
@@ -58,7 +67,7 @@ export default defineComponent({
     /// 设置当前选中的type
     const setType = (e: AnyType, item: ComponentsItem[]) => setChooseType(e, state, item);
     /// 设置click的item
-    const setClickItem = (it: ComponentsItem) => setClickHandleItem(state, it);
+    const setClickItem = (it: ComponentsItem) => setClickHandleItem(it, state);
 
     return {
       ...toRefs(state),
