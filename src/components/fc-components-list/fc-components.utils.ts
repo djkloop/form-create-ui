@@ -2,7 +2,7 @@
  * @Author       : djkloop
  * @Date         : 2020-04-25 01:21:14
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-26 20:03:59
+ * @LastEditTime  : 2020-04-26 20:06:06
  * @Description  : fc-components工具方法(用来替代vue2中的methods的)
  * @FilePath      : /form-create-ui/src/components/fc-components-list/fc-components.utils.ts
  */
@@ -50,6 +50,8 @@ export const setClickHandleItem = (item: ComponentsItem, callbakCopy?: Function)
     setStore.setCurrentItem(deepItem);
     return
   } else if(!callbakCopy){
+    /// 如果从左侧拖入进来的...
+    /// 只需要激活item不要copy
     setStore.setCurrentItem(deepItem);
     return
   }
