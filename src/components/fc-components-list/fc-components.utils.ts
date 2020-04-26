@@ -2,7 +2,7 @@
  * @Author       : djkloop
  * @Date         : 2020-04-25 01:21:14
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-26 19:54:24
+ * @LastEditTime  : 2020-04-26 20:03:59
  * @Description  : fc-components工具方法(用来替代vue2中的methods的)
  * @FilePath      : /form-create-ui/src/components/fc-components-list/fc-components.utils.ts
  */
@@ -35,23 +35,24 @@ export const setChooseType = (e: AnyType, state: IFcComponentsListState, list: C
 export const setClickHandleItem = (item: ComponentsItem, callbakCopy?: Function) => {
   const storeGetters = reactive({
     ...useGetters("common", ["getSelectItem"])
-  })
+  });
+  const setStore = {
+    ...useMutations("common", ["setCurrentItem", "pushMainList"]),
+  };
   const deepItem = clonedeep(item);
-
   /// 当前任何一个都没有被选中
   /// 就说明主区域为空
   if (Object.keys(storeGetters.getSelectItem).length === 0) {
-    const setStore = {
-      ...useMutations("common", ["setCurrentItem", "pushMainList"]),
-    };
     if (!deepItem.uniqueKey) {
       deepItem.uniqueKey = Utils.generateUniqueKeyUtils(deepItem.tag);
       setStore.pushMainList(deepItem);
     }
     setStore.setCurrentItem(deepItem);
     return
+  } else if(!callbakCopy){
+    setStore.setCurrentItem(deepItem);
+    return
   }
-
   /// 如果当前主区域有被选中的
   /// 直接调用item里面的复制方法就行了
   callbakCopy && callbakCopy(false, item);

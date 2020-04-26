@@ -2,7 +2,7 @@
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-26 19:52:45
+ * @LastEditTime  : 2020-04-26 20:03:42
  * @Description  : 主区域
  * @FilePath      : /form-create-ui/src/views/ui/element/index.vue
  -->
@@ -107,7 +107,7 @@ export default defineComponent({
       } else {
         const newIndex = e.newIndex;
         /// 拖拽
-        setClickHandleItem(baseList.value[newIndex]);
+        setClickHandleItem(baseList.value[newIndex], undefined);
       }
     };
 
