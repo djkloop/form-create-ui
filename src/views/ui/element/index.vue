@@ -2,8 +2,8 @@
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-26 15:09:06
- * @Description  : 从fc-item到lib-ui
+ * @LastEditTime  : 2020-04-26 19:04:58
+ * @Description  : 主区域
  * @FilePath      : /form-create-ui/src/views/ui/element/index.vue
  -->
 <template>
@@ -39,7 +39,7 @@ import draggable from "vuedraggable";
 import { useGetters } from "@u3u/vue-hooks";
 import { AnyType } from "@/interface/common";
 import { ComponentsItem } from "@/interface/components";
-import { setClickHandleItem } from "@/components/fc-components-list/fc-components.utils";
+import { setClickHandleItem, handleColAdd } from "@/components/fc-components-list/fc-components.utils";
 
 /// form item
 import FormItem from "@/components/fc-render/form/form.vue";
@@ -51,24 +51,18 @@ export default defineComponent({
   },
   setup() {
     /// 默认的mainList
-    const baseList = ref([]);
+    const baseList = ref<ComponentsItem[]>([]);
 
     const draggableOptions = ref({
       group: "fc-draggable",
-      ghostClass: "moving",
+      ghostClass: "ghost",
       animation: 300,
       handle: ".fc-drage-move",
     });
 
     const storeGetters = reactive({
-      ...useGetters("common", ["getMainList"]),
+      ...useGetters("common", ["getMainList", "getSelectItem"]),
     });
-
-    const handleAddItem = (e: AnyType) => {
-      const newIndex = e.newIndex;
-      /// 选中
-      setClickHandleItem(baseList.value[newIndex], void 0);
-    };
 
     /// 监听一下
     watch(
@@ -79,9 +73,40 @@ export default defineComponent({
       { lazy: true }
     );
 
+    /// 复制方法 - 回调方式
+    /// 也可以放在fc-components.utils里面
+    /// 可以看到vue3.x 灵活性极大的提高了
     const handleCopyItem = (isCopy: boolean, item: ComponentsItem) => {
-      console.log(isCopy, item);
-    }
+      /// TODO: 这里用的递归, 有什么优化好办法?
+      const traverse = (array: ComponentsItem[]) => {
+        array.forEach((element, index) => {
+          console.log(array.length);
+          if (element.uniqueKey === storeGetters.getSelectItem.uniqueKey) {
+            if (isCopy) {
+              // 复制添加到选择节点后面
+              array.splice(index + 1, 0, element);
+            } else {
+              // 双击添加到选择节点后面
+              array.splice(index + 1, 0, item);
+            }
+
+            const e = {
+              newIndex: index + 1,
+            };
+            handleColAdd(e, array, true);
+            return;
+          }
+        });
+      };
+      traverse(baseList.value);
+    };
+
+    const handleAddItem = (e: AnyType, item: ComponentsItem) => {
+      /// 父级调用的时候没有e属性
+      if (!e) {
+        setClickHandleItem(item, handleCopyItem);
+      }
+    };
 
     return {
       draggableOptions,
@@ -90,12 +115,25 @@ export default defineComponent({
       handleCopyItem,
       ...toRefs(storeGetters),
     };
-  }
+  },
 });
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .flip-list-move {
   transition: transform 0.5s;
+}
+.no-move {
+  transition: transform 0s;
+}
+.ghost {
+  opacity: 0.3;
+}
+
+.fc-drage-move {
+  cursor: move;
+}
+.fc-drage-move {
+  cursor: pointer;
 }
 </style>
 

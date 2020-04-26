@@ -2,7 +2,7 @@
  * @Author        : djkloop
  * @Date          : 2020-04-26 11:45:07
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-26 15:03:57
+ * @LastEditTime  : 2020-04-26 18:42:53
  * @Description   : form-item
  * @FilePath      : /form-create-ui/src/components/fc-render/form/form.vue
  -->
@@ -28,8 +28,9 @@
 <script lang="ts">
 import { defineComponent, toRefs, ref } from "@vue/composition-api";
 import { FormItemProps, ComponentsItem } from "@/interface/components";
-import { useGetters, useMutations } from "@u3u/vue-hooks";
+import { useGetters } from "@u3u/vue-hooks";
 import { AnyType } from "@/interface/common";
+import { handleActiveSelectItem } from "@/components/fc-components-list/fc-components.utils";
 
 export default defineComponent<FormItemProps, AnyType>({
   props: {
@@ -44,18 +45,15 @@ export default defineComponent<FormItemProps, AnyType>({
       ...useGetters("common", ["getSelectItem"]),
     };
 
-    const storeMutations = {
-      ...useMutations("common", ["setCurrentItem"]),
-    };
-
     const handleActiveItem = () => {
       const newTime = new Date().getTime();
       if (newTime - updateTime.value < 400) {
         return;
       }
       updateTime.value = newTime;
-
-      storeMutations.setCurrentItem(props.item);
+      if (props.item) {
+        handleActiveSelectItem(props.item);
+      }
     };
 
     const handleCopyItem = (isCopy: boolean, item: ComponentsItem) => ctx.emit("copy-item", ...[isCopy, item]);

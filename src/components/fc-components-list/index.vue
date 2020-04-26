@@ -2,7 +2,7 @@
  * @Author        : djkloop
  * @Date          : 2020-04-26 11:45:07
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-26 14:32:42
+ * @LastEditTime  : 2020-04-26 18:40:51
  * @Description   : 头部注释
  * @FilePath      : /form-create-ui/src/components/fc-components-list/index.vue
  -->
@@ -36,14 +36,14 @@ import { AnyType } from "@/interface/common";
 import fetchServerList from "./use-server-list";
 /// 代替以前的methods
 /// 这里可以优化的更好
-import { generateUniqueKey, setChooseType, setClickHandleItem } from "./fc-components.utils";
+import { generateUniqueKey, setChooseType } from "./fc-components.utils";
 
 export default defineComponent({
   name: "fc-components-list",
   components: {
     draggable,
   },
-  setup() {
+  setup(_, ctx) {
     const state = reactive<IFcComponentsListState>({
       list: [],
       tags: [],
@@ -67,7 +67,8 @@ export default defineComponent({
     /// 设置当前选中的type
     const setType = (e: AnyType, item: ComponentsItem[]) => setChooseType(e, state, item);
     /// 设置click的item
-    const setClickItem = (it: ComponentsItem) => setClickHandleItem(it, state);
+    /// setClickHandleItem(it, state);
+    const setClickItem = (it: ComponentsItem) => ctx.emit("fc-click-item", it);
 
     return {
       ...toRefs(state),
