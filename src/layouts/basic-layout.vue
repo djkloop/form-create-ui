@@ -1,10 +1,10 @@
 <!--
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
- * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-26 17:31:02
+ * @LastEditors  : djkloop
+ * @LastEditTime : 2020-04-27 00:16:33
  * @Description  : 基础布局
- * @FilePath      : /form-create-ui/src/layouts/basic-layout.vue
+ * @FilePath     : /form-create-ui/src/layouts/basic-layout.vue
  -->
 <template>
   <el-container class="fc-container">
@@ -29,7 +29,7 @@
             </el-aside>
           </el-col>
           <!-- xs-24 sm-24 md-18 lg-18 xl-19 -->
-          <el-col :md="12" :lg="12" :xl="14" :xs="24" :sm="24">
+          <el-col :md="12" :lg="12" :xl="14" :xs="24" :sm="24" class="fc-container-main__row">
             <el-container class="fc-container-main__section">
               <el-main>
                 <fc-element-main ref="viewRefs" />

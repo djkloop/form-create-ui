@@ -19,6 +19,13 @@ $color: #f0f2f5;
 
   &-main {
     padding: 40px 0 0;
+    height: calc(100vh - 100px);
+    overflow: hidden;
+
+    &__row {
+      height: calc(100vh - 100px);
+      overflow: auto;
+    }
 
     &__box {
       width: 100%;
@@ -34,8 +41,12 @@ $color: #f0f2f5;
 
     &__components {
       height: 100%;
-      max-height: 100vh;
+      max-height: calc(100vh -100px);
       overflow: hidden;
+
+      .el-aside {
+        height: 100%;
+      }
     }
   }
 }
