@@ -1,20 +1,25 @@
 /*
  * @Author       : djkloop
  * @Date         : 2020-04-25 01:21:14
- * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-26 20:06:06
+ * @LastEditors  : djkloop
+ * @LastEditTime : 2020-04-27 00:53:37
  * @Description  : fc-components工具方法(用来替代vue2中的methods的)
- * @FilePath      : /form-create-ui/src/components/fc-components-list/fc-components.utils.ts
+ * @FilePath     : /form-create-ui/src/components/fc-components-list/fc-components.utils.ts
  */
 import { ComponentsItem, IFcComponentsListState } from "@/interface/components";
 import { AnyType } from "@/interface/common";
 import clonedeep from "lodash.clonedeep";
 import { useMutations, useGetters } from "@u3u/vue-hooks";
 import Utils from "@/utils/utils";
-import { reactive } from '@vue/composition-api';
+import { reactive } from "@vue/composition-api";
+import cfgs from "@/configs/config";
 
 /// 生成唯一key
 export const generateUniqueKey = (state: IFcComponentsListState, idx: number) => {
+  if (cfgs.disabledConfigComponents.includes(state.list[idx].tag)) {
+    return;
+  }
+
   const uniqueKey = Utils.generateUniqueKeyUtils(state.list[idx].tag);
   const cloneItem = clonedeep(state.list[idx]);
   const key = cloneItem.key;
@@ -27,6 +32,9 @@ export const generateUniqueKey = (state: IFcComponentsListState, idx: number) =>
 
 /// 当前选中的值
 export const setChooseType = (e: AnyType, state: IFcComponentsListState, list: ComponentsItem[]) => {
+  if (cfgs.disabledConfigComponents.includes(list[e.oldIndex].tag)) {
+    return;
+  }
   state.chooseType = list[e.oldIndex].tag;
 };
 
@@ -34,7 +42,7 @@ export const setChooseType = (e: AnyType, state: IFcComponentsListState, list: C
 /// 判断当前主区域是否有选中的
 export const setClickHandleItem = (item: ComponentsItem, callbakCopy?: Function) => {
   const storeGetters = reactive({
-    ...useGetters("common", ["getSelectItem"])
+    ...useGetters("common", ["getSelectItem"]),
   });
   const setStore = {
     ...useMutations("common", ["setCurrentItem", "pushMainList"]),
@@ -48,33 +56,31 @@ export const setClickHandleItem = (item: ComponentsItem, callbakCopy?: Function)
       setStore.pushMainList(deepItem);
     }
     setStore.setCurrentItem(deepItem);
-    return
-  } else if(!callbakCopy){
+    return;
+  } else if (!callbakCopy) {
     /// 如果从左侧拖入进来的...
     /// 只需要激活item不要copy
     setStore.setCurrentItem(deepItem);
-    return
+    return;
   }
   /// 如果当前主区域有被选中的
   /// 直接调用item里面的复制方法就行了
   callbakCopy && callbakCopy(false, item);
 };
 
-
 /// 主区域点击选中active
 export const handleActiveSelectItem = (item: ComponentsItem) => {
-    const setStore = {
-      ...useMutations("common", ["setCurrentItem"]),
-    };
-    setStore.setCurrentItem(item);
-}
-
+  const setStore = {
+    ...useMutations("common", ["setCurrentItem"]),
+  };
+  setStore.setCurrentItem(item);
+};
 
 export const handleColAdd = (e: AnyType, columns: ComponentsItem[], isCopy = false) => {
   const newIndex = e.newIndex;
   const uniqueKey = Utils.generateUniqueKeyUtils(columns[newIndex].tag);
   if (!columns[newIndex].tag || isCopy) {
-    columns[newIndex]["uniqueKey"] = uniqueKey
+    columns[newIndex]["uniqueKey"] = uniqueKey;
   }
   const item = clonedeep(columns[newIndex]);
   columns[newIndex] = item;

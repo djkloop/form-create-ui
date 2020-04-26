@@ -1,10 +1,10 @@
 /*
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
- * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-26 12:15:56
+ * @LastEditors  : djkloop
+ * @LastEditTime : 2020-04-27 01:04:02
  * @Description  : 组件相关的interface
- * @FilePath      : /form-create-ui/src/interface/components.ts
+ * @FilePath     : /form-create-ui/src/interface/components.ts
  */
 import { IDraggableOptions, AnyType } from "./common";
 
@@ -20,6 +20,8 @@ export interface ComponentsItem {
   uniqueKey?: string;
   model?: string;
   attrs?: AnyType;
+  span?: number;
+  children?: Partial<ComponentsItem>[];
 }
 
 export interface FormItemProps {

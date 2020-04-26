@@ -1,10 +1,10 @@
 <!--
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
- * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-26 20:03:42
+ * @LastEditors  : djkloop
+ * @LastEditTime : 2020-04-27 00:51:13
  * @Description  : 主区域
- * @FilePath      : /form-create-ui/src/views/ui/element/index.vue
+ * @FilePath     : /form-create-ui/src/views/ui/element/index.vue
  -->
 <template>
   <div class="fc-main fc-main-element">
@@ -43,13 +43,14 @@ import { setClickHandleItem, handleColAdd } from "@/components/fc-components-lis
 
 /// form item
 import FormItem from "@/components/fc-render/form/form.vue";
+import config from "@/configs/config";
 
 export default defineComponent({
   components: {
     draggable,
     FormItem,
   },
-  setup() {
+  setup(_, ctx) {
     /// 默认的mainList
     const baseList = ref<ComponentsItem[]>([]);
 
@@ -101,6 +102,11 @@ export default defineComponent({
     };
 
     const handleAddItem = (e: AnyType, item: ComponentsItem) => {
+      if (config.disabledConfigComponents.includes(item.tag)) {
+        ctx.root.$toast.error(`暂时不支持 ${item.tag.toUpperCase()} 组件...`);
+        return;
+      }
+
       /// 父级调用的时候没有e属性
       if (!e) {
         setClickHandleItem(item, handleCopyItem);

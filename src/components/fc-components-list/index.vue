@@ -1,10 +1,10 @@
 <!--
  * @Author        : djkloop
  * @Date          : 2020-04-26 11:45:07
- * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-26 18:40:51
+ * @LastEditors  : djkloop
+ * @LastEditTime : 2020-04-27 01:15:39
  * @Description   : 头部注释
- * @FilePath      : /form-create-ui/src/components/fc-components-list/index.vue
+ * @FilePath     : /form-create-ui/src/components/fc-components-list/index.vue
  -->
 
 <template>
@@ -16,7 +16,18 @@
           <div class="fc-container-box__collapse__box">
             <!-- 拖拽组件 -->
             <draggable tag="ul" :value="item" v-bind="draggableOptions" @start="setType($event, item, key)">
-              <li v-for="(it, idx) in item" @click="setClickItem(it)" :key="it.label" @dragstart="genKey(idx)">
+              <li
+                :class="
+                  !cfgs.disabledConfigComponents.includes(it.tag)
+                    ? 'fc-drage-component-item'
+                    : 'fc-drage-component-item__disabled'
+                "
+                v-for="(it, idx) in item"
+                @click="setClickItem(it)"
+                :title="cfgs.disabledConfigComponents.includes(it.tag) && '暂不支持当前组件'"
+                :key="it.label"
+                @dragstart="genKey(idx)"
+              >
                 <i :class="it.icon"></i>
                 {{ it.label }}
               </li>
@@ -29,7 +40,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from "@vue/composition-api";
+import { defineComponent, reactive, toRefs, ref } from "@vue/composition-api";
 import draggable from "vuedraggable";
 import { IFcComponentsListState, ComponentsItem } from "@/interface/components";
 import { AnyType } from "@/interface/common";
@@ -37,6 +48,7 @@ import fetchServerList from "./use-server-list";
 /// 代替以前的methods
 /// 这里可以优化的更好
 import { generateUniqueKey, setChooseType } from "./fc-components.utils";
+import configs from "@/configs/config";
 
 export default defineComponent({
   name: "fc-components-list",
@@ -56,9 +68,11 @@ export default defineComponent({
         group: { name: "fc-draggable", pull: "clone", put: false },
         sort: false,
         animation: 180,
+        draggable: ".fc-drage-component-item",
         ghostClass: "moving",
       },
     });
+    const cfgs = ref(configs);
 
     /// 拿到左侧列表
     fetchServerList(state);
@@ -72,6 +86,7 @@ export default defineComponent({
 
     return {
       ...toRefs(state),
+      cfgs,
       genKey,
       setType,
       setClickItem,
