@@ -2,7 +2,7 @@
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-26 19:04:58
+ * @LastEditTime  : 2020-04-26 19:52:45
  * @Description  : 主区域
  * @FilePath      : /form-create-ui/src/views/ui/element/index.vue
  -->
@@ -79,8 +79,8 @@ export default defineComponent({
     const handleCopyItem = (isCopy: boolean, item: ComponentsItem) => {
       /// TODO: 这里用的递归, 有什么优化好办法?
       const traverse = (array: ComponentsItem[]) => {
-        array.forEach((element, index) => {
-          console.log(array.length);
+        for (let index = 0; index < array.length; index++) {
+          const element = array[index];
           if (element.uniqueKey === storeGetters.getSelectItem.uniqueKey) {
             if (isCopy) {
               // 复制添加到选择节点后面
@@ -89,14 +89,13 @@ export default defineComponent({
               // 双击添加到选择节点后面
               array.splice(index + 1, 0, item);
             }
-
             const e = {
               newIndex: index + 1,
             };
             handleColAdd(e, array, true);
-            return;
+            break;
           }
-        });
+        }
       };
       traverse(baseList.value);
     };
@@ -105,6 +104,10 @@ export default defineComponent({
       /// 父级调用的时候没有e属性
       if (!e) {
         setClickHandleItem(item, handleCopyItem);
+      } else {
+        const newIndex = e.newIndex;
+        /// 拖拽
+        setClickHandleItem(baseList.value[newIndex]);
       }
     };
 
