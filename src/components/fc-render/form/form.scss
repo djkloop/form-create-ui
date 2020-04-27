@@ -4,6 +4,9 @@ $primary-color-50: rgba(75, 144, 240, 50%);
 $primary-hover-bg-color: rgb(159, 234, 191);
 $primary-hover-bg-color-50: rgba(159, 234, 191, 50%);
 $border-width: 5px;
+$layout-background-color: rgba(#9867f7, 12%);
+$layout-hover-bg-color: rgba(#9867f7, 24%);
+$layout-color: #9867f7;
 
 .#{$prefix}-drage {
   &-move-box {
@@ -16,7 +19,11 @@ $border-width: 5px;
     margin: 0 0 5px;
 
     &:hover {
-      background: linear-gradient(to right, $primary-hover-bg-color-50, $primary-color-50);
+      background: linear-gradient(
+        to right,
+        $primary-hover-bg-color-50,
+        $primary-color-50
+      );
     }
 
     &::before,
@@ -62,8 +69,75 @@ $border-width: 5px;
         height: 100%;
       }
 
-      background: linear-gradient(to right, $primary-hover-bg-color-50, $primary-color-50);
+      background: linear-gradient(
+        to right,
+        $primary-hover-bg-color-50,
+        $primary-color-50
+      );
       outline-offset: 0;
+    }
+
+    &.fc-layout-width {
+      &::after {
+        display: none;
+      }
+
+      &::before {
+        display: none;
+      }
+
+      &:hover {
+        background: transparent;
+      }
+    }
+
+    .fc-render-form-grid {
+      position: relative;
+      box-sizing: border-box;
+      padding: 5px;
+      background: $layout-background-color;
+      width: 100%;
+      transition: all 0.3s;
+      overflow: hidden;
+
+      &-row {
+        .fc-main-draggable-box {
+          min-height: 60px;
+          min-width: 50px;
+          border: 1px #ccc dashed;
+          background: #fff;
+
+          .fc-main-draggable-box-transition {
+            min-height: 60px;
+            position: relative;
+            border: 1px #ccc dashed;
+          }
+        }
+      }
+
+      &::after {
+        display: none;
+      }
+      &::before {
+        content: "";
+        height: 5px;
+        width: 100%;
+        background: transparent;
+        position: absolute;
+        top: 0;
+        right: -100%;
+        transition: all 0.3s;
+      }
+
+      &.fc-active {
+        &::before {
+          background: $layout-color;
+          right: 0;
+        }
+
+        background: $layout-hover-bg-color;
+        outline-offset: 0;
+      }
     }
   }
 

@@ -1,10 +1,10 @@
 <!--
  * @Author        : djkloop
  * @Date          : 2020-04-26 11:45:07
- * @LastEditors  : djkloop
- * @LastEditTime : 2020-04-27 01:15:39
+ * @LastEditors   : djkloop
+ * @LastEditTime  : 2020-04-27 17:15:49
  * @Description   : 头部注释
- * @FilePath     : /form-create-ui/src/components/fc-components-list/index.vue
+ * @FilePath      : /form-create-ui/src/components/fc-components-list/index.vue
  -->
 
 <template>
@@ -46,7 +46,7 @@ import { IFcComponentsListState, ComponentsItem } from "@/interface/components";
 import { AnyType } from "@/interface/common";
 import fetchServerList from "./use-server-list";
 /// 代替以前的methods
-/// 这里可以优化的更好
+/// TODO: 这里可以优化的更好
 import { generateUniqueKey, setChooseType } from "./fc-components.utils";
 import configs from "@/configs/config";
 

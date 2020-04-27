@@ -13,8 +13,7 @@ const routes: Array<RouteConfig> = [
   {
     path: "/choose-ui/:ui",
     name: "ChooseUI",
-    component: () =>
-      import(/* webpackChunkName: "choose-ui" */ "@/views/choose-ui/index.vue"),
+    component: () => import(/* webpackChunkName: "choose-ui" */ "@/views/choose-ui/index.vue"),
   },
 ];
 

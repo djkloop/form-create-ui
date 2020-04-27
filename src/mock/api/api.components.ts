@@ -1,10 +1,10 @@
 /*
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
- * @LastEditors  : djkloop
- * @LastEditTime : 2020-04-27 00:38:16
+ * @LastEditors   : djkloop
+ * @LastEditTime  : 2020-04-27 12:30:29
  * @Description  : mocks数据
- * @FilePath     : /form-create-ui/src/mock/api/api.components.ts
+ * @FilePath      : /form-create-ui/src/mock/api/api.components.ts
  */
 import { ResponseWithMockJS } from "@/interface/response";
 import { ComponentsResult } from "@/interface/components";
@@ -28,6 +28,7 @@ const respose: Array<ResponseWithMockJS<ComponentsResult>> = [
               icon: "el-icon-edit",
               model: "", // 数据字段
               sort: 4,
+              options: {},
               attrs: {
                 type: "text",
               },
@@ -40,6 +41,7 @@ const respose: Array<ResponseWithMockJS<ComponentsResult>> = [
               model: "", // 数据字段
               icon: "el-icon-edit",
               sort: 4,
+              options: {},
               attrs: {
                 type: "textarea",
               },
@@ -52,6 +54,9 @@ const respose: Array<ResponseWithMockJS<ComponentsResult>> = [
               key: "布局组件",
               model: "", // 数据字段
               sort: 4,
+              options: {
+                gutter: 0,
+              },
               children: [
                 {
                   span: 12,
@@ -71,6 +76,7 @@ const respose: Array<ResponseWithMockJS<ComponentsResult>> = [
               key: "布局组件",
               model: "", // 数据字段
               sort: 4,
+              options: {},
               children: [
                 {
                   span: 12,

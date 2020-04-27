@@ -17,8 +17,7 @@ const Generator = (prop, template) => {
 };
 
 /* 扩展 [循环] */
-const Repeat = (num, itemTemplate) =>
-  Generator(`data|${num}`, itemTemplate).data;
+const Repeat = (num, itemTemplate) => Generator(`data|${num}`, itemTemplate).data;
 
 const CustomExtends = {
   Generator,
@@ -41,32 +40,17 @@ const wired = ({ url, type, body }) => ({
 });
 
 const setup = (path, method, handle) => {
-  Mock.mock(
-    RegExp(path),
-    method,
-    typeof handle === "function" ? (o) => handle(wired(o)) : handle
-  );
+  Mock.mock(RegExp(path), method, typeof handle === "function" ? o => handle(wired(o)) : handle);
 };
 
-const load = (collection) => {
+const load = collection => {
   collection.map(({ path, method, handle }) => {
     if (method === "*") {
-      method = [
-        "get",
-        "head",
-        "post",
-        "put",
-        "delete",
-        "connect",
-        "options",
-        "trace",
-        "patch",
-      ];
+      method = ["get", "head", "post", "put", "delete", "connect", "options", "trace", "patch"];
     }
-    if (typeof method === "string" && method.indexOf("|") > -1)
-      method = method.split("|");
+    if (typeof method === "string" && method.indexOf("|") > -1) method = method.split("|");
     if (method instanceof Array) {
-      method.map((item) => setup(path, item, handle));
+      method.map(item => setup(path, item, handle));
     } else {
       setup(path, method, handle);
     }

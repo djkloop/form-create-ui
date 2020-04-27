@@ -9,5 +9,4 @@
 
 import FcUIElement from "./index.vue";
 
-export type FCUIElementRefs = InstanceType<typeof FcUIElement>
-
+export type FCUIElementRefs = InstanceType<typeof FcUIElement>;

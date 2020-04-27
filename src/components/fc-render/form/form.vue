@@ -2,26 +2,57 @@
  * @Author        : djkloop
  * @Date          : 2020-04-26 11:45:07
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-26 18:42:53
+ * @LastEditTime  : 2020-04-27 17:10:06
  * @Description   : form-item
  * @FilePath      : /form-create-ui/src/components/fc-render/form/form.vue
  -->
 <template>
   <div
     class="fc-drage-move-box"
-    :class="{ 'fc-active': item.uniqueKey === getSelectItem.uniqueKey }"
-    @click.stop="handleActiveItem"
+    :class="{
+      'fc-layout-width': ['fc-grid', 'table', 'card', 'divider', 'html'].includes(item.tag),
+    }"
   >
-    <div class="fc-drage-components-form__container fc-drage-container">
-      <div class="fc-drage-components-form__tools" :class="{ 'fc-active': item.uniqueKey === getSelectItem.uniqueKey }">
-        <i class="el-icon-document-copy" @click.stop="handleCopyItem(item)"></i>
-        <i class="el-icon-delete"></i>
+    <!-- TODO: 这里可以想个更好的解决方法... -->
+    <!-- 栅格布局 -->
+    <template v-if="item.tag === 'fc-grid'">
+      <div
+        class="fc-drage-components-form__container fc-drage-container fc-render-form-grid"
+        :class="{
+          'fc-active': item.uniqueKey === getSelectItem.uniqueKey,
+        }"
+        @click.stop="handleActiveItem"
+      >
+        <el-row :gutter="item.options.gutter" class="fc-render-form-grid-row">
+          <el-col v-for="(it, index) in item.children" :key="index" :span="it.span || 0">
+            <draggable
+              tag="div"
+              class="fc-main-draggable-box"
+              v-bind="{
+                group: 'fc-draggable',
+                ghostClass: 'ghost',
+                animation: 300,
+                handle: '.fc-drage-move',
+              }"
+              v-model="it.children"
+            >
+              <transition-group tag="div" type="transition" class="fc-main-draggable-box-transition" name="flip-list">
+                <fc-render-form
+                  class="fc-drage-move"
+                  :item="col"
+                  v-for="col in it.children"
+                  :key="col.uniqueKey + 'col__item__parent'"
+                />
+              </transition-group>
+            </draggable>
+          </el-col>
+        </el-row>
       </div>
-      <div class="fc-drage-components-form__item">
-        <component :is="item.tag" :key="item.uniqueKey" :data-key="item.uniqueKey" :type="item.attrs.type" />
-      </div>
-      <div class="fc-drage-components-form__keys" v-text="item.uniqueKey || '暂无key'"></div>
-    </div>
+    </template>
+    <!-- 普通的表单start -->
+    <template v-else>
+      <fc-render-form-item :item="item" @fc-on-copy="handleCopyItem" />
+    </template>
   </div>
 </template>
 
@@ -30,9 +61,20 @@ import { defineComponent, toRefs, ref } from "@vue/composition-api";
 import { FormItemProps, ComponentsItem } from "@/interface/components";
 import { useGetters } from "@u3u/vue-hooks";
 import { AnyType } from "@/interface/common";
+import draggable from "vuedraggable";
 import { handleActiveSelectItem } from "@/components/fc-components-list/fc-components.utils";
 
+/// TODO: 后期是否可以考虑抽成单独的组件?
+/// fc-render-form-components
+import FcRenderFormItem from "./fc-render-form-item/index.vue";
+// import FcRenderFormGrid from "./fc-render-form-grid/index.vue";
+
 export default defineComponent<FormItemProps, AnyType>({
+  name: "fc-render-form",
+  components: {
+    FcRenderFormItem,
+    draggable,
+  },
   props: {
     item: {
       type: Object,

@@ -36,9 +36,8 @@ const commonModule: Module<ICommonState, AnyType> = {
       state.mainList.push(item);
     },
     setMainList(state, list) {
-      state.mainList = list
-    }
-
+      state.mainList = list;
+    },
   },
   actions: {},
 };

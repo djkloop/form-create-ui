@@ -1,10 +1,10 @@
 /*
  * @Author       : djkloop
  * @Date         : 2020-04-25 01:21:14
- * @LastEditors  : djkloop
- * @LastEditTime : 2020-04-27 00:53:37
+ * @LastEditors   : djkloop
+ * @LastEditTime  : 2020-04-27 15:02:28
  * @Description  : fc-components工具方法(用来替代vue2中的methods的)
- * @FilePath     : /form-create-ui/src/components/fc-components-list/fc-components.utils.ts
+ * @FilePath      : /form-create-ui/src/components/fc-components-list/fc-components.utils.ts
  */
 import { ComponentsItem, IFcComponentsListState } from "@/interface/components";
 import { AnyType } from "@/interface/common";

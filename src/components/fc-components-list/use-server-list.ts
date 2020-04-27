@@ -1,17 +1,18 @@
+/*
+ * @Author        : djkloop
+ * @Date          : 2020-04-26 11:45:07
+ * @LastEditors   : djkloop
+ * @LastEditTime  : 2020-04-27 15:07:28
+ * @Description   : 头部注释
+ * @FilePath      : /form-create-ui/src/components/fc-components-list/use-server-list.ts
+ */
 import { ResponseHandle } from "@/interface/response";
-import {
-  ComponentsResult,
-  IFcComponentsListState,
-  ComponentsItem,
-} from "@/interface/components";
+import { ComponentsResult, IFcComponentsListState, ComponentsItem } from "@/interface/components";
 import axios, { AxiosResponse } from "axios";
 import { useMutations } from "@u3u/vue-hooks";
 
 async function fetchServerList(state: IFcComponentsListState) {
-  const result = await axios.get<
-    never,
-    AxiosResponse<ResponseHandle<ComponentsResult>>
-  >("/api/getComponentsList");
+  const result = await axios.get<never, AxiosResponse<ResponseHandle<ComponentsResult>>>("/api/getComponentsList");
   if (result.data.code === 0) {
     state.list = result.data.result.list;
     state.tags = result.data.result.tags;
