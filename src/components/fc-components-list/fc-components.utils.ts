@@ -2,7 +2,7 @@
  * @Author       : djkloop
  * @Date         : 2020-04-25 01:21:14
  * @LastEditors  : djkloop
- * @LastEditTime : 2020-04-29 00:47:56
+ * @LastEditTime : 2020-04-29 01:12:53
  * @Description  : fc-components工具方法(用来替代vue2中的methods的)
  * @FilePath     : /form-create-ui/src/components/fc-components-list/fc-components.utils.ts
  */
@@ -91,6 +91,8 @@ export const handleColAdd = (e: AnyType, columns: ComponentsItem[], isCopy = fal
   console.log(columns[newIndex].uniqueKey);
   const uniqueKey = Utils.generateUniqueKeyUtils(columns[newIndex].tag);
   if (!columns[newIndex].uniqueKey || isCopy) {
+    /// 如果item不深拷贝
+    /// 在这里容易出现uniqueKey被修改的情况
     columns[newIndex]["uniqueKey"] = uniqueKey;
     if (columns[newIndex].children) {
       columns[newIndex].children = clonedeep(columns[newIndex].children);
@@ -98,7 +100,6 @@ export const handleColAdd = (e: AnyType, columns: ComponentsItem[], isCopy = fal
         item.children = [];
       });
     }
-    console.log(columns[newIndex]);
   }
   const item = clonedeep(columns[newIndex]);
   columns[newIndex] = item;

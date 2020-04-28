@@ -2,7 +2,7 @@
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
  * @LastEditors  : djkloop
- * @LastEditTime : 2020-04-29 00:42:46
+ * @LastEditTime : 2020-04-29 01:11:57
  * @Description  : 主区域
  * @FilePath     : /form-create-ui/src/views/ui/element/index.vue
  -->
@@ -46,6 +46,7 @@ import { setClickHandleItem, handleColAdd } from "@/components/fc-components-lis
 /// form item
 import FormItem from "@/components/fc-render/form/form.vue";
 import config from "@/configs/config";
+import cloneDeep from "lodash.clonedeep";
 
 export default defineComponent({
   components: {
@@ -89,7 +90,8 @@ export default defineComponent({
           if (element.uniqueKey === storeGetters.getSelectItem.uniqueKey) {
             if (isCopy) {
               // 复制添加到选择节点后面
-              array.splice(index + 1, 0, element);
+              // 这里建议深拷贝一下因为后面修改uniquekey的时候有可能会冲突
+              array.splice(index + 1, 0, cloneDeep(element));
             } else {
               // 双击添加到选择节点后面
               array.splice(index + 1, 0, item);

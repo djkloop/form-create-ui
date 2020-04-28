@@ -2,7 +2,7 @@
  * @Author        : djkloop
  * @Date          : 2020-04-26 11:45:07
  * @LastEditors  : djkloop
- * @LastEditTime : 2020-04-29 00:07:47
+ * @LastEditTime : 2020-04-29 00:55:17
  * @Description   : form-item
  * @FilePath     : /form-create-ui/src/components/fc-render/form/form.vue
  -->
@@ -110,7 +110,7 @@ export default defineComponent<FormItemProps, AnyType>({
       }
     };
 
-    const handleCopyItem = (isCopy: boolean, item: ComponentsItem) => ctx.emit("fc-copy-item", ...[isCopy, item]);
+    const handleCopyItem = (isCopy: boolean, item: ComponentsItem) => ctx.emit("fc-copy-item", isCopy, item);
 
     const handleColAdd = (e: AnyType, list: AnyType, isc: AnyType, isn: AnyType) =>
       ctx.emit("fc-add-col-item", e, list, isc, isn);
