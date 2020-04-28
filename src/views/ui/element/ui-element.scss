@@ -4,13 +4,12 @@
   width: 100%;
   height: 100%;
 
-
   /// 主区域外层盒子
   &-draggable-box-transition {
     height: 100%;
-    padding      : 5px;
-    position     : relative;
-    background   : #fafafa;
+    padding: 5px;
+    position: relative;
+    background: #fafafa;
 
     /// 正在拖动中的样式...
     /// fc-drage-moving
@@ -23,7 +22,7 @@
       padding: 5px 0;
 
       &::before {
-        content: '';
+        content: "";
         height: 5px;
         width: 100%;
         background: linear-gradient(to right, $primary-color-2, $primary-color-1);
@@ -52,4 +51,23 @@
       height: 100%;
     }
   }
+}
+
+/// common transition
+.fc-drage-list-enter-active {
+  transition: all $fc-drage-transition-time;
+}
+
+.fc-drage-list-leave-active {
+  transition: all $fc-drage-transition-time;
+}
+
+.fc-drage-list-enter,
+.fc-drage-list-leave-to {
+  opacity: 0;
+  transform: translateX(-100px);
+}
+
+.fc-drage-list-enter {
+  height: 30px;
 }

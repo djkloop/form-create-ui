@@ -5,6 +5,16 @@ $primary-color-1: #4b90f0;
 $primary-color-2: #9feabf;
 $primary-color-3: #9867f7;
 
+/// theme-color-opacity-30
+$primary-color-1-30: rgba(75, 144, 240, 0.3);
+$primary-color-2-30: rgba(159, 234, 191, 0.3);
+$primary-color-3-30: rgba(152, 103, 247, 0.3);
+
+/// theme-color-opactity-50
+$primary-color-1-50: rgba(75, 144, 240, 0.5);
+$primary-color-2-50: rgba(159, 234, 191, 0.5);
+$primary-color-3-50: rgba(152, 103, 247, 0.5);
+
 ///
 $gray-color: #bfbfbf;
 $white-color: #fafafa;

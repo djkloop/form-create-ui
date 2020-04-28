@@ -1,10 +1,10 @@
 <!--
  * @Author        : djkloop
  * @Date          : 2020-04-26 11:45:07
- * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-28 16:56:11
+ * @LastEditors  : djkloop
+ * @LastEditTime : 2020-04-29 00:07:47
  * @Description   : form-item
- * @FilePath      : /form-create-ui/src/components/fc-render/form/form.vue
+ * @FilePath     : /form-create-ui/src/components/fc-render/form/form.vue
  -->
 <template>
   <div
@@ -17,7 +17,7 @@
     <!-- 栅格布局 -->
     <template v-if="item.tag === 'fc-grid'">
       <div
-        class="fc-drage-components-form__container fc-drage-container fc-render-form-grid"
+        class="fc-drage-components-form__container fc-drage-container fc-render-layout-grid"
         :class="{
           'fc-active': item.uniqueKey === getSelectItem.uniqueKey,
         }"
@@ -55,7 +55,14 @@
     </template>
     <!-- 普通的表单start -->
     <template v-else>
-      <fc-render-form-item :item="item" @fc-on-copy="handleCopyItem" />
+      <fc-render-form-item
+        class="fc-render-form-item"
+        :class="{
+          'fc-active': item.uniqueKey === getSelectItem.uniqueKey,
+        }"
+        :item="item"
+        @fc-on-copy="handleCopyItem"
+      />
     </template>
   </div>
 </template>
@@ -119,6 +126,6 @@ export default defineComponent<FormItemProps, AnyType>({
 });
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "form.scss";
 </style>

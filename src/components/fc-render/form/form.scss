@@ -1,28 +1,67 @@
-$prefix: "fc";
-$primary-color: rgb(75, 144, 240);
-$primary-color-50: rgba(75, 144, 240, 50%);
-$primary-hover-bg-color: rgb(159, 234, 191);
-$primary-hover-bg-color-50: rgba(159, 234, 191, 50%);
-$border-width: 5px;
-$layout-background-color: rgba(#9867f7, 12%);
-$layout-hover-bg-color: rgba(#9867f7, 24%);
-$layout-color: #9867f7;
+@import "../../../assets/styles/fc-create-ui/all";
 
 .#{$prefix}-drage {
   &-move-box {
-    position: relative;
-    box-sizing: border-box;
-    padding: 10px;
-    overflow: hidden;
-    transition: all 0.3s;
-    min-height: 36px;
+    /// form-item组件的样式
+    /// fc-render-/^form-*$/
+    .fc-render-form-item {
+      position: relative;
+      box-sizing: border-box;
+      padding: 8px;
+      overflow: hidden;
+      min-height: 36px;
+      transition: all 0.3s;
 
-    &:hover {
-      background: linear-gradient(
-        to right,
-        $primary-hover-bg-color-50,
-        $primary-color-50
-      );
+      &::before {
+        content: "";
+        height: $border-width;
+        width: 100%;
+        background: $primary-color-1;
+        position: absolute;
+        top: 0;
+        right: -100%;
+        transition: all 0.3s;
+      }
+
+      &.fc-active {
+        &::before {
+          right: 0;
+        }
+        background: linear-gradient(to right, $primary-color-2-50, $primary-color-1-50);
+        outline-offset: 0;
+      }
+
+      /// 选择时不让点击需要一个遮罩
+      /// 防止点到输入框等控件防止出现其他的问题
+      /// tools在下面的类里面设置更高的层级
+      .fc-render-form-item {
+        &__box {
+          position: relative;
+          box-sizing: border-box;
+          word-wrap: break-word;
+
+          &::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 666;
+          }
+        }
+      }
+    }
+
+    /// 布局类组件的样式
+    /// fc-render-/^layout-*$/
+    /// 栅格
+    .fc-render-layout-grid {
+      position: relative;
+      box-sizing: border-box;
+      padding: 5px;
+      background: linear-gradient(to right, $primary-color-2-50, $primary-color-1-50);
+      min-height: 60px;
     }
   }
 
@@ -33,15 +72,16 @@ $layout-color: #9867f7;
         transition: all 0.3s;
       }
       &__tools {
-        float: right;
-        background-color: $primary-color;
+        position: absolute;
+        right: 0;
+        background-color: $primary-color-1;
         padding: 5px 10px;
         margin-top: -10px;
-        margin-right: -10px;
         margin-bottom: 5px;
         border-radius: 0 0 0 15px;
         opacity: 0;
         transition: all 0.3s;
+        z-index: 999;
 
         &.fc-active {
           opacity: 1;
@@ -49,11 +89,12 @@ $layout-color: #9867f7;
         i {
           margin: 0 3px 0 5px;
           color: #ffffff;
+          z-index: 999;
         }
       }
       &__keys {
         font-size: 14px;
-        color: $primary-color;
+        color: $primary-color-1;
         text-transform: uppercase;
         text-align: right;
         padding: 5px 0 0;

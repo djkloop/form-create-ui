@@ -1,10 +1,10 @@
 <!--
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
- * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-28 19:08:56
+ * @LastEditors  : djkloop
+ * @LastEditTime : 2020-04-29 00:42:46
  * @Description  : 主区域
- * @FilePath      : /form-create-ui/src/views/ui/element/index.vue
+ * @FilePath     : /form-create-ui/src/views/ui/element/index.vue
  -->
 <template>
   <div class="fc-main fc-main-element">
@@ -20,7 +20,7 @@
       v-model="baseList"
     >
       <!-- fc-item -->
-      <transition-group tag="div" type="transition" class="fc-main-draggable-box-transition" name="flip-list">
+      <transition-group tag="div" type="transition" class="fc-main-draggable-box-transition" name="fc-drage-list">
         <form-item
           class="fc-drage-move"
           v-for="record in baseList"
@@ -82,6 +82,7 @@ export default defineComponent({
     /// 可以看到vue3.x 灵活性极大的提高了
     const handleCopyItem = (isCopy: boolean, item: ComponentsItem) => {
       /// TODO: 这里用的递归, 有什么优化好办法?
+      console.log("copy----", isCopy, item);
       const traverse = (array: ComponentsItem[]) => {
         for (let index = 0; index < array.length; index++) {
           const element = array[index];
@@ -137,21 +138,6 @@ export default defineComponent({
   },
 });
 </script>
-<style lang="scss">
-.flip-list-move {
-  transition: transform 0.5s;
-}
-.no-move {
-  transition: transform 0s;
-}
-
-.fc-drage-move {
-  cursor: move;
-}
-.fc-drage-move {
-  cursor: pointer;
-}
-</style>
 
 <style lang="scss">
 @import "ui-element.scss";
