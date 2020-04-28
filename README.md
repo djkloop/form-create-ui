@@ -1,29 +1,5 @@
 # form-create-ui
 
-## Project setup
-```
-yarn install
-```
+## 本仓库处于开发状态， 无法使用在任何项目中... 如使用在生产环境，产生严重后果，自己负责。
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
-
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Run your unit tests
-```
-yarn test:unit
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+# status: pre-Alpha.1
