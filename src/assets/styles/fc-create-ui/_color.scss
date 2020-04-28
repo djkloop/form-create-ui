@@ -1,0 +1,22 @@
+$prefix: "fc";
+
+/// theme
+$primary-color-1: #4b90f0;
+$primary-color-2: #9feabf;
+$primary-color-3: #9867f7;
+
+///
+$gray-color: #bfbfbf;
+$white-color: #fafafa;
+/// theme-text-color
+$text-no-data-color: $gray-color;
+
+/// theme-drage-main-bg-color
+$drage-main-bg-color: $white-color;
+
+/// theme-base
+$primary-base-color-main: $primary-color-1;
+/// theme-layout
+$primary-layout-color-main: $primary-color-2;
+/// theme-custom
+$primary-custom-color-main: $primary-color-3;

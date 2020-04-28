@@ -2,7 +2,7 @@
  * @Author       : djkloop
  * @Date         : 2020-04-25 01:21:14
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-28 16:53:55
+ * @LastEditTime  : 2020-04-28 19:09:07
  * @Description  : fc-components工具方法(用来替代vue2中的methods的)
  * @FilePath      : /form-create-ui/src/components/fc-components-list/fc-components.utils.ts
  */
@@ -17,19 +17,14 @@ import cfgs from "@/configs/config";
 /// TODO: 后期把所有的函数改为useXXX和hooks更加符合语义
 /// 生成唯一key
 export const generateUniqueKey = (state: IFcComponentsListState, idx: number, list: ComponentsItem[]) => {
-  console.log(list);
   if (cfgs.disabledConfigComponents.includes(list[idx].tag)) {
     return;
   }
-
-  console.log(list[idx].tag, "   tag");
   const uniqueKey = Utils.generateUniqueKeyUtils(list[idx].tag);
   const cloneItem = clonedeep(list[idx]);
   const key = cloneItem.key;
   cloneItem["uniqueKey"] = uniqueKey;
   state.filterData[key][idx] = state.list[idx] = cloneItem;
-  console.log(cloneItem["uniqueKey"], "   gggggggggg-----key");
-  console.log(state, "   gggggggggg-----state");
 };
 
 /// 当前选中的值
@@ -54,9 +49,8 @@ export const setClickHandleItem = (item: ComponentsItem, baseList: ComponentsIte
   /// 就说明主区域为空
   console.log("set-click-handle-item");
   if (Object.keys(storeGetters.getSelectItem).length === 0) {
-    console.log(1);
+    console.log("set-click-handle-item-1", deepItem);
     if (!deepItem.uniqueKey) {
-      console.log(1, 1);
       deepItem.uniqueKey = Utils.generateUniqueKeyUtils(deepItem.tag);
       setStore.pushMainList(deepItem);
       baseList.push(deepItem);
@@ -64,7 +58,7 @@ export const setClickHandleItem = (item: ComponentsItem, baseList: ComponentsIte
     setStore.setCurrentItem(deepItem);
     return;
   } else if (!callbakCopy) {
-    console.log(2, 2);
+    console.log("set-click-handle-item-2");
     if (!deepItem.uniqueKey) {
       deepItem.uniqueKey = Utils.generateUniqueKeyUtils(deepItem.tag);
     }
@@ -73,9 +67,9 @@ export const setClickHandleItem = (item: ComponentsItem, baseList: ComponentsIte
     setStore.setCurrentItem(deepItem);
     return;
   }
-  console.log(3, 3);
   /// 如果当前主区域有被选中的
   /// 直接调用item里面的复制方法就行了
+  console.log("set-click-handle-item-3");
   callbakCopy && callbakCopy(false, item);
 };
 
@@ -107,7 +101,6 @@ export const handleColAdd = (e: AnyType, columns: ComponentsItem[], isCopy = fal
   }
   const item = clonedeep(columns[newIndex]);
   columns[newIndex] = item;
-  console.log(columns[newIndex]);
   /// 激活添加的
   handleActiveSelectItem(item);
 };
@@ -124,7 +117,6 @@ export const useColAdd = (e: AnyType, columns: ComponentsItem[], isCopy = false,
       });
     }
   }
-  console.log(columns[newIndex]);
   const item = clonedeep(columns[newIndex]);
   columns[newIndex] = item;
   /// 激活添加的

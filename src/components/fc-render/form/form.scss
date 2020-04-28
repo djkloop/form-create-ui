@@ -14,9 +14,8 @@ $layout-color: #9867f7;
     box-sizing: border-box;
     padding: 10px;
     overflow: hidden;
-    transition: all 0.5s;
+    transition: all 0.3s;
     min-height: 36px;
-    margin: 0 0 5px;
 
     &:hover {
       background: linear-gradient(
@@ -24,120 +23,6 @@ $layout-color: #9867f7;
         $primary-hover-bg-color-50,
         $primary-color-50
       );
-    }
-
-    &::before,
-    &::after,
-    .fc-drage-container::before,
-    .fc-drage-container::after {
-      content: "";
-      height: $border-width;
-      width: 0;
-      position: absolute;
-      background: $primary-color;
-      transition: all 0.4s;
-    }
-
-    .fc-drage-container::before,
-    .fc-drage-container::after {
-      width: $border-width;
-      height: 0;
-    }
-
-    &::before,
-    .fc-drage-container::before {
-      top: 0;
-      left: 0;
-      transition-duration: 0.6s;
-    }
-
-    &::after,
-    .fc-drage-container::after {
-      right: 0;
-      bottom: 0;
-      transition-duration: 0.6s;
-    }
-
-    &.fc-active {
-      &::before,
-      &::after {
-        width: 100%;
-      }
-
-      .fc-drage-container::before,
-      .fc-drage-container::after {
-        height: 100%;
-      }
-
-      background: linear-gradient(
-        to right,
-        $primary-hover-bg-color-50,
-        $primary-color-50
-      );
-      outline-offset: 0;
-    }
-
-    &.fc-layout-width {
-      &::after {
-        display: none;
-      }
-
-      &::before {
-        display: none;
-      }
-
-      &:hover {
-        background: transparent;
-      }
-    }
-
-    .fc-render-form-grid {
-      position: relative;
-      box-sizing: border-box;
-      padding: 5px;
-      background: $layout-background-color;
-      width: 100%;
-      transition: all 0.3s;
-      overflow: hidden;
-
-      &-row {
-        .fc-main-draggable-box {
-          min-height: 60px;
-          min-width: 50px;
-          border: 1px #ccc dashed;
-          background: #fff;
-
-          .fc-main-draggable-box-transition {
-            min-height: 60px;
-            position: relative;
-            border: 1px #ccc dashed;
-          }
-        }
-      }
-
-      &::after {
-        display: none;
-      }
-      &::before {
-        content: "";
-        height: 5px;
-        width: 100%;
-        background: transparent;
-        position: absolute;
-        top: 0;
-        right: -100%;
-        transition: all 0.3s;
-      }
-
-      &.fc-active {
-        &::before {
-          background: $layout-color;
-          right: 0;
-        }
-
-        background: $layout-hover-bg-color;
-        outline-offset: 0;
-      }
     }
   }
 

@@ -2,7 +2,7 @@
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-28 16:25:00
+ * @LastEditTime  : 2020-04-28 19:08:56
  * @Description  : 主区域
  * @FilePath      : /form-create-ui/src/views/ui/element/index.vue
  -->
@@ -36,7 +36,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, toRefs, reactive } from "@vue/composition-api";
+import { defineComponent, ref, toRefs, reactive, watch } from "@vue/composition-api";
 import draggable from "vuedraggable";
 import { useGetters } from "@u3u/vue-hooks";
 import { AnyType } from "@/interface/common";
@@ -54,14 +54,24 @@ export default defineComponent({
   },
   setup(_, ctx) {
     /// 默认的mainList
-    const baseList = reactive<ComponentsItem[]>([]);
+    const baseList = ref<ComponentsItem[]>([]);
 
     const draggableOptions = ref({
       group: "fc-draggable",
-      ghostClass: "ghost",
-      animation: 300,
+      ghostClass: "fc-drage-moving",
+      animation: 180,
       handle: ".fc-drage-move",
     });
+
+    watch(
+      () => baseList,
+      (n, o) => {
+        console.log("watch", n, o);
+      },
+      {
+        deep: true,
+      }
+    );
 
     const storeGetters = reactive({
       ...useGetters("common", ["getMainList", "getSelectItem"]),
@@ -72,7 +82,6 @@ export default defineComponent({
     /// 可以看到vue3.x 灵活性极大的提高了
     const handleCopyItem = (isCopy: boolean, item: ComponentsItem) => {
       /// TODO: 这里用的递归, 有什么优化好办法?
-      console.log("copy-------", isCopy);
       const traverse = (array: ComponentsItem[]) => {
         for (let index = 0; index < array.length; index++) {
           const element = array[index];
@@ -92,29 +101,28 @@ export default defineComponent({
           }
         }
       };
-      traverse(baseList);
+      traverse(baseList.value);
     };
 
     const handleAddItem = (e: AnyType, item: ComponentsItem, isNew = true) => {
+      console.log(e, item, isNew);
       /// 父级调用的时候没有e属性
-      console.log("add-------", item);
       if (!e) {
-        console.log("add-----------1");
         if (config.disabledConfigComponents.includes(item.tag)) {
           ctx.root.$toast.error(`暂时不支持 ${item.tag.toUpperCase()} 组件...`);
           return;
         }
-        setClickHandleItem(item, baseList, handleCopyItem);
+        setClickHandleItem(item, baseList.value, handleCopyItem);
       } else {
+        console.log(baseList.value);
         const idx = isNew ? e.newIndex : e.oldIndex;
-        const item = baseList[idx];
-        console.log("add-----------2");
+        const item = baseList.value[idx];
         if (config.disabledConfigComponents.includes(item.tag)) {
           ctx.root.$toast.error(`暂时不支持 ${item.tag.toUpperCase()} 组件...`);
           return;
         }
         /// 拖拽
-        setClickHandleItem(item, baseList, undefined);
+        setClickHandleItem(item, baseList.value, undefined);
       }
     };
 
@@ -136,9 +144,6 @@ export default defineComponent({
 .no-move {
   transition: transform 0s;
 }
-.ghost {
-  opacity: 0.3;
-}
 
 .fc-drage-move {
   cursor: move;
@@ -148,6 +153,6 @@ export default defineComponent({
 }
 </style>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "ui-element.scss";
 </style>
