@@ -2,7 +2,7 @@
  * @Author        : djkloop
  * @Date          : 2020-04-26 11:45:07
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-26 15:46:12
+ * @LastEditTime  : 2020-04-28 16:17:24
  * @Description   : 全局store
  * @FilePath      : /form-create-ui/src/store/modules/common/common.ts
  */
@@ -16,6 +16,7 @@ const commonModule: Module<ICommonState, AnyType> = {
     list: [],
     selectCurrentItem: {},
     mainList: [],
+    selectType: "",
   },
   getters: {
     getMainList(state) {
@@ -37,6 +38,9 @@ const commonModule: Module<ICommonState, AnyType> = {
     },
     setMainList(state, list) {
       state.mainList = list;
+    },
+    setSelectType(state, type) {
+      state.selectType = type;
     },
   },
   actions: {},

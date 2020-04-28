@@ -2,7 +2,7 @@
  * @Author        : djkloop
  * @Date          : 2020-04-26 11:45:07
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-27 17:21:22
+ * @LastEditTime  : 2020-04-28 16:16:46
  * @Description   : 头部注释
  * @FilePath      : /form-create-ui/src/store/modules/common/common.interface.ts
  */
@@ -14,6 +14,7 @@ export interface ICommonState {
   list: ComponentsItem[];
   selectCurrentItem: Partial<ComponentsItem>;
   mainList: AnyType[];
+  selectType: string;
 }
 
 export interface ICommonActions {

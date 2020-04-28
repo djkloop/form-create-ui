@@ -1,10 +1,10 @@
 <!--
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
- * @LastEditors  : djkloop
- * @LastEditTime : 2020-04-27 01:15:53
+ * @LastEditors   : djkloop
+ * @LastEditTime  : 2020-04-28 15:48:32
  * @Description  : 基础布局
- * @FilePath     : /form-create-ui/src/layouts/basic-layout.vue
+ * @FilePath      : /form-create-ui/src/layouts/basic-layout.vue
  -->
 <template>
   <el-container class="fc-container">
@@ -74,6 +74,7 @@ export default defineComponent({
 
     /// 左侧菜单点击添加到主区域
     const handleItemClick = (it: ComponentsItem) => {
+      console.log(it);
       viewRefs.value.handleAddItem(void 0, it);
     };
 

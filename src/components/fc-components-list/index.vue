@@ -2,7 +2,7 @@
  * @Author        : djkloop
  * @Date          : 2020-04-26 11:45:07
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-27 17:15:49
+ * @LastEditTime  : 2020-04-28 16:55:05
  * @Description   : 头部注释
  * @FilePath      : /form-create-ui/src/components/fc-components-list/index.vue
  -->
@@ -26,7 +26,7 @@
                 @click="setClickItem(it)"
                 :title="cfgs.disabledConfigComponents.includes(it.tag) && '暂不支持当前组件'"
                 :key="it.label"
-                @dragstart="genKey(idx)"
+                @dragstart="genKey(item, idx)"
               >
                 <i :class="it.icon"></i>
                 {{ it.label }}
@@ -77,7 +77,7 @@ export default defineComponent({
     /// 拿到左侧列表
     fetchServerList(state);
     /// 生成uniqukey
-    const genKey = (idx: number) => generateUniqueKey(state, idx);
+    const genKey = (list: ComponentsItem[], idx: number) => generateUniqueKey(state, idx, list);
     /// 设置当前选中的type
     const setType = (e: AnyType, item: ComponentsItem[]) => setChooseType(e, state, item);
     /// 设置click的item

@@ -2,7 +2,7 @@
  * @Author        : djkloop
  * @Date          : 2020-04-26 11:45:07
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-27 17:10:06
+ * @LastEditTime  : 2020-04-28 16:56:11
  * @Description   : form-item
  * @FilePath      : /form-create-ui/src/components/fc-render/form/form.vue
  -->
@@ -31,19 +31,23 @@
               v-bind="{
                 group: 'fc-draggable',
                 ghostClass: 'ghost',
-                animation: 300,
+                animation: 180,
                 handle: '.fc-drage-move',
               }"
               v-model="it.children"
+              @start="$emit('fc-drage-start', $event, it.children)"
+              @add="$emit('fc-add-col-item', $event, it.children, false, true)"
             >
-              <transition-group tag="div" type="transition" class="fc-main-draggable-box-transition" name="flip-list">
+              <div class="fc-main-draggable-box-transition" name="flip-list">
                 <fc-render-form
                   class="fc-drage-move"
                   :item="col"
+                  :data-key="col.uniqueKey"
                   v-for="col in it.children"
-                  :key="col.uniqueKey + 'col__item__parent'"
+                  :key="col.uniqueKey + '__col__item__parent'"
+                  @fc-add-col-item="handleColAdd"
                 />
-              </transition-group>
+              </div>
             </draggable>
           </el-col>
         </el-row>
@@ -88,6 +92,7 @@ export default defineComponent<FormItemProps, AnyType>({
     };
 
     const handleActiveItem = () => {
+      console.log("form-active");
       const newTime = new Date().getTime();
       if (newTime - updateTime.value < 400) {
         return;
@@ -98,13 +103,17 @@ export default defineComponent<FormItemProps, AnyType>({
       }
     };
 
-    const handleCopyItem = (isCopy: boolean, item: ComponentsItem) => ctx.emit("copy-item", ...[isCopy, item]);
+    const handleCopyItem = (isCopy: boolean, item: ComponentsItem) => ctx.emit("fc-copy-item", ...[isCopy, item]);
 
+    const handleColAdd = (e: AnyType, list: AnyType, isc: AnyType, isn: AnyType) =>
+      ctx.emit("fc-add-col-item", e, list, isc, isn);
     return {
       ...toRefs(storeGet),
       updateTime,
       handleActiveItem,
       handleCopyItem,
+      handleColAdd,
+      ctx,
     };
   },
 });
