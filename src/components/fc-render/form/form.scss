@@ -70,6 +70,11 @@
         &.fc-active {
           opacity: 1;
         }
+        /// 如果是隐藏状态不能触发点击事件
+        /// https://developer.mozilla.org/zh-CN/docs/Web/CSS/pointer-events
+        &.fc-inactive {
+          pointer-events: none;
+        }
         i {
           margin: 0 3px 0 5px;
           color: #ffffff;
