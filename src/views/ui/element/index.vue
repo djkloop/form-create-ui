@@ -2,7 +2,7 @@
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-29 17:59:40
+ * @LastEditTime  : 2020-04-29 18:37:24
  * @Description  : 主区域
  * @FilePath      : /form-create-ui/src/views/ui/element/index.vue
  -->
@@ -37,6 +37,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, toRefs, reactive, watch } from "@vue/composition-api";
+import { useToast } from "vue-toastification/composition";
 import draggable from "vuedraggable";
 import { useGetters } from "@u3u/vue-hooks";
 import { AnyType } from "@/interface/common";
@@ -53,7 +54,8 @@ export default defineComponent({
     draggable,
     FormItem,
   },
-  setup(_, ctx) {
+  setup() {
+    const toast = useToast();
     /// 默认的mainList
     const baseList = ref<ComponentsItem[]>([]);
 
@@ -122,7 +124,7 @@ export default defineComponent({
       /// 父级调用的时候没有e属性
       if (!e) {
         if (config.disabledConfigComponents.includes(item.tag)) {
-          ctx.root.$toast.error(`暂时不支持 ${item.tag.toUpperCase()} 组件...`);
+          toast.error(`暂时不支持 ${item.tag.toUpperCase()} 组件...`);
           return;
         }
         setClickHandleItem(item, baseList.value, handleCopyItem);
@@ -131,7 +133,7 @@ export default defineComponent({
         const idx = isNew ? e.newIndex : e.oldIndex;
         const item = baseList.value[idx];
         if (config.disabledConfigComponents.includes(item.tag)) {
-          ctx.root.$toast.error(`暂时不支持 ${item.tag.toUpperCase()} 组件...`);
+          toast.error(`暂时不支持 ${item.tag.toUpperCase()} 组件...`);
           return;
         }
         /// 拖拽

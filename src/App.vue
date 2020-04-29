@@ -1,10 +1,10 @@
 <!--
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
- * @LastEditors  : djkloop
- * @LastEditTime : 2020-04-27 00:26:26
+ * @LastEditors   : djkloop
+ * @LastEditTime  : 2020-04-29 18:36:57
  * @Description  : 头部注释
- * @FilePath     : /form-create-ui/src/App.vue
+ * @FilePath      : /form-create-ui/src/App.vue
  -->
 <template>
   <div id="fc-app">
@@ -14,9 +14,16 @@
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
 import BaseLayout from "@/layouts/basic-layout.vue";
+import { provideToast } from "vue-toastification/composition";
+import "vue-toastification/dist/index.css";
 
 export default defineComponent({
   name: "App",
+  setup() {
+    /// install toast
+    provideToast({ maxToasts: 5 });
+    return {};
+  },
   components: {
     BaseLayout,
   },
