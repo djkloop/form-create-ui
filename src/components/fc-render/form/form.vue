@@ -1,10 +1,10 @@
 <!--
  * @Author        : djkloop
  * @Date          : 2020-04-26 11:45:07
- * @LastEditors  : djkloop
- * @LastEditTime : 2020-04-29 00:55:17
+ * @LastEditors   : djkloop
+ * @LastEditTime  : 2020-04-29 11:50:45
  * @Description   : form-item
- * @FilePath     : /form-create-ui/src/components/fc-render/form/form.vue
+ * @FilePath      : /form-create-ui/src/components/fc-render/form/form.vue
  -->
 <template>
   <div
@@ -30,15 +30,20 @@
               class="fc-main-draggable-box"
               v-bind="{
                 group: 'fc-draggable',
-                ghostClass: 'ghost',
+                ghostClass: 'fc-drage-moving',
                 animation: 180,
                 handle: '.fc-drage-move',
               }"
               v-model="it.children"
               @start="$emit('fc-drage-start', $event, it.children)"
-              @add="$emit('fc-add-col-item', $event, it.children, false, true)"
+              @add="$emit('fc-add-col-item', $event, it.children)"
             >
-              <div class="fc-main-draggable-box-transition" name="flip-list">
+              <transition-group
+                tag="div"
+                type="transition"
+                class="fc-main-draggable-box-transition"
+                name="fc-drage-list"
+              >
                 <fc-render-form
                   class="fc-drage-move"
                   :item="col"
@@ -47,7 +52,7 @@
                   :key="col.uniqueKey + '__col__item__parent'"
                   @fc-add-col-item="handleColAdd"
                 />
-              </div>
+              </transition-group>
             </draggable>
           </el-col>
         </el-row>

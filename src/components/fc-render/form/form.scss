@@ -5,31 +5,8 @@
     /// form-item组件的样式
     /// fc-render-/^form-*$/
     .fc-render-form-item {
-      position: relative;
-      box-sizing: border-box;
-      padding: 8px;
-      overflow: hidden;
-      min-height: 36px;
-      transition: all 0.3s;
-
-      &::before {
-        content: "";
-        height: $border-width;
-        width: 100%;
-        background: $primary-color-1;
-        position: absolute;
-        top: 0;
-        right: -100%;
-        transition: all 0.3s;
-      }
-
-      &.fc-active {
-        &::before {
-          right: 0;
-        }
-        background: linear-gradient(to right, $primary-color-2-50, $primary-color-1-50);
-        outline-offset: 0;
-      }
+      @include fc-render-item(36px);
+      @include fc-before;
 
       /// 选择时不让点击需要一个遮罩
       /// 防止点到输入框等控件防止出现其他的问题
@@ -57,11 +34,18 @@
     /// fc-render-/^layout-*$/
     /// 栅格
     .fc-render-layout-grid {
-      position: relative;
-      box-sizing: border-box;
-      padding: 5px;
-      background: linear-gradient(to right, $primary-color-2-50, $primary-color-1-50);
-      min-height: 60px;
+      @include fc-render-item(60px);
+
+      @include fc-before;
+
+      .fc-render-form-grid-row {
+        .fc-main-draggable-box,
+        .fc-main-draggable-box-transition {
+            min-height: 60px;
+            border: 1px dashed $gray-color-1;
+            background: white;
+        }
+      }
     }
   }
 

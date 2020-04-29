@@ -1,0 +1,30 @@
+@mixin fc-render-item($height) {
+  position: relative;
+  box-sizing: border-box;
+  padding: 8px;
+  overflow: hidden;
+  min-height: $height;
+  transition: all 0.3s;
+  background: linear-gradient(to right, $primary-color-2-50, $primary-color-1-50);
+}
+
+@mixin fc-before {
+  &::before {
+    content: "";
+    height: $border-width;
+    width: 100%;
+    background: $primary-color-1;
+    position: absolute;
+    top: 0;
+    right: -100%;
+    transition: all 0.3s;
+  }
+
+  &.fc-active {
+    &::before {
+      right: 0;
+    }
+    background: linear-gradient(to right, $primary-color-2-50, $primary-color-1-50);
+    outline-offset: 0;
+  }
+}
