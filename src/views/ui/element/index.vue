@@ -1,10 +1,10 @@
 <!--
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
- * @LastEditors  : djkloop
- * @LastEditTime : 2020-04-29 01:11:57
+ * @LastEditors   : djkloop
+ * @LastEditTime  : 2020-04-29 12:02:45
  * @Description  : 主区域
- * @FilePath     : /form-create-ui/src/views/ui/element/index.vue
+ * @FilePath      : /form-create-ui/src/views/ui/element/index.vue
  -->
 <template>
   <div class="fc-main fc-main-element">
@@ -101,6 +101,16 @@ export default defineComponent({
             };
             handleColAdd(e, array, true);
             break;
+          }
+          if (element.tag === "fc-grid") {
+            // 栅格布局
+            if (typeof element.children !== "undefined") {
+              element.children.forEach(item => {
+                if (typeof item.children !== "undefined") {
+                  traverse(item.children);
+                }
+              });
+            }
           }
         }
       };

@@ -2,7 +2,7 @@
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-27 15:42:06
+ * @LastEditTime  : 2020-04-29 12:03:03
  * @Description  : 组件相关的interface
  * @FilePath      : /form-create-ui/src/interface/components.ts
  */
@@ -23,7 +23,7 @@ export interface ComponentsItem {
   model?: string;
   attrs?: AnyType;
   span?: number;
-  children?: Partial<ComponentsItem>[];
+  children?: ComponentsItem[];
 }
 
 export interface FormItemProps {
