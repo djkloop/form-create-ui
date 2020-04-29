@@ -2,7 +2,7 @@
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-29 12:03:03
+ * @LastEditTime  : 2020-04-29 17:55:26
  * @Description  : 组件相关的interface
  * @FilePath      : /form-create-ui/src/interface/components.ts
  */
@@ -23,7 +23,7 @@ export interface ComponentsItem {
   model?: string;
   attrs?: AnyType;
   span?: number;
-  children?: ComponentsItem[];
+  children?: Partial<ComponentsItem>[];
 }
 
 export interface FormItemProps {
@@ -42,6 +42,9 @@ export interface IFcComponentsListState extends ComponentsResult {
   draggableOptions: IDraggableOptions;
   selectCurrentItem: Partial<ComponentsItem>;
   filterData: {
+    [props: string]: ComponentsItem[];
+  };
+  cacheData: {
     [props: string]: ComponentsItem[];
   };
 }

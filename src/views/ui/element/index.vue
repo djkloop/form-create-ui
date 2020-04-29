@@ -2,7 +2,7 @@
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-29 14:21:50
+ * @LastEditTime  : 2020-04-29 17:59:40
  * @Description  : 主区域
  * @FilePath      : /form-create-ui/src/views/ui/element/index.vue
  -->
@@ -84,7 +84,7 @@ export default defineComponent({
     const handleCopyItem = (isCopy: boolean, item: ComponentsItem) => {
       /// TODO: 这里用的递归, 有什么优化好办法?
       console.log("copy----", isCopy, item);
-      const traverse = (array: ComponentsItem[]) => {
+      const traverse = (array: Partial<ComponentsItem>[]) => {
         for (let index = 0; index < array.length; index++) {
           const element = array[index];
           if (element.uniqueKey === storeGetters.getSelectItem.uniqueKey) {
@@ -107,7 +107,7 @@ export default defineComponent({
             if (typeof element.children !== "undefined") {
               element.children.forEach(item => {
                 if (typeof item.children !== "undefined") {
-                  traverse(item.children);
+                  traverse(item!.children);
                 }
               });
             }

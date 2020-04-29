@@ -2,7 +2,7 @@
  * @Author       : djkloop
  * @Date         : 2020-04-25 01:21:14
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-29 12:43:59
+ * @LastEditTime  : 2020-04-29 18:00:47
  * @Description  : fc-components工具方法(用来替代vue2中的methods的)
  * @FilePath      : /form-create-ui/src/components/fc-components-list/fc-components.utils.ts
  */
@@ -21,10 +21,12 @@ export const generateUniqueKey = (state: IFcComponentsListState, idx: number, li
     return;
   }
   const uniqueKey = Utils.generateUniqueKeyUtils(list[idx].tag);
-  const cloneItem = clonedeep(list[idx]);
+  const cloneItem = clonedeep(state.cacheData[list[idx].key][idx]);
+  console.log(cloneItem);
   const key = cloneItem.key;
   cloneItem["uniqueKey"] = uniqueKey;
-  state.filterData[key][idx] = state.list[idx] = cloneItem;
+  state.filterData[key][idx] = cloneItem;
+  console.log(state);
 };
 
 /// 当前选中的值
@@ -74,14 +76,14 @@ export const setClickHandleItem = (item: ComponentsItem, baseList: ComponentsIte
 };
 
 /// 主区域点击选中active
-export const handleActiveSelectItem = (item: ComponentsItem) => {
+export const handleActiveSelectItem = (item: Partial<ComponentsItem>) => {
   const setStore = {
     ...useMutations("common", ["setCurrentItem"]),
   };
   setStore.setCurrentItem(item);
 };
 
-export const handleColAdd = (e: AnyType, columns: ComponentsItem[], isCopy = false, isNew = true) => {
+export const handleColAdd = (e: AnyType, columns: Partial<ComponentsItem>[], isCopy = false, isNew = true) => {
   const newIndex = isNew ? e.newIndex : e.oldIndex;
   console.log(e, " aaaaaaaa");
   console.log(newIndex, " aaaaaaaa");
@@ -89,7 +91,7 @@ export const handleColAdd = (e: AnyType, columns: ComponentsItem[], isCopy = fal
   console.log(isCopy, " aaaaaaaa");
   console.log(isNew, " aaaaaaaa");
   console.log(columns[newIndex].uniqueKey);
-  const uniqueKey = Utils.generateUniqueKeyUtils(columns[newIndex].tag);
+  const uniqueKey = Utils.generateUniqueKeyUtils(columns[newIndex].tag!);
   if (!columns[newIndex].uniqueKey || isCopy) {
     /// 如果item不深拷贝
     /// 在这里容易出现uniqueKey被修改的情况

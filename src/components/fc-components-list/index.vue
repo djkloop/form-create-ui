@@ -2,7 +2,7 @@
  * @Author        : djkloop
  * @Date          : 2020-04-26 11:45:07
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-28 16:55:05
+ * @LastEditTime  : 2020-04-29 17:50:44
  * @Description   : 头部注释
  * @FilePath      : /form-create-ui/src/components/fc-components-list/index.vue
  -->
@@ -63,6 +63,7 @@ export default defineComponent({
       loading: true,
       defaultActive: ["基础组件", "布局组件"],
       filterData: {},
+      cacheData: {},
       selectCurrentItem: {},
       draggableOptions: {
         group: { name: "fc-draggable", pull: "clone", put: false },
