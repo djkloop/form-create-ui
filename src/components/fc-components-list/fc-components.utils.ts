@@ -1,10 +1,10 @@
 /*
  * @Author       : djkloop
  * @Date         : 2020-04-25 01:21:14
- * @LastEditors  : djkloop
- * @LastEditTime : 2020-04-29 01:12:53
+ * @LastEditors   : djkloop
+ * @LastEditTime  : 2020-04-29 12:43:59
  * @Description  : fc-components工具方法(用来替代vue2中的methods的)
- * @FilePath     : /form-create-ui/src/components/fc-components-list/fc-components.utils.ts
+ * @FilePath      : /form-create-ui/src/components/fc-components-list/fc-components.utils.ts
  */
 import { ComponentsItem, IFcComponentsListState } from "@/interface/components";
 import { AnyType } from "@/interface/common";
@@ -107,6 +107,7 @@ export const handleColAdd = (e: AnyType, columns: ComponentsItem[], isCopy = fal
   handleActiveSelectItem(item);
 };
 
+/// 后面所有的函数都会换成这种开头的
 export const useColAdd = (e: AnyType, columns: ComponentsItem[], isCopy = false, isNew = false) => {
   const newIndex = isNew ? e.newIndex : e.oldIndex;
   const uniqueKey = Utils.generateUniqueKeyUtils(columns[newIndex].tag);

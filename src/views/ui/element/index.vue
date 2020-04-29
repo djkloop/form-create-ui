@@ -2,7 +2,7 @@
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-29 12:02:45
+ * @LastEditTime  : 2020-04-29 14:21:50
  * @Description  : 主区域
  * @FilePath      : /form-create-ui/src/views/ui/element/index.vue
  -->
@@ -26,9 +26,9 @@
           v-for="record in baseList"
           :item="record"
           :key="record.uniqueKey + '__item__parent'"
-          @fc-copy-item="handleCopyItem"
           @fc-add-col-item="handleColAdd"
           @fc-drage-start="handleAddItem"
+          @fc-copy-form-item="handleCopyItem"
         />
       </transition-group>
     </draggable>

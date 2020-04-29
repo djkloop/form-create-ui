@@ -2,7 +2,7 @@
  * @Author        : djkloop
  * @Date          : 2020-04-27 11:15:31
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-29 10:46:58
+ * @LastEditTime  : 2020-04-29 14:07:29
  * @Description   : 头部注释
  * @FilePath      : /form-create-ui/src/components/fc-render/form/fc-render-form-item/index.vue
  -->
@@ -12,7 +12,7 @@
       class="fc-drage-components-form__tools fc-render-form-item__tools"
       :class="{ 'fc-active': item.uniqueKey === getSelectItem.uniqueKey }"
     >
-      <i class="el-icon-document-copy" @click.stop="context.emit('fc-on-copy', true, item)"></i>
+      <i class="el-icon-document-copy" @click.stop="context.emit('fc-on-form-item-copy', true, item)"></i>
       <i class="el-icon-delete"></i>
     </div>
     <div class="fc-drage-components-form__item fc-render-form-item__box">

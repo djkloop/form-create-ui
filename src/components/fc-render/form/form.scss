@@ -65,7 +65,7 @@
         border-radius: 0 0 0 15px;
         opacity: 0;
         transition: all 0.3s;
-        z-index: 999;
+        z-index: 777;
 
         &.fc-active {
           opacity: 1;
@@ -73,7 +73,6 @@
         i {
           margin: 0 3px 0 5px;
           color: #ffffff;
-          z-index: 999;
         }
       }
       &__keys {

@@ -2,7 +2,7 @@
  * @Author        : djkloop
  * @Date          : 2020-04-26 11:45:07
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-29 11:50:45
+ * @LastEditTime  : 2020-04-29 14:23:43
  * @Description   : form-item
  * @FilePath      : /form-create-ui/src/components/fc-render/form/form.vue
  -->
@@ -44,6 +44,7 @@
                 class="fc-main-draggable-box-transition"
                 name="fc-drage-list"
               >
+                <!-- 这里的和element那里要写一样要不然不能冒泡哦 -->
                 <fc-render-form
                   class="fc-drage-move"
                   :item="col"
@@ -51,6 +52,7 @@
                   v-for="col in it.children"
                   :key="col.uniqueKey + '__col__item__parent'"
                   @fc-add-col-item="handleColAdd"
+                  @fc-copy-form-item="handleCopyItem"
                 />
               </transition-group>
             </draggable>
@@ -62,11 +64,9 @@
     <template v-else>
       <fc-render-form-item
         class="fc-render-form-item"
-        :class="{
-          'fc-active': item.uniqueKey === getSelectItem.uniqueKey,
-        }"
+        :class="{ 'fc-active': item.uniqueKey === getSelectItem.uniqueKey }"
         :item="item"
-        @fc-on-copy="handleCopyItem"
+        @fc-on-form-item-copy="handleCopyItem"
       />
     </template>
   </div>
@@ -96,7 +96,7 @@ export default defineComponent<FormItemProps, AnyType>({
       type: Object,
     },
   },
-  setup(props, ctx) {
+  setup(props, { emit }) {
     const updateTime = ref(0);
 
     const storeGet = {
@@ -115,17 +115,15 @@ export default defineComponent<FormItemProps, AnyType>({
       }
     };
 
-    const handleCopyItem = (isCopy: boolean, item: ComponentsItem) => ctx.emit("fc-copy-item", isCopy, item);
-
-    const handleColAdd = (e: AnyType, list: AnyType, isc: AnyType, isn: AnyType) =>
-      ctx.emit("fc-add-col-item", e, list, isc, isn);
+    const handleColAdd = (e: AnyType, list: ComponentsItem[], isc: boolean, isn: boolean) =>
+      emit("fc-add-col-item", e, list, isc, isn);
+    const handleCopyItem = (isCopy: boolean, item: ComponentsItem) => emit("fc-copy-form-item", isCopy, item);
     return {
       ...toRefs(storeGet),
       updateTime,
       handleActiveItem,
-      handleCopyItem,
       handleColAdd,
-      ctx,
+      handleCopyItem,
     };
   },
 });
