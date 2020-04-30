@@ -2,16 +2,6 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [0.1.0-pre-alpha.12](https://github.com/djkloop/form-create-ui/compare/v0.1.0-pre-alpha.6...v0.1.0-pre-alpha.12) (2020-04-30)
-
-## [0.1.0-pre-alpha.11](https://github.com/djkloop/form-create-ui/compare/v0.1.0-pre-alpha.6...v0.1.0-pre-alpha.11) (2020-04-30)
-
-## [0.1.0-pre-alpha.10](https://github.com/djkloop/form-create-ui/compare/v0.1.0-pre-alpha.6...v0.1.0-pre-alpha.10) (2020-04-30)
-
-## [0.1.0-pre-alpha.9](https://github.com/djkloop/form-create-ui/compare/v0.1.0-pre-alpha.6...v0.1.0-pre-alpha.9) (2020-04-30)
-
-## [0.1.0-pre-alpha.8](https://github.com/djkloop/form-create-ui/compare/v0.1.0-pre-alpha.6...v0.1.0-pre-alpha.8) (2020-04-30)
-
 ## [0.1.0-pre-alpha.7](https://github.com/djkloop/form-create-ui/compare/v0.1.0-pre-alpha.6...v0.1.0-pre-alpha.7) (2020-04-30)
 
 ## 0.1.0-pre-alpha.6 (2020-04-30)
