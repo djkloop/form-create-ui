@@ -2,7 +2,7 @@
  * @Author       : djkloop
  * @Date         : 2020-04-25 01:21:14
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-29 18:00:47
+ * @LastEditTime  : 2020-04-30 20:23:57
  * @Description  : fc-components工具方法(用来替代vue2中的methods的)
  * @FilePath      : /form-create-ui/src/components/fc-components-list/fc-components.utils.ts
  */
@@ -14,12 +14,35 @@ import Utils from "@/utils/utils";
 import { reactive } from "@vue/composition-api";
 import cfgs from "@/configs/config";
 
+
+const useES20XX = () => {
+  const idx = void 0;
+  /// 测试下新特性...
+  const testA = idx ?? "default_a";
+  console.log(testA);
+
+  ///
+  const box: any = {
+    weight: 2,
+    getWeight() {
+      return this.weight;
+    }
+  }
+
+  console.log(box?.bbb);
+
+  /// ::func
+  /// 好像不支持
+}
+
+
 /// TODO: 后期把所有的函数改为useXXX和hooks更加符合语义
 /// 生成唯一key
 export const generateUniqueKey = (state: IFcComponentsListState, idx: number, list: ComponentsItem[]) => {
   if (cfgs.disabledConfigComponents.includes(list[idx].tag)) {
     return;
   }
+  useES20XX();
   const uniqueKey = Utils.generateUniqueKeyUtils(list[idx].tag);
   const cloneItem = clonedeep(state.cacheData[list[idx].key][idx]);
   console.log(cloneItem);
