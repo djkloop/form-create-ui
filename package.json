@@ -17,7 +17,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint && npm run r:pa && npm run n:version"
+      "pre-commit": "npm run lint",
+      "pre-push": "npm run r:pa && npm run n:version"
     }
   },
   "dependencies": {
