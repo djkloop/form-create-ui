@@ -6,7 +6,19 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint --fix"
+    "lint": "vue-cli-service lint --fix",
+    "release:minor": "standard-version --release-as minor",
+    "release:major": "standard-version --release-as major",
+    "release:patch": "standard-version --release-as patch",
+    "r:b": "standard-version -p beta",
+    "r:a": "standard-version -p alpha",
+    "r:pa": "standard-version -p pre-alpha"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test",
+      "pre-push": "npm test"
+    }
   },
   "dependencies": {
     "@form-create/element-ui": "^1.0.11",
@@ -50,10 +62,12 @@
     "eslint": "^6.7.2",
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-vue": "^6.2.2",
+    "husky": "^4.2.5",
     "lodash.uniqueid": "^4.0.1",
     "prettier": "^1.19.1",
     "sass": "^1.26.3",
     "sass-loader": "^8.0.2",
+    "standard-version": "^7.1.0",
     "typescript": "~3.8.3",
     "vue-template-compiler": "^2.6.11"
   }
