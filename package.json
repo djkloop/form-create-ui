@@ -12,11 +12,12 @@
     "release:patch": "standard-version --release-as patch",
     "r:b": "standard-version -p beta",
     "r:a": "standard-version -p alpha",
-    "r:pa": "standard-version -p pre-alpha"
+    "r:pa": "standard-version -p pre-alpha",
+    "n:version": "node ./scripts/reset.version.js"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint"
+      "pre-commit": "npm run lint && npm run n:version"
     }
   },
   "dependencies": {
