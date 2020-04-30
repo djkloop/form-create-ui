@@ -2,7 +2,7 @@
  * @Author       : djkloop
  * @Date         : 2020-04-25 01:21:14
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-30 20:23:57
+ * @LastEditTime  : 2020-04-30 20:27:18
  * @Description  : fc-components工具方法(用来替代vue2中的methods的)
  * @FilePath      : /form-create-ui/src/components/fc-components-list/fc-components.utils.ts
  */
@@ -13,7 +13,6 @@ import { useMutations, useGetters } from "@u3u/vue-hooks";
 import Utils from "@/utils/utils";
 import { reactive } from "@vue/composition-api";
 import cfgs from "@/configs/config";
-
 
 const useES20XX = () => {
   const idx = void 0;
@@ -26,15 +25,12 @@ const useES20XX = () => {
     weight: 2,
     getWeight() {
       return this.weight;
-    }
-  }
-
+    },
+  };
   console.log(box?.bbb);
-
   /// ::func
   /// 好像不支持
-}
-
+};
 
 /// TODO: 后期把所有的函数改为useXXX和hooks更加符合语义
 /// 生成唯一key
