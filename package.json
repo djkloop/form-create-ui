@@ -1,6 +1,6 @@
 {
   "name": "form-create-ui",
-  "version": "0.1.0-pre-alpha.6",
+  "version": "0.1.0-pre-alpha.12",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -17,7 +17,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint && npm run n:version"
+      "pre-commit": "npm run lint && npm run r:pa && npm run n:version"
     }
   },
   "dependencies": {
