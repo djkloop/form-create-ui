@@ -43,6 +43,7 @@
   }
 }
 
+/// 全局tootip
 .no-fc-item {
   color: $text-no-data-color;
   font-size: 22px;
@@ -52,6 +53,34 @@
   left: 50%;
   z-index: 2;
   transform: translate(-50%, 50%);
+}
+
+/// 文档提示
+.fc-tips-href {
+  a {
+    @include text-linear;
+    margin-left: 3px;
+    position: relative;
+    padding: 0 2px;
+
+    &::after {
+      content: "";
+      position: absolute;
+      height: 0;
+      width: 100%;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(to right, $primary-color-2, $primary-color-1);
+      transition: all 0.3s;
+    }
+
+    &:hover {
+      &::after {
+        height: 1px;
+      }
+    }
+  }
 }
 
 /// common transition

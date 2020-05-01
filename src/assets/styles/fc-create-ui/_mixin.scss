@@ -28,3 +28,9 @@
     outline-offset: 0;
   }
 }
+
+@mixin text-linear {
+  background-image: linear-gradient(to right, $primary-color-2, $primary-color-1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

@@ -15,6 +15,16 @@
     .el-tabs__content {
       height: calc(100% - 95px);
     }
+
+    .fc-props-tab_item_tip {
+      margin-bottom: 15px;
+    }
+
+    .fc-props-tab__item {
+      &_props,
+      &_style {
+      }
+    }
   }
 
   /// 去掉element的el-tab下划线
@@ -25,9 +35,7 @@
   .el-tabs__item {
     user-select: none;
     &.is-active {
-      background-image: linear-gradient(to right, $primary-color-2, $primary-color-1);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      @include text-linear;
     }
   }
 
