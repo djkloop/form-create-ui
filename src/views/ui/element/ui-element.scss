@@ -34,16 +34,6 @@
     }
   }
 
-  .no-fc-item {
-    color: $text-no-data-color;
-    font-size: 22px;
-    text-align: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, 50%);
-  }
-
   &-draggable-box {
     height: 100%;
 
@@ -51,6 +41,17 @@
       height: 100%;
     }
   }
+}
+
+.no-fc-item {
+  color: $text-no-data-color;
+  font-size: 22px;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  transform: translate(-50%, 50%);
 }
 
 /// common transition

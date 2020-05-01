@@ -1,14 +1,16 @@
 <!--
  * @Author        : djkloop
  * @Date          : 2020-04-27 11:26:48
- * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-27 16:15:55
- * @Description   : 头部注释
- * @FilePath      : /form-create-ui/src/components/fc-render/form/fc-render-form-grid/index.vue
+ * @LastEditors  : djkloop
+ * @LastEditTime : 2020-05-01 15:12:06
+ * @Description   : 属性区域
+ * @FilePath     : /form-create-ui/src/components/fc-render/form/fc-render-form-grid/index.vue
  -->
 <template>
   <div>
-    1
+    <el-tab>
+      1
+    </el-tab>
   </div>
 </template>
 
