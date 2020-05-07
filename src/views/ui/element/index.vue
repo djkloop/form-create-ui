@@ -2,7 +2,7 @@
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-29 18:37:24
+ * @LastEditTime  : 2020-05-07 17:28:13
  * @Description  : 主区域
  * @FilePath      : /form-create-ui/src/views/ui/element/index.vue
  -->
@@ -12,14 +12,37 @@
       从左侧控件列表添加
     </h1>
     <!-- fc-transfer-panel -->
-    <draggable
+    <!-- <div class="fc-main-draggable-box">
+      <form-create v-model="formInstance" :rule="formRules" :option="formOptions" />
+    </div> -->
+    <form-create v-model="formInstance" :rule="formRules" :option="formOptions">
+      <draggable
+        class="fc-main-draggable-box"
+        tag="div"
+        v-bind="draggableOptions"
+        @add="handleAddItem"
+        v-model="baseList"
+      >
+        <transition-group tag="div" type="transition" class="fc-main-draggable-box-transition" name="fc-drage-list">
+          <form-item
+            class="fc-drage-move"
+            v-for="record in baseList"
+            :item="record"
+            :key="record.uniqueKey + '__item__parent'"
+            @fc-add-col-item="handleColAdd"
+            @fc-drage-start="handleAddItem"
+            @fc-copy-form-item="handleCopyItem"
+          />
+        </transition-group>
+      </draggable>
+    </form-create>
+    <!-- <draggable
       class="fc-main-draggable-box"
       tag="div"
       v-bind="draggableOptions"
       @add="handleAddItem"
       v-model="baseList"
     >
-      <!-- fc-item -->
       <transition-group tag="div" type="transition" class="fc-main-draggable-box-transition" name="fc-drage-list">
         <form-item
           class="fc-drage-move"
@@ -31,39 +54,54 @@
           @fc-copy-form-item="handleCopyItem"
         />
       </transition-group>
-    </draggable>
+    </draggable> -->
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, toRefs, reactive, watch } from "@vue/composition-api";
 import { useToast } from "vue-toastification/composition";
-import draggable from "vuedraggable";
 import { useGetters } from "@u3u/vue-hooks";
 import { AnyType } from "@/interface/common";
 import { ComponentsItem } from "@/interface/components";
 import { setClickHandleItem, handleColAdd } from "@/components/fc-components-list/fc-components.utils";
-
-/// form item
 import FormItem from "@/components/fc-render/form/form.vue";
 import config from "@/configs/config";
 import cloneDeep from "lodash.clonedeep";
 
 export default defineComponent({
   components: {
-    draggable,
     FormItem,
   },
   setup() {
     const toast = useToast();
     /// 默认的mainList
     const baseList = ref<ComponentsItem[]>([]);
-
     const draggableOptions = ref({
       group: "fc-draggable",
       ghostClass: "fc-drage-moving",
       animation: 180,
       handle: ".fc-drage-move",
+    });
+    const formCreateState = reactive({
+      formInstance: {},
+      formRules: [
+        {
+          type: "draggable",
+          props: {
+            list: baseList.value,
+            ...draggableOptions.value,
+            tag: "div",
+          },
+          class: "fc-main-draggable-box",
+          children: baseList.value,
+          native: true,
+        },
+      ],
+      formOptions: {
+        submitBtn: false,
+        injectEvent: true,
+      },
     });
 
     watch(
@@ -132,6 +170,10 @@ export default defineComponent({
         console.log(baseList.value);
         const idx = isNew ? e.newIndex : e.oldIndex;
         const item = baseList.value[idx];
+        if (!item) {
+          toast.error(`不存在`);
+          return;
+        }
         if (config.disabledConfigComponents.includes(item.tag)) {
           toast.error(`暂时不支持 ${item.tag.toUpperCase()} 组件...`);
           return;
@@ -148,6 +190,7 @@ export default defineComponent({
       baseList,
       handleCopyItem,
       ...toRefs(storeGetters),
+      ...toRefs(formCreateState),
     };
   },
 });
