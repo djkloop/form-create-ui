@@ -2,7 +2,7 @@
  * @Author        : djkloop
  * @Date          : 2020-04-26 11:45:07
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-29 17:50:44
+ * @LastEditTime  : 2020-05-07 18:34:16
  * @Description   : 头部注释
  * @FilePath      : /form-create-ui/src/components/fc-components-list/index.vue
  -->
@@ -28,7 +28,7 @@
                 :key="it.label"
                 @dragstart="genKey(item, idx)"
               >
-                <i :class="it.icon"></i>
+                <i :class="it.listIcon"></i>
                 {{ it.label }}
               </li>
             </draggable>

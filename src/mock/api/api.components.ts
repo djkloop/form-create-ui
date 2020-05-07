@@ -2,7 +2,7 @@
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-27 12:30:29
+ * @LastEditTime  : 2020-05-07 18:34:06
  * @Description  : mocks数据
  * @FilePath      : /form-create-ui/src/mock/api/api.components.ts
  */
@@ -21,73 +21,76 @@ const respose: Array<ResponseWithMockJS<ComponentsResult>> = [
           tags: ["基础组件", "布局组件"],
           list: [
             {
-              type: "el-input",
+              type: "input",
+              field: "goods_name",
               label: "单行输入框",
-              key: "基础组件",
-              tag: "el-input",
-              icon: "el-icon-edit",
-              model: "", // 数据字段
-              sort: 4,
-              options: {},
-              attrs: {
+              value: "iphone 7",
+              listIcon: "el-icon-edit",
+              itemTag: "基础组件",
+              col: {
+                span: 12,
+                labelWidth: 150,
+              },
+              props: {
                 type: "text",
               },
+              validate: [{ required: true, message: "请输入goods_name", trigger: "blur" }],
             },
-            {
-              type: "el-input",
-              tag: "el-input",
-              label: "多行输入框",
-              key: "基础组件",
-              model: "", // 数据字段
-              icon: "el-icon-edit",
-              sort: 4,
-              options: {},
-              attrs: {
-                type: "textarea",
-              },
-            },
-            {
-              type: "fc-grid",
-              tag: "fc-grid",
-              label: "栅格布局",
-              icon: "el-icon-c-scale-to-original",
-              key: "布局组件",
-              model: "", // 数据字段
-              sort: 4,
-              options: {
-                gutter: 0,
-              },
-              children: [
-                {
-                  span: 12,
-                  children: [],
-                },
-                {
-                  span: 12,
-                  children: [],
-                },
-              ],
-            },
-            {
-              type: "fc-card",
-              tag: "fc-card",
-              label: "卡片布局",
-              icon: "el-icon-c-scale-to-original",
-              key: "布局组件",
-              model: "", // 数据字段
-              sort: 4,
-              options: {},
-              children: [
-                {
-                  span: 12,
-                  children: [],
-                },
-                {
-                  span: 12,
-                  children: [],
-                },
-              ],
-            },
+            // {
+            //   type: "el-input",
+            //   tag: "el-input",
+            //   label: "多行输入框",
+            //   key: "基础组件",
+            //   model: "", // 数据字段
+            //   icon: "el-icon-edit",
+            //   sort: 4,
+            //   options: {},
+            //   attrs: {
+            //     type: "textarea",
+            //   },
+            // },
+            // {
+            //   type: "fc-grid",
+            //   tag: "fc-grid",
+            //   label: "栅格布局",
+            //   icon: "el-icon-c-scale-to-original",
+            //   key: "布局组件",
+            //   model: "", // 数据字段
+            //   sort: 4,
+            //   options: {
+            //     gutter: 0,
+            //   },
+            //   children: [
+            //     {
+            //       span: 12,
+            //       children: [],
+            //     },
+            //     {
+            //       span: 12,
+            //       children: [],
+            //     },
+            //   ],
+            // },
+            // {
+            //   type: "fc-card",
+            //   tag: "fc-card",
+            //   label: "卡片布局",
+            //   icon: "el-icon-c-scale-to-original",
+            //   key: "布局组件",
+            //   model: "", // 数据字段
+            //   sort: 4,
+            //   options: {},
+            //   children: [
+            //     {
+            //       span: 12,
+            //       children: [],
+            //     },
+            //     {
+            //       span: 12,
+            //       children: [],
+            //     },
+            //   ],
+            // },
           ],
         },
       };
