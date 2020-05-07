@@ -9,7 +9,7 @@
 import Vue from "vue";
 import VueCompositionApi from "@vue/composition-api";
 import hooks from "@u3u/vue-hooks";
-import Draggable from 'vuedraggable'
+import Draggable from "vuedraggable";
 
 /// element-ui
 import ElementUI from "element-ui";
@@ -29,7 +29,7 @@ function installPlugins() {
   Vue.use(VueCompositionApi);
   Vue.use(ElementUI);
   Vue.use(formCreate);
-  Vue.component(Draggable.name, Draggable)
+  Vue.component(Draggable.name, Draggable);
   Vue.component(FcTips.name, FcTips);
   Vue.use(VueAxios, axios);
   Vue.use(hooks);

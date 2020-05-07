@@ -8,5 +8,5 @@
  */
 
 export default abstract class FormCreateBase {
-  abstract setup(): any
+  abstract setup(): any;
 }

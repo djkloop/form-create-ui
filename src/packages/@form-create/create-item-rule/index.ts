@@ -7,7 +7,7 @@
  * @FilePath      : /form-create-ui/src/packages/@form-create/create-item-rule/index.ts
  */
 
-import FormCreateBase from '@/interface/@form-create/create-form-item-rule.interface';
+import FormCreateBase from "@/interface/@form-create/create-form-item-rule.interface";
 
 export default class CreateFormItemRule extends FormCreateBase {
   setup() {
