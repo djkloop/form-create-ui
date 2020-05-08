@@ -2,7 +2,7 @@
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-08 14:11:17
+ * @LastEditTime  : 2020-05-08 16:13:44
  * @Description  : 主区域
  * @FilePath      : /form-create-ui/src/views/ui/element/index.vue
  -->
@@ -35,7 +35,13 @@
         </transition-group>
       </draggable> -->
     <!-- </form-create> -->
-    <form-create v-model="formInstance" class="fc-main-draggable-box" :rule="formRules" :option="formOptions" />
+    <form-create
+      v-model="formInstance"
+      @fc-dg-container-click="fcContainerClick"
+      class="fc-main-draggable-box"
+      :rule="formRules"
+      :option="formOptions"
+    />
     <!-- <draggable
       class="fc-main-draggable-box"
       tag="div"
@@ -125,7 +131,7 @@ export default defineComponent({
       },
       {
         deep: true,
-      }
+      },
     );
 
     const storeGetters = reactive({
@@ -159,7 +165,7 @@ export default defineComponent({
           if (element.tag === "fc-grid") {
             // 栅格布局
             if (typeof element.children !== "undefined") {
-              element.children.forEach(item => {
+              element.children.forEach((item) => {
                 if (typeof item.children !== "undefined") {
                   traverse(item!.children);
                 }
@@ -179,7 +185,7 @@ export default defineComponent({
           toast.error(`暂时不支持 ${item.tag.toUpperCase()} 组件...`);
           return;
         }
-        setClickHandleItem(item, baseList.value, handleCopyItem);
+        setClickHandleItem(item, baseList.value, handleCopyItem, formCreateState.formInstance);
       } else {
         console.log(baseList.value);
         const idx = isNew ? e.newIndex : e.oldIndex;
@@ -197,6 +203,12 @@ export default defineComponent({
       }
     };
 
+    const fcContainerClick = (e: AnyType) => {
+      console.log(`fc-container-click`);
+      const fItem = e.inject[0];
+      fItem.updateActive();
+    };
+
     return {
       draggableOptions,
       handleAddItem,
@@ -205,6 +217,7 @@ export default defineComponent({
       handleCopyItem,
       ...toRefs(storeGetters),
       ...toRefs(formCreateState),
+      fcContainerClick,
     };
   },
 });

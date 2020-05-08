@@ -2,7 +2,7 @@
  * @Author       : djkloop
  * @Date         : 2020-04-25 01:21:14
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-08 13:20:10
+ * @LastEditTime  : 2020-05-08 16:34:42
  * @Description  : fc-components工具方法(用来替代vue2中的methods的)
  * @FilePath      : /form-create-ui/src/components/fc-components-list/fc-components.utils.ts
  */
@@ -59,9 +59,16 @@ export const setChooseType = (e: AnyType, state: IFcComponentsListState, list: C
 
 /// 点击左侧按钮
 /// 判断当前主区域是否有选中的
-export const setClickHandleItem = (item: ComponentsItem, baseList: ComponentsItem[], callbakCopy?: Function) => {
-  const ruleInstance = new CreateFormItemRule(item);
+export const setClickHandleItem = (
+  item: ComponentsItem,
+  baseList: ComponentsItem[],
+  callbakCopy?: Function,
+  fcInstance?: AnyType,
+) => {
+  const ruleInstance = new CreateFormItemRule(item, fcInstance);
   const rule = ruleInstance.getRule();
+  /// 这个是获取真正的组件属性
+  const originRule = ruleInstance.getOriginRule();
   /// 如果rule没有则不需要在进行其他操作了
   if (rule) {
     const storeGetters = reactive({
@@ -75,13 +82,16 @@ export const setClickHandleItem = (item: ComponentsItem, baseList: ComponentsIte
     /// 就说明主区域为空
     console.log("set-click-handle-item");
     if (Object.keys(storeGetters.getSelectItem).length === 0) {
-      console.log("set-click-handle-item-1", deepItem);
-      if (!deepItem.uniqueKey) {
-        deepItem.uniqueKey = Utils.generateUniqueKeyUtils(deepItem.tag);
-        setStore.pushMainList(deepItem);
-        baseList.push(deepItem);
+      console.log("set-click-handle-item-1", originRule);
+      setStore.pushMainList(deepItem);
+      setStore.setCurrentItem(originRule);
+      /// 更新重新获取rule
+      // ruleInstance.updateActive();
+      const newItem = ruleInstance.getRule();
+      const deepNewItem = clonedeep(newItem);
+      if (deepNewItem) {
+        baseList.push(deepNewItem);
       }
-      setStore.setCurrentItem(deepItem);
       return;
     } else if (!callbakCopy) {
       console.log("set-click-handle-item-2");
@@ -123,7 +133,7 @@ export const handleColAdd = (e: AnyType, columns: Partial<ComponentsItem>[], isC
     columns[newIndex]["uniqueKey"] = uniqueKey;
     if (columns[newIndex].children) {
       columns[newIndex].children = clonedeep(columns[newIndex].children);
-      columns[newIndex].children!.forEach(item => {
+      columns[newIndex].children!.forEach((item) => {
         item.children = [];
       });
     }
@@ -142,7 +152,7 @@ export const useColAdd = (e: AnyType, columns: ComponentsItem[], isCopy = false,
     columns[newIndex]["uniqueKey"] = uniqueKey;
     if (columns[newIndex].children) {
       columns[newIndex].children = clonedeep(columns[newIndex].children);
-      columns[newIndex].children!.forEach(item => {
+      columns[newIndex].children!.forEach((item) => {
         item.children = [];
       });
     }
