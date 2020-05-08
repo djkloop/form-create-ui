@@ -1,10 +1,10 @@
 <!--
  * @Author        : djkloop
  * @Date          : 2020-04-26 11:45:07
- * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-29 14:23:43
+ * @LastEditors  : djkloop
+ * @LastEditTime : 2020-05-08 23:12:12
  * @Description   : form-item
- * @FilePath      : /form-create-ui/src/components/fc-render/form/form.vue
+ * @FilePath     : /form-create-ui/src/components/fc-render/form/form.vue
  -->
 <template>
   <div
@@ -67,7 +67,9 @@
         :class="{ 'fc-active': item.uniqueKey === getSelectItem.uniqueKey }"
         :item="item"
         @fc-on-form-item-copy="handleCopyItem"
-      />
+      >
+        <slot></slot>
+      </fc-render-form-item>
     </template>
   </div>
 </template>
@@ -86,7 +88,7 @@ import FcRenderFormItem from "./fc-render-form-item/index.vue";
 // import FcRenderFormGrid from "./fc-render-form-grid/index.vue";
 
 export default defineComponent<FormItemProps, AnyType>({
-  name: "fc-render-form",
+  name: "form-create-item-wrapper",
   components: {
     FcRenderFormItem,
     draggable,
@@ -96,7 +98,7 @@ export default defineComponent<FormItemProps, AnyType>({
       type: Object,
     },
   },
-  setup(props, { emit }) {
+  setup(props, { emit, slots }) {
     const updateTime = ref(0);
 
     const storeGet = {
@@ -120,6 +122,7 @@ export default defineComponent<FormItemProps, AnyType>({
     const handleCopyItem = (isCopy: boolean, item: ComponentsItem) => emit("fc-copy-form-item", isCopy, item);
     return {
       ...toRefs(storeGet),
+      slots,
       updateTime,
       handleActiveItem,
       handleColAdd,

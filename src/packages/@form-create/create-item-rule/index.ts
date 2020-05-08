@@ -1,10 +1,10 @@
 /*
  * @Author        : djkloop
  * @Date          : 2020-05-07 17:37:33
- * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-08 16:59:02
+ * @LastEditors  : djkloop
+ * @LastEditTime : 2020-05-08 23:20:11
  * @Description   : 处理规则类
- * @FilePath      : /form-create-ui/src/packages/@form-create/create-item-rule/index.ts
+ * @FilePath     : /form-create-ui/src/packages/@form-create/create-item-rule/index.ts
  */
 
 import { ComponentsItem, IDraggableComponentsItem } from "@/interface/components";
@@ -129,46 +129,14 @@ export default class CreateFormItemRule {
     this.generateUniqueKey();
     /// 每个
     const draggableRule: any = {
-      type: "div",
-      class: "fc-drage-move-box fc-drage-move",
+      type: "form-create-item-wrapper",
+      name: this.originProps?.field,
       props: {
-        type: "div",
+        item: this.originProps,
       },
-      children: [
-        {
-          type: "div",
-          name: `${this.originProps?.uniqueKey}_container`,
-          class: classnames(`fc-draage-components-form_container`, ` fc-drage-container`, this.themeClass, {
-            ["fc-active"]: this.isActiveClass,
-            ["fc-inactive"]: !this.isActiveClass,
-          }),
-          children: [
-            {
-              type: "div",
-              name: `${this.originProps?.uniqueKey}_tools`,
-              class: `fc-drage-components-form__tools fc-render-form-item__tools`,
-              children: this._renderFormItemToolsIconRule(),
-            },
-            {
-              type: "div",
-              class: "fc-drage-components-form__item fc-render-form-item__box",
-              children: [this.originProps],
-            },
-            {
-              type: "div",
-              class: "fc-drage-components-form__keys",
-              children: [this.originProps?.uniqueKey],
-            },
-          ],
-          emit: [
-            {
-              name: "click",
-              inject: [this],
-            },
-          ],
-          emitPrefix: "fc-dg-container",
-        },
-      ],
+      emit: ["add-col-item", "drage-start", "copy-form-item"],
+      emitPrefix: "fc-",
+      children: [this.originProps],
       native: true,
     };
     console.log(this.originProps, "  生成的规则");

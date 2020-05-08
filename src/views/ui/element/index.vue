@@ -1,10 +1,10 @@
 <!--
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
- * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-08 16:13:44
+ * @LastEditors  : djkloop
+ * @LastEditTime : 2020-05-08 23:20:32
  * @Description  : 主区域
- * @FilePath      : /form-create-ui/src/views/ui/element/index.vue
+ * @FilePath     : /form-create-ui/src/views/ui/element/index.vue
  -->
 <template>
   <div class="fc-main fc-main-element">
@@ -37,10 +37,12 @@
     <!-- </form-create> -->
     <form-create
       v-model="formInstance"
-      @fc-dg-container-click="fcContainerClick"
       class="fc-main-draggable-box"
       :rule="formRules"
       :option="formOptions"
+      @fc-add-col-item="handleColAdd"
+      @fc-drage-start="handleAddItem"
+      @fc-copy-form-item="handleCopyItem"
     />
     <!-- <draggable
       class="fc-main-draggable-box"
@@ -144,6 +146,7 @@ export default defineComponent({
     const handleCopyItem = (isCopy: boolean, item: ComponentsItem) => {
       /// TODO: 这里用的递归, 有什么优化好办法?
       console.log("copy----", isCopy, item);
+      debugger;
       const traverse = (array: Partial<ComponentsItem>[]) => {
         for (let index = 0; index < array.length; index++) {
           const element = array[index];

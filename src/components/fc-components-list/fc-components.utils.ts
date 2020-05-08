@@ -1,10 +1,10 @@
 /*
  * @Author       : djkloop
  * @Date         : 2020-04-25 01:21:14
- * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-08 16:34:42
+ * @LastEditors  : djkloop
+ * @LastEditTime : 2020-05-08 22:37:01
  * @Description  : fc-components工具方法(用来替代vue2中的methods的)
- * @FilePath      : /form-create-ui/src/components/fc-components-list/fc-components.utils.ts
+ * @FilePath     : /form-create-ui/src/components/fc-components-list/fc-components.utils.ts
  */
 import { ComponentsItem, IFcComponentsListState } from "@/interface/components";
 import { AnyType } from "@/interface/common";
@@ -88,6 +88,7 @@ export const setClickHandleItem = (
       /// 更新重新获取rule
       // ruleInstance.updateActive();
       const newItem = ruleInstance.getRule();
+      console.log(newItem, " newItem");
       const deepNewItem = clonedeep(newItem);
       if (deepNewItem) {
         baseList.push(deepNewItem);
