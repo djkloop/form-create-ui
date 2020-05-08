@@ -2,7 +2,7 @@
  * @Author        : djkloop
  * @Date          : 2020-05-07 17:37:33
  * @LastEditors  : djkloop
- * @LastEditTime : 2020-05-08 23:20:11
+ * @LastEditTime : 2020-05-08 23:45:24
  * @Description   : 处理规则类
  * @FilePath     : /form-create-ui/src/packages/@form-create/create-item-rule/index.ts
  */
@@ -134,8 +134,8 @@ export default class CreateFormItemRule {
       props: {
         item: this.originProps,
       },
-      emit: ["add-col-item", "drage-start", "copy-form-item"],
-      emitPrefix: "fc-",
+      emit: ["click"],
+      emitPrefix: "fc-dg-container",
       children: [this.originProps],
       native: true,
     };

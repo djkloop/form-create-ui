@@ -1,10 +1,10 @@
 /*
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
- * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-08 13:55:49
+ * @LastEditors  : djkloop
+ * @LastEditTime : 2020-05-08 23:30:43
  * @Description  : mocks数据
- * @FilePath      : /form-create-ui/src/mock/api/api.components.ts
+ * @FilePath     : /form-create-ui/src/mock/api/api.components.ts
  */
 import { ResponseWithMockJS } from "@/interface/response";
 import { ComponentsResult } from "@/interface/components";
@@ -36,7 +36,7 @@ const respose: Array<ResponseWithMockJS<ComponentsResult>> = [
               type: "input",
               field: "goods_name1",
               label: "单行输入框1",
-              value: "iphone 7",
+              value: "iphone 8",
               listIcon: "el-icon-edit",
               itemTag: "基础组件",
               props: {

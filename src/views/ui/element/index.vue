@@ -2,7 +2,7 @@
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
  * @LastEditors  : djkloop
- * @LastEditTime : 2020-05-08 23:20:32
+ * @LastEditTime : 2020-05-08 23:46:29
  * @Description  : 主区域
  * @FilePath     : /form-create-ui/src/views/ui/element/index.vue
  -->
@@ -43,6 +43,7 @@
       @fc-add-col-item="handleColAdd"
       @fc-drage-start="handleAddItem"
       @fc-copy-form-item="handleCopyItem"
+      @fc-dg-container-click="fcContainerClick"
     />
     <!-- <draggable
       class="fc-main-draggable-box"
@@ -114,6 +115,7 @@ export default defineComponent({
               native: true,
             },
           ],
+
           native: true,
         },
       ],
@@ -208,8 +210,6 @@ export default defineComponent({
 
     const fcContainerClick = (e: AnyType) => {
       console.log(`fc-container-click`);
-      const fItem = e.inject[0];
-      fItem.updateActive();
     };
 
     return {
