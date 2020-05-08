@@ -2,7 +2,7 @@
  * @Author        : djkloop
  * @Date          : 2020-04-27 11:15:31
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-29 14:32:19
+ * @LastEditTime  : 2020-05-08 14:31:31
  * @Description   : 头部注释
  * @FilePath      : /form-create-ui/src/components/fc-render/form/fc-render-form-item/index.vue
  -->
@@ -18,6 +18,7 @@
       <i class="el-icon-document-copy" @click.stop="context.emit('fc-on-form-item-copy', true, item)"></i>
       <i class="el-icon-delete"></i>
     </div>
+    ''
     <div class="fc-drage-components-form__item fc-render-form-item__box">
       <component
         :is="item.tag"

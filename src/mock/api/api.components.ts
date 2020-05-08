@@ -2,7 +2,7 @@
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-07 18:34:06
+ * @LastEditTime  : 2020-05-08 13:55:49
  * @Description  : mocks数据
  * @FilePath      : /form-create-ui/src/mock/api/api.components.ts
  */
@@ -27,10 +27,18 @@ const respose: Array<ResponseWithMockJS<ComponentsResult>> = [
               value: "iphone 7",
               listIcon: "el-icon-edit",
               itemTag: "基础组件",
-              col: {
-                span: 12,
-                labelWidth: 150,
+              props: {
+                type: "text",
               },
+              validate: [{ required: true, message: "请输入goods_name", trigger: "blur" }],
+            },
+            {
+              type: "input",
+              field: "goods_name1",
+              label: "单行输入框1",
+              value: "iphone 7",
+              listIcon: "el-icon-edit",
+              itemTag: "基础组件",
               props: {
                 type: "text",
               },

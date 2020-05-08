@@ -819,20 +819,20 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@form-create/core@^1.0.11":
-  version "1.0.11"
-  resolved "https://registry.npmjs.org/@form-create/core/-/core-1.0.11.tgz#db84672c9c513e03b2b96938bf8b7ca250e0be85"
-  integrity sha512-xLze493CsoN9L0b4N5wuIya3DdhcXkItrUNoGs7MBlHZ8lgafEuw1ZqK1F2JyRr9iR/1o1hvLSxioakLuKikbQ==
+"@form-create/core@^1.0.12":
+  version "1.0.12"
+  resolved "https://registry.npmjs.org/@form-create/core/-/core-1.0.12.tgz#cc60c6521bd3e8ca4efcb10d6f5e21261f267808"
+  integrity sha512-jsxKn/2FSNIDBEKDmK5XuWzVZqcl7Iks9ut02TwA1Y8wMMKyNCDQ45LVSJoqF6RZJW2rfJu4mwiwvhzIYwr22A==
   dependencies:
     "@form-create/utils" "^1.0.11"
     vue "^2.6.10"
 
-"@form-create/element-ui@^1.0.11":
-  version "1.0.11"
-  resolved "https://registry.npmjs.org/@form-create/element-ui/-/element-ui-1.0.11.tgz#5b8126f9a98bf47b4c77678715e3b49fc40332fa"
-  integrity sha512-CsUdNyDej6IMMSvzEUZQRAbrLKhdE21iuY41ddy6CDkUWBnEPyxedHZW8RWAsjy07gk1Gs70zBBp9HUz+6GqAg==
+"@form-create/element-ui@^1.0.12":
+  version "1.0.12"
+  resolved "https://registry.npmjs.org/@form-create/element-ui/-/element-ui-1.0.12.tgz#d3dfb777ccb069a4adfeada14971a3be0e63325b"
+  integrity sha512-VjX0iqM8fQWptxb3f67l9c2G04VGKLofbDjq7K+pzUwDb2HOsppORXVEp9c56oyUP7aRc6oYFL3yaikfliSRWw==
   dependencies:
-    "@form-create/core" "^1.0.11"
+    "@form-create/core" "^1.0.12"
     "@form-create/utils" "^1.0.11"
     element-ui "^2.8.2"
 

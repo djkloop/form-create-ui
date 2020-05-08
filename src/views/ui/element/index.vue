@@ -2,7 +2,7 @@
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-07 18:37:54
+ * @LastEditTime  : 2020-05-08 14:11:17
  * @Description  : 主区域
  * @FilePath      : /form-create-ui/src/views/ui/element/index.vue
  -->
@@ -15,8 +15,7 @@
     <!-- <div class="fc-main-draggable-box">
       <form-create v-model="formInstance" :rule="formRules" :option="formOptions" />
     </div> -->
-    <form-create v-model="formInstance" :rule="formRules" :option="formOptions">
-      <draggable
+    <!-- <draggable
         class="fc-main-draggable-box"
         tag="div"
         v-bind="draggableOptions"
@@ -34,8 +33,9 @@
             @fc-copy-form-item="handleCopyItem"
           />
         </transition-group>
-      </draggable>
-    </form-create>
+      </draggable> -->
+    <!-- </form-create> -->
+    <form-create v-model="formInstance" class="fc-main-draggable-box" :rule="formRules" :option="formOptions" />
     <!-- <draggable
       class="fc-main-draggable-box"
       tag="div"
@@ -94,13 +94,27 @@ export default defineComponent({
             tag: "div",
           },
           class: "fc-main-draggable-box",
-          children: baseList.value,
+          children: [
+            {
+              type: "transition-group",
+              props: {
+                name: "fc-drage-list",
+                tag: "div",
+              },
+              class: "fc-main-draggable-box-transition",
+              children: baseList.value,
+              native: true,
+            },
+          ],
           native: true,
         },
       ],
       formOptions: {
         submitBtn: false,
         injectEvent: true,
+        form: {
+          col: false,
+        },
       },
     });
 

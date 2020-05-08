@@ -36,6 +36,9 @@
 
   &-draggable-box {
     height: 100%;
+    .el-row:first-child {
+      height: 100%;
+    }
 
     &-transition {
       height: 100%;

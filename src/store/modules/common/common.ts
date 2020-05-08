@@ -2,7 +2,7 @@
  * @Author        : djkloop
  * @Date          : 2020-04-26 11:45:07
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-28 16:17:24
+ * @LastEditTime  : 2020-05-08 11:24:56
  * @Description   : 全局store
  * @FilePath      : /form-create-ui/src/store/modules/common/common.ts
  */
@@ -27,15 +27,39 @@ const commonModule: Module<ICommonState, AnyType> = {
     },
   },
   mutations: {
+    /**
+     * 从后台请求的列表
+     *
+     * @param state Stroe
+     * @param list
+     */
     setList(state, list) {
       state.list = list;
     },
+    /**
+     * 当前选中的Item
+     *
+     * @param state Stroe
+     * @param item
+     */
     setCurrentItem(state, item) {
       state.selectCurrentItem = item;
     },
+    /**
+     * 向主区域列表添加Item
+     *
+     * @param state
+     * @param item
+     */
     pushMainList(state, item) {
       state.mainList.push(item);
     },
+    /**
+     * 设置主区域列表
+     *
+     * @param state
+     * @param list
+     */
     setMainList(state, list) {
       state.mainList = list;
     },

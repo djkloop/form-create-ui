@@ -21,7 +21,7 @@
     }
   },
   "dependencies": {
-    "@form-create/element-ui": "^1.0.11",
+    "@form-create/element-ui": "^1.0.12",
     "@u3u/vue-hooks": "^2.0.1",
     "@vue/composition-api": "^0.5.0",
     "axios": "^0.19.2",

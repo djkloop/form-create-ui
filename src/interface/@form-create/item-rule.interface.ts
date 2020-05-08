@@ -2,7 +2,7 @@
  * @Author        : djkloop
  * @Date          : 2020-05-07 17:40:28
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-07 18:41:08
+ * @LastEditTime  : 2020-05-08 12:35:06
  * @Description   : 创建item属性
  * @FilePath      : /form-create-ui/src/interface/@form-create/item-rule.interface.ts
  */
@@ -27,7 +27,7 @@ export interface IFormCreateItem extends IFormCreateItemBase {
   defaultSlot?: AnyType;
   visibility?: boolean;
   children?: Partial<IFormCreateItem>[];
-  listIcon: string;
+  listIcon?: string;
   itemTag?: string;
   [key: string]: AnyType;
 }

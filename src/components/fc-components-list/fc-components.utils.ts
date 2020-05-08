@@ -2,7 +2,7 @@
  * @Author       : djkloop
  * @Date         : 2020-04-25 01:21:14
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-07 17:02:37
+ * @LastEditTime  : 2020-05-08 13:20:10
  * @Description  : fc-components工具方法(用来替代vue2中的methods的)
  * @FilePath      : /form-create-ui/src/components/fc-components-list/fc-components.utils.ts
  */
@@ -13,6 +13,7 @@ import { useMutations, useGetters } from "@u3u/vue-hooks";
 import Utils from "@/utils/utils";
 import { reactive } from "@vue/composition-api";
 import cfgs from "@/configs/config";
+import CreateFormItemRule from "@/packages/@form-create/create-item-rule";
 
 const useES20XX = () => {
   const idx = void 0;
@@ -59,39 +60,44 @@ export const setChooseType = (e: AnyType, state: IFcComponentsListState, list: C
 /// 点击左侧按钮
 /// 判断当前主区域是否有选中的
 export const setClickHandleItem = (item: ComponentsItem, baseList: ComponentsItem[], callbakCopy?: Function) => {
-  const storeGetters = reactive({
-    ...useGetters("common", ["getSelectItem"]),
-  });
-  const setStore = {
-    ...useMutations("common", ["setCurrentItem", "pushMainList"]),
-  };
-  const deepItem = clonedeep(item);
-  /// 当前任何一个都没有被选中
-  /// 就说明主区域为空
-  console.log("set-click-handle-item");
-  if (Object.keys(storeGetters.getSelectItem).length === 0) {
-    console.log("set-click-handle-item-1", deepItem);
-    if (!deepItem.uniqueKey) {
-      deepItem.uniqueKey = Utils.generateUniqueKeyUtils(deepItem.tag);
-      setStore.pushMainList(deepItem);
-      baseList.push(deepItem);
+  const ruleInstance = new CreateFormItemRule(item);
+  const rule = ruleInstance.getRule();
+  /// 如果rule没有则不需要在进行其他操作了
+  if (rule) {
+    const storeGetters = reactive({
+      ...useGetters("common", ["getSelectItem"]),
+    });
+    const setStore = {
+      ...useMutations("common", ["setCurrentItem", "pushMainList"]),
+    };
+    const deepItem = clonedeep(rule);
+    /// 当前任何一个都没有被选中
+    /// 就说明主区域为空
+    console.log("set-click-handle-item");
+    if (Object.keys(storeGetters.getSelectItem).length === 0) {
+      console.log("set-click-handle-item-1", deepItem);
+      if (!deepItem.uniqueKey) {
+        deepItem.uniqueKey = Utils.generateUniqueKeyUtils(deepItem.tag);
+        setStore.pushMainList(deepItem);
+        baseList.push(deepItem);
+      }
+      setStore.setCurrentItem(deepItem);
+      return;
+    } else if (!callbakCopy) {
+      console.log("set-click-handle-item-2");
+      if (!deepItem.uniqueKey) {
+        deepItem.uniqueKey = Utils.generateUniqueKeyUtils(deepItem.tag);
+      }
+      /// 如果从左侧拖入进来的...
+      /// 只需要激活item不要copy
+      setStore.setCurrentItem(deepItem);
+      return;
     }
-    setStore.setCurrentItem(deepItem);
-    return;
-  } else if (!callbakCopy) {
-    console.log("set-click-handle-item-2");
-    if (!deepItem.uniqueKey) {
-      deepItem.uniqueKey = Utils.generateUniqueKeyUtils(deepItem.tag);
-    }
-    /// 如果从左侧拖入进来的...
-    /// 只需要激活item不要copy
-    setStore.setCurrentItem(deepItem);
-    return;
+    /// 如果当前主区域有被选中的
+    /// 直接调用item里面的复制方法就行了
+    console.log("set-click-handle-item-3");
+    callbakCopy && callbakCopy(false, item);
   }
-  /// 如果当前主区域有被选中的
-  /// 直接调用item里面的复制方法就行了
-  console.log("set-click-handle-item-3");
-  callbakCopy && callbakCopy(false, item);
 };
 
 /// 主区域点击选中active

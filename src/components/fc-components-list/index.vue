@@ -2,7 +2,7 @@
  * @Author        : djkloop
  * @Date          : 2020-04-26 11:45:07
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-07 18:34:16
+ * @LastEditTime  : 2020-05-08 11:46:12
  * @Description   : 头部注释
  * @FilePath      : /form-create-ui/src/components/fc-components-list/index.vue
  -->
@@ -41,7 +41,6 @@
 
 <script lang="ts">
 import { defineComponent, reactive, toRefs, ref } from "@vue/composition-api";
-import draggable from "vuedraggable";
 import { IFcComponentsListState, ComponentsItem } from "@/interface/components";
 import { AnyType } from "@/interface/common";
 import fetchServerList from "./use-server-list";
@@ -50,11 +49,9 @@ import fetchServerList from "./use-server-list";
 import { generateUniqueKey, setChooseType } from "./fc-components.utils";
 import configs from "@/configs/config";
 
+/// TODO: 这个组件应该抽出来不应该把业务数据放到这里
 export default defineComponent({
   name: "fc-components-list",
-  components: {
-    draggable,
-  },
   setup(_, ctx) {
     const state = reactive<IFcComponentsListState>({
       list: [],
