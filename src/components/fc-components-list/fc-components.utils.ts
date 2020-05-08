@@ -63,7 +63,7 @@ export const setClickHandleItem = (
   item: ComponentsItem,
   baseList: ComponentsItem[],
   callbakCopy?: Function,
-  fcInstance?: AnyType,
+  fcInstance?: AnyType
 ) => {
   const ruleInstance = new CreateFormItemRule(item, fcInstance);
   const rule = ruleInstance.getRule();
@@ -133,7 +133,7 @@ export const handleColAdd = (e: AnyType, columns: Partial<ComponentsItem>[], isC
     columns[newIndex]["uniqueKey"] = uniqueKey;
     if (columns[newIndex].children) {
       columns[newIndex].children = clonedeep(columns[newIndex].children);
-      columns[newIndex].children!.forEach((item) => {
+      columns[newIndex].children!.forEach(item => {
         item.children = [];
       });
     }
@@ -152,7 +152,7 @@ export const useColAdd = (e: AnyType, columns: ComponentsItem[], isCopy = false,
     columns[newIndex]["uniqueKey"] = uniqueKey;
     if (columns[newIndex].children) {
       columns[newIndex].children = clonedeep(columns[newIndex].children);
-      columns[newIndex].children!.forEach((item) => {
+      columns[newIndex].children!.forEach(item => {
         item.children = [];
       });
     }

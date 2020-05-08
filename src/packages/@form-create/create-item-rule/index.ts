@@ -83,7 +83,7 @@ export default class CreateFormItemRule {
             {
               ["fc-active"]: this.isActiveClass,
               ["fc-inactive"]: !this.isActiveClass,
-            },
+            }
           );
           /// 更新第二个
           /// fc-drage-components-form__tools fc-render-form-item__tools
@@ -94,7 +94,7 @@ export default class CreateFormItemRule {
               {
                 ["fc-active"]: this.isActiveClass,
                 ["fc-inactive"]: !this.isActiveClass,
-              },
+              }
             );
           }
         }
@@ -108,7 +108,7 @@ export default class CreateFormItemRule {
             {
               ["fc-active"]: this.isActiveClass,
               ["fc-inactive"]: !this.isActiveClass,
-            },
+            }
           );
           if (this.props.children[0].children) {
             this.props.children[0].children[0].class = classnames(
@@ -117,7 +117,7 @@ export default class CreateFormItemRule {
               {
                 ["fc-active"]: this.isActiveClass,
                 ["fc-inactive"]: !this.isActiveClass,
-              },
+              }
             );
           }
         }
@@ -181,7 +181,7 @@ export default class CreateFormItemRule {
       { type: "i", class: "el-icon-delete" },
     ];
 
-    const toolsRules = toolsIcons.map((item) => this._createElementRule(item));
+    const toolsRules = toolsIcons.map(item => this._createElementRule(item));
     return toolsRules;
   }
 
