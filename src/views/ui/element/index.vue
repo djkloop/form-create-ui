@@ -1,10 +1,10 @@
 <!--
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
- * @LastEditors  : djkloop
- * @LastEditTime : 2020-05-08 23:46:29
+ * @LastEditors   : djkloop
+ * @LastEditTime  : 2020-05-09 10:48:50
  * @Description  : 主区域
- * @FilePath     : /form-create-ui/src/views/ui/element/index.vue
+ * @FilePath      : /form-create-ui/src/views/ui/element/index.vue
  -->
 <template>
   <div class="fc-main fc-main-element">
@@ -35,6 +35,7 @@
         </transition-group>
       </draggable> -->
     <!-- </form-create> -->
+    <!-- 这里有三个emit事件 -->
     <form-create
       v-model="formInstance"
       class="fc-main-draggable-box"
@@ -43,7 +44,6 @@
       @fc-add-col-item="handleColAdd"
       @fc-drage-start="handleAddItem"
       @fc-copy-form-item="handleCopyItem"
-      @fc-dg-container-click="fcContainerClick"
     />
     <!-- <draggable
       class="fc-main-draggable-box"
@@ -170,7 +170,7 @@ export default defineComponent({
           if (element.tag === "fc-grid") {
             // 栅格布局
             if (typeof element.children !== "undefined") {
-              element.children.forEach(item => {
+              element.children.forEach((item) => {
                 if (typeof item.children !== "undefined") {
                   traverse(item!.children);
                 }

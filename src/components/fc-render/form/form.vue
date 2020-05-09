@@ -1,10 +1,10 @@
 <!--
  * @Author        : djkloop
  * @Date          : 2020-04-26 11:45:07
- * @LastEditors  : djkloop
- * @LastEditTime : 2020-05-08 23:28:35
+ * @LastEditors   : djkloop
+ * @LastEditTime  : 2020-05-09 10:49:58
  * @Description   : form-item
- * @FilePath     : /form-create-ui/src/components/fc-render/form/form.vue
+ * @FilePath      : /form-create-ui/src/components/fc-render/form/form.vue
  -->
 <template>
   <div
@@ -119,7 +119,10 @@ export default defineComponent<FormItemProps, AnyType>({
 
     const handleColAdd = (e: AnyType, list: ComponentsItem[], isc: boolean, isn: boolean) =>
       emit("fc-add-col-item", e, list, isc, isn);
-    const handleCopyItem = (isCopy: boolean, item: ComponentsItem) => emit("fc-copy-form-item", isCopy, item);
+    const handleCopyItem = (isCopy: boolean, item: ComponentsItem) => {
+      console.log("->  我被点击了但是没有被触发emit事件 <-");
+      emit("fc-copy-form-item", isCopy, item);
+    };
     return {
       ...toRefs(storeGet),
       slots,
