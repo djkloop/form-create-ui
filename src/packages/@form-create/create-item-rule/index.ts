@@ -149,7 +149,7 @@ export default class CreateFormItemRule {
       { type: "i", class: "el-icon-delete" },
     ];
 
-    const toolsRules = toolsIcons.map((item) => this._createElementRule(item));
+    const toolsRules = toolsIcons.map(item => this._createElementRule(item));
     return toolsRules;
   }
 
