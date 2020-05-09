@@ -172,7 +172,7 @@ export default defineComponent({
           if (element.tag === "fc-grid") {
             // 栅格布局
             if (typeof element.children !== "undefined") {
-              element.children.forEach((item) => {
+              element.children.forEach(item => {
                 if (typeof item.children !== "undefined") {
                   traverse(item!.children);
                 }
