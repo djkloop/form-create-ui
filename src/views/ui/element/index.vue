@@ -2,7 +2,7 @@
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-09 10:48:50
+ * @LastEditTime  : 2020-05-09 11:40:24
  * @Description  : 主区域
  * @FilePath      : /form-create-ui/src/views/ui/element/index.vue
  -->
@@ -129,12 +129,14 @@ export default defineComponent({
     });
 
     watch(
-      () => baseList,
+      () => baseList.value,
       (n, o) => {
-        console.log("watch", n, o);
+        console.log("watch", formCreateState);
+        console.log("watch", n);
       },
       {
         deep: true,
+        lazy: true,
       }
     );
 
@@ -170,7 +172,7 @@ export default defineComponent({
           if (element.tag === "fc-grid") {
             // 栅格布局
             if (typeof element.children !== "undefined") {
-              element.children.forEach(item => {
+              element.children.forEach((item) => {
                 if (typeof item.children !== "undefined") {
                   traverse(item!.children);
                 }

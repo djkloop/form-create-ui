@@ -2,7 +2,7 @@
  * @Author        : djkloop
  * @Date          : 2020-05-07 17:37:33
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-09 10:46:41
+ * @LastEditTime  : 2020-05-09 11:41:57
  * @Description   : 处理规则类
  * @FilePath      : /form-create-ui/src/packages/@form-create/create-item-rule/index.ts
  */
@@ -134,7 +134,7 @@ export default class CreateFormItemRule {
       props: {
         item: this.originProps,
       },
-      emit: ["copy-form-item", "drage-start", "add-col-item", " "],
+      emit: ["copy-form-item", "drage-start", "add-col-item"],
       emitPrefix: "fc",
       children: [this.originProps],
       native: true,
@@ -149,7 +149,7 @@ export default class CreateFormItemRule {
       { type: "i", class: "el-icon-delete" },
     ];
 
-    const toolsRules = toolsIcons.map(item => this._createElementRule(item));
+    const toolsRules = toolsIcons.map((item) => this._createElementRule(item));
     return toolsRules;
   }
 
