@@ -2,7 +2,7 @@
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
  * @LastEditors  : djkloop
- * @LastEditTime : 2020-05-10 21:03:25
+ * @LastEditTime : 2020-05-10 21:55:51
  * @Description  : 主区域
  * @FilePath     : /form-create-ui/src/views/ui/element/index.vue
  -->
@@ -183,8 +183,10 @@ export default defineComponent({
           type: "draggable",
           props: {
             list: baseList.value,
-            ...draggableOptions.value,
             tag: "div",
+          },
+          attrs: {
+            ...draggableOptions.value,
           },
           class: "fc-main-draggable-box",
           children: [
