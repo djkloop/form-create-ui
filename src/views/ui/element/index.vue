@@ -2,7 +2,7 @@
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
  * @LastEditors  : djkloop
- * @LastEditTime : 2020-05-10 17:15:17
+ * @LastEditTime : 2020-05-10 21:03:25
  * @Description  : 主区域
  * @FilePath     : /form-create-ui/src/views/ui/element/index.vue
  -->
@@ -43,7 +43,7 @@
       :option="formOptions"
       @fc-add-col-item="handleColAdd"
       @fc-drage-start="handleAddItem"
-      @fc-copy="handleCopyItem"
+      @fc-copy-form-item="handleCopyItem"
     />
     <!-- <draggable
       class="fc-main-draggable-box"
@@ -68,7 +68,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, toRefs, reactive, watch } from "@vue/composition-api";
+import { defineComponent, ref, toRefs, reactive, watch, watchEffect } from "@vue/composition-api";
 import { useToast } from "vue-toastification/composition";
 import { useGetters } from "@u3u/vue-hooks";
 import { AnyType } from "@/interface/common";
@@ -92,47 +92,15 @@ export default defineComponent({
       animation: 180,
       handle: ".fc-drage-move",
     });
-    const formCreateState = reactive({
-      formInstance: {},
-      formRules: [
-        {
-          type: "draggable",
-          props: {
-            list: baseList.value,
-            ...draggableOptions.value,
-            tag: "div",
-          },
-          class: "fc-main-draggable-box",
-          children: [
-            {
-              type: "transition-group",
-              props: {
-                name: "fc-drage-list",
-                tag: "div",
-              },
-              class: "fc-main-draggable-box-transition",
-              children: baseList.value,
-              native: true,
-            },
-          ],
 
-          native: true,
-        },
-      ],
-      formOptions: {
-        submitBtn: false,
-        injectEvent: true,
-        form: {
-          col: false,
-        },
-      },
+    const storeGetters = reactive({
+      ...useGetters("common", ["getMainList", "getSelectItem"]),
     });
 
     watch(
       () => baseList.value,
       (n, o) => {
-        console.log("watch", formCreateState);
-        console.log("watch", n);
+        console.log(n, o);
       },
       {
         deep: true,
@@ -140,22 +108,18 @@ export default defineComponent({
       }
     );
 
-    const storeGetters = reactive({
-      ...useGetters("common", ["getMainList", "getSelectItem"]),
-    });
-
     /// 复制方法 - 回调方式
     /// 也可以放在fc-components.utils里面
     /// 可以看到vue3.x 灵活性极大的提高了
     const handleCopyItem = (isCopy: boolean, item: ComponentsItem) => {
       /// TODO: 这里用的递归, 有什么优化好办法?
-      console.log("copy----", isCopy, item);
-      /// 这里这时候是可以被触发了emit
-      debugger;
       const traverse = (array: Partial<ComponentsItem>[]) => {
         for (let index = 0; index < array.length; index++) {
           const element = array[index];
-          if (element.uniqueKey === storeGetters.getSelectItem.uniqueKey) {
+          /// 拿到组件的key
+          const key = element.children![0].uniqueKey;
+          console.log(key, storeGetters.getSelectItem.uniqueKey);
+          if (key === storeGetters.getSelectItem.uniqueKey) {
             if (isCopy) {
               // 复制添加到选择节点后面
               // 这里建议深拷贝一下因为后面修改uniquekey的时候有可能会冲突
@@ -185,35 +149,70 @@ export default defineComponent({
       traverse(baseList.value);
     };
 
-    const handleAddItem = (e: AnyType, item: ComponentsItem, isNew = true) => {
-      console.log(e, item, isNew);
+    const handleAddItem = (e: AnyType, item?: ComponentsItem, isNew = true) => {
       /// 父级调用的时候没有e属性
-      if (!e) {
+      if (!e && item) {
         if (config.disabledConfigComponents.includes(item.tag)) {
           toast.error(`暂时不支持 ${item.tag.toUpperCase()} 组件...`);
           return;
         }
-        setClickHandleItem(item, baseList.value, handleCopyItem, formCreateState.formInstance);
+        setClickHandleItem(item, baseList.value, handleCopyItem);
       } else {
-        console.log(baseList.value);
-        const idx = isNew ? e.newIndex : e.oldIndex;
+        const idx = e.newIndex;
         const item = baseList.value[idx];
+        console.log(item, "           -------------");
+        console.log(baseList, "           -------------");
+        console.log(idx, "           -------------");
         if (!item) {
           toast.error(`不存在`);
           return;
         }
-        if (config.disabledConfigComponents.includes(item.tag)) {
-          toast.error(`暂时不支持 ${item.tag.toUpperCase()} 组件...`);
+        if (config.disabledConfigComponents.includes(item.type)) {
+          toast.error(`暂时不支持 ${item.type.toUpperCase()} 组件...`);
           return;
         }
         /// 拖拽
-        setClickHandleItem(item, baseList.value, undefined);
+        setClickHandleItem(item, baseList.value, void 0, idx);
       }
     };
 
-    const fcContainerClick = (e: AnyType) => {
-      console.log(`fc-container-click`);
-    };
+    const formCreateState = reactive({
+      formInstance: {},
+      formRules: [
+        {
+          type: "draggable",
+          props: {
+            list: baseList.value,
+            ...draggableOptions.value,
+            tag: "div",
+          },
+          class: "fc-main-draggable-box",
+          children: [
+            {
+              type: "transition-group",
+              props: {
+                name: "fc-drage-list",
+                tag: "div",
+              },
+              class: "fc-main-draggable-box-transition",
+              children: baseList.value,
+              native: true,
+            },
+          ],
+          on: {
+            add: ($f: AnyType, e: AnyType) => handleAddItem(e, void 0, true),
+          },
+          native: true,
+        },
+      ],
+      formOptions: {
+        submitBtn: false,
+        injectEvent: true,
+        form: {
+          col: false,
+        },
+      },
+    });
 
     return {
       draggableOptions,
@@ -223,7 +222,6 @@ export default defineComponent({
       handleCopyItem,
       ...toRefs(storeGetters),
       ...toRefs(formCreateState),
-      fcContainerClick,
     };
   },
 });

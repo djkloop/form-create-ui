@@ -2,7 +2,7 @@
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
  * @LastEditors  : djkloop
- * @LastEditTime : 2020-05-08 23:30:43
+ * @LastEditTime : 2020-05-10 19:13:30
  * @Description  : mocks数据
  * @FilePath     : /form-create-ui/src/mock/api/api.components.ts
  */
@@ -22,7 +22,7 @@ const respose: Array<ResponseWithMockJS<ComponentsResult>> = [
           list: [
             {
               type: "input",
-              field: "goods_name",
+              field: "",
               label: "单行输入框",
               value: "iphone 7",
               listIcon: "el-icon-edit",
@@ -34,7 +34,7 @@ const respose: Array<ResponseWithMockJS<ComponentsResult>> = [
             },
             {
               type: "input",
-              field: "goods_name1",
+              field: "",
               label: "单行输入框1",
               value: "iphone 8",
               listIcon: "el-icon-edit",

@@ -2,7 +2,7 @@
  * @Author        : djkloop
  * @Date          : 2020-04-26 11:45:07
  * @LastEditors  : djkloop
- * @LastEditTime : 2020-05-10 17:14:22
+ * @LastEditTime : 2020-05-10 17:31:43
  * @Description   : form-item
  * @FilePath     : /form-create-ui/src/components/fc-render/form/form.vue
  -->
@@ -35,8 +35,8 @@
                 handle: '.fc-drage-move',
               }"
               v-model="it.children"
-              @start="$emit('fc-drage-start', $event, it.children)"
-              @add="$emit('fc-add-col-item', $event, it.children)"
+              @start="$emit('drage-start', $event, it.children)"
+              @add="$emit('add-col-item', $event, it.children)"
             >
               <transition-group
                 tag="div"
@@ -62,12 +62,6 @@
     </template>
     <!-- 普通的表单start -->
     <template v-else>
-      <!-- 
-          点击复制会触发
-          -> fc-on-form-item-copy
-          -> 对应当前组件的 handleCopyItem
-          -> handleCopyItem 里面要触发 fc-copy 事件
-       -->
       <fc-render-form-item
         class="fc-render-form-item"
         :class="{ 'fc-active': item.uniqueKey === getSelectItem.uniqueKey }"
@@ -112,7 +106,6 @@ export default defineComponent<FormItemProps, AnyType>({
     };
 
     const handleActiveItem = () => {
-      console.log("form-active");
       const newTime = new Date().getTime();
       if (newTime - updateTime.value < 400) {
         return;
@@ -124,12 +117,8 @@ export default defineComponent<FormItemProps, AnyType>({
     };
 
     const handleColAdd = (e: AnyType, list: ComponentsItem[], isc: boolean, isn: boolean) =>
-      emit("fc-add-col-item", e, list, isc, isn);
-    const handleCopyItem = (isCopy: boolean, item: ComponentsItem) => {
-      console.log("->  我被点击了但是没有被触发emit事件 <-");
-      console.log(isCopy, item);
-      emit("fc-copy", isCopy, item);
-    };
+      emit("add-col-item", e, list, isc, isn);
+    const handleCopyItem = (isCopy: boolean, item: ComponentsItem) => emit("copy-form-item", isCopy, item);
 
     return {
       ...toRefs(storeGet),

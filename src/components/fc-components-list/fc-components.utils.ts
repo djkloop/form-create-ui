@@ -2,7 +2,7 @@
  * @Author       : djkloop
  * @Date         : 2020-04-25 01:21:14
  * @LastEditors  : djkloop
- * @LastEditTime : 2020-05-08 22:37:01
+ * @LastEditTime : 2020-05-10 20:58:09
  * @Description  : fc-components工具方法(用来替代vue2中的methods的)
  * @FilePath     : /form-create-ui/src/components/fc-components-list/fc-components.utils.ts
  */
@@ -35,18 +35,34 @@ const useES20XX = () => {
 
 /// TODO: 后期把所有的函数改为useXXX和hooks更加符合语义
 /// 生成唯一key
-export const generateUniqueKey = (state: IFcComponentsListState, idx: number, list: ComponentsItem[]) => {
+export const generateUniqueKey = (
+  state: IFcComponentsListState,
+  idx: number,
+  list: ComponentsItem[],
+  item?: ComponentsItem
+) => {
   if (cfgs.disabledConfigComponents.includes(list[idx].tag)) {
     return;
   }
+  let cloneItem: AnyType = {};
+
+  if (item) {
+    cloneItem = clonedeep(state.cacheData[item.itemTag!][idx]);
+  } else {
+    cloneItem = clonedeep(state.cacheData[list[idx].itemTag!][idx]);
+  }
+
   useES20XX();
-  const uniqueKey = Utils.generateUniqueKeyUtils(list[idx].tag);
-  const cloneItem = clonedeep(state.cacheData[list[idx].key][idx]);
-  console.log(cloneItem);
-  const key = cloneItem.key;
-  cloneItem["uniqueKey"] = uniqueKey;
-  state.filterData[key][idx] = cloneItem;
-  console.log(state);
+  /// 在这里就把key生成
+  console.log(cloneItem, " --------------------------------------------");
+  const ruleInstance = new CreateFormItemRule(cloneItem, void 0);
+  const rule = ruleInstance.getRule();
+  const originRules = ruleInstance.getOriginRule();
+  console.log(originRules, " originRules");
+  const key = cloneItem.itemTag!;
+  cloneItem["uniqueKey"] = originRules?.uniqueKey;
+  cloneItem["originRules"] = originRules;
+  state.filterData[key][idx] = rule!;
 };
 
 /// 当前选中的值
@@ -63,52 +79,41 @@ export const setClickHandleItem = (
   item: ComponentsItem,
   baseList: ComponentsItem[],
   callbakCopy?: Function,
-  fcInstance?: AnyType
+  index?: number
 ) => {
-  const ruleInstance = new CreateFormItemRule(item, fcInstance);
-  const rule = ruleInstance.getRule();
-  /// 这个是获取真正的组件属性
-  const originRule = ruleInstance.getOriginRule();
-  /// 如果rule没有则不需要在进行其他操作了
-  if (rule) {
-    const storeGetters = reactive({
-      ...useGetters("common", ["getSelectItem"]),
-    });
-    const setStore = {
-      ...useMutations("common", ["setCurrentItem", "pushMainList"]),
-    };
-    const deepItem = clonedeep(rule);
-    /// 当前任何一个都没有被选中
-    /// 就说明主区域为空
-    console.log("set-click-handle-item");
-    if (Object.keys(storeGetters.getSelectItem).length === 0) {
-      console.log("set-click-handle-item-1", originRule);
-      setStore.pushMainList(deepItem);
-      setStore.setCurrentItem(originRule);
-      /// 更新重新获取rule
-      // ruleInstance.updateActive();
-      const newItem = ruleInstance.getRule();
-      console.log(newItem, " newItem");
-      const deepNewItem = clonedeep(newItem);
-      if (deepNewItem) {
-        baseList.push(deepNewItem);
-      }
-      return;
-    } else if (!callbakCopy) {
-      console.log("set-click-handle-item-2");
-      if (!deepItem.uniqueKey) {
-        deepItem.uniqueKey = Utils.generateUniqueKeyUtils(deepItem.tag);
-      }
-      /// 如果从左侧拖入进来的...
-      /// 只需要激活item不要copy
-      setStore.setCurrentItem(deepItem);
-      return;
-    }
-    /// 如果当前主区域有被选中的
-    /// 直接调用item里面的复制方法就行了
-    console.log("set-click-handle-item-3");
-    callbakCopy && callbakCopy(false, item);
+  const storeGetters = reactive({
+    ...useGetters("common", ["getSelectItem"]),
+  });
+  const setStore = {
+    ...useMutations("common", ["setCurrentItem", "pushMainList"]),
+  };
+  let deepItem = clonedeep(item);
+  /// 如果是点击左侧列表需要手动添加key
+  if (!deepItem.originRules) {
+    const ruleInstance = new CreateFormItemRule(deepItem, void 0);
+    const rule = ruleInstance.getRule();
+    deepItem = rule!;
   }
+  /// 当前任何一个都没有被选中
+  /// 就说明主区域为空
+  console.log("set-click-handle-item");
+  if (Object.keys(storeGetters.getSelectItem).length === 0) {
+    console.log("set-click-handle-item-1");
+
+    setStore.pushMainList(deepItem);
+    setStore.setCurrentItem(deepItem.originRules);
+    if (deepItem && callbakCopy) {
+      baseList.push(deepItem);
+    }
+    return;
+  } else if (!callbakCopy) {
+    setStore.setCurrentItem(deepItem.originRules);
+    return;
+  }
+  /// 如果当前主区域有被选中的
+  /// 直接调用item里面的复制方法就行了
+  console.log("set-click-handle-item-3", deepItem);
+  callbakCopy && callbakCopy(false, deepItem);
 };
 
 /// 主区域点击选中active
@@ -120,29 +125,34 @@ export const handleActiveSelectItem = (item: Partial<ComponentsItem>) => {
 };
 
 export const handleColAdd = (e: AnyType, columns: Partial<ComponentsItem>[], isCopy = false, isNew = true) => {
-  const newIndex = isNew ? e.newIndex : e.oldIndex;
+  const newIndex = e.newIndex;
+  console.log(columns, " aaaaaaaa");
+  const __item__ = columns[newIndex].children![0];
   console.log(e, " aaaaaaaa");
   console.log(newIndex, " aaaaaaaa");
   console.log(columns, " aaaaaaaa");
   console.log(isCopy, " aaaaaaaa");
   console.log(isNew, " aaaaaaaa");
-  console.log(columns[newIndex].uniqueKey);
-  const uniqueKey = Utils.generateUniqueKeyUtils(columns[newIndex].tag!);
-  if (!columns[newIndex].uniqueKey || isCopy) {
+  console.log(__item__);
+
+  const uniqueKey = Utils.generateUniqueKeyUtils(__item__.type!);
+  if (!__item__.uniqueKey || isCopy) {
     /// 如果item不深拷贝
     /// 在这里容易出现uniqueKey被修改的情况
-    columns[newIndex]["uniqueKey"] = uniqueKey;
-    if (columns[newIndex].children) {
-      columns[newIndex].children = clonedeep(columns[newIndex].children);
-      columns[newIndex].children!.forEach(item => {
+    __item__["uniqueKey"] = uniqueKey;
+    /// 这里的form组件的fileds也不能相同
+    __item__.field = uniqueKey;
+    if (__item__.children) {
+      __item__.children = clonedeep(__item__.children);
+      __item__.children!.forEach(item => {
         item.children = [];
       });
     }
   }
-  const item = clonedeep(columns[newIndex]);
-  columns[newIndex] = item;
+  // const item = clonedeep(__item__);
+  columns[newIndex].children![0] = __item__;
   /// 激活添加的
-  handleActiveSelectItem(item);
+  handleActiveSelectItem(__item__);
 };
 
 /// 后面所有的函数都会换成这种开头的
