@@ -2,7 +2,7 @@
  * @Author        : djkloop
  * @Date          : 2020-05-07 17:37:33
  * @LastEditors  : djkloop
- * @LastEditTime : 2020-05-10 20:52:01
+ * @LastEditTime : 2020-05-10 22:10:35
  * @Description   : 处理规则类
  * @FilePath     : /form-create-ui/src/packages/@form-create/create-item-rule/index.ts
  */
@@ -48,9 +48,8 @@ export default class CreateFormItemRule {
   generateUniqueKey() {
     if (this.originProps && !this.originProps.uniqueKey) {
       this.originProps["uniqueKey"] = Utils.generateUniqueKeyUtils(this.originProps.type);
-    } else {
-      this.originProps["field"] = this.originProps["uniqueKey"];
     }
+    this.originProps!["field"] = this.originProps!["uniqueKey"];
   }
 
   _createFormItem() {
