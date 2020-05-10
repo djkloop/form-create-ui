@@ -1,10 +1,10 @@
 <!--
  * @Author        : djkloop
  * @Date          : 2020-04-26 11:45:07
- * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-09 10:49:58
+ * @LastEditors  : djkloop
+ * @LastEditTime : 2020-05-10 17:14:22
  * @Description   : form-item
- * @FilePath      : /form-create-ui/src/components/fc-render/form/form.vue
+ * @FilePath     : /form-create-ui/src/components/fc-render/form/form.vue
  -->
 <template>
   <div
@@ -62,6 +62,12 @@
     </template>
     <!-- 普通的表单start -->
     <template v-else>
+      <!-- 
+          点击复制会触发
+          -> fc-on-form-item-copy
+          -> 对应当前组件的 handleCopyItem
+          -> handleCopyItem 里面要触发 fc-copy 事件
+       -->
       <fc-render-form-item
         class="fc-render-form-item"
         :class="{ 'fc-active': item.uniqueKey === getSelectItem.uniqueKey }"
@@ -75,7 +81,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, toRefs, ref } from "@vue/composition-api";
+import { defineComponent, toRefs, ref, onMounted } from "@vue/composition-api";
 import { FormItemProps, ComponentsItem } from "@/interface/components";
 import { useGetters } from "@u3u/vue-hooks";
 import { AnyType } from "@/interface/common";
@@ -121,10 +127,13 @@ export default defineComponent<FormItemProps, AnyType>({
       emit("fc-add-col-item", e, list, isc, isn);
     const handleCopyItem = (isCopy: boolean, item: ComponentsItem) => {
       console.log("->  我被点击了但是没有被触发emit事件 <-");
-      emit("fc-copy-form-item", isCopy, item);
+      console.log(isCopy, item);
+      emit("fc-copy", isCopy, item);
     };
+
     return {
       ...toRefs(storeGet),
+      emit,
       slots,
       updateTime,
       handleActiveItem,

@@ -1,10 +1,10 @@
 <!--
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
- * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-09 11:40:24
+ * @LastEditors  : djkloop
+ * @LastEditTime : 2020-05-10 17:15:17
  * @Description  : 主区域
- * @FilePath      : /form-create-ui/src/views/ui/element/index.vue
+ * @FilePath     : /form-create-ui/src/views/ui/element/index.vue
  -->
 <template>
   <div class="fc-main fc-main-element">
@@ -43,7 +43,7 @@
       :option="formOptions"
       @fc-add-col-item="handleColAdd"
       @fc-drage-start="handleAddItem"
-      @fc-copy-form-item="handleCopyItem"
+      @fc-copy="handleCopyItem"
     />
     <!-- <draggable
       class="fc-main-draggable-box"
@@ -150,6 +150,7 @@ export default defineComponent({
     const handleCopyItem = (isCopy: boolean, item: ComponentsItem) => {
       /// TODO: 这里用的递归, 有什么优化好办法?
       console.log("copy----", isCopy, item);
+      /// 这里这时候是可以被触发了emit
       debugger;
       const traverse = (array: Partial<ComponentsItem>[]) => {
         for (let index = 0; index < array.length; index++) {

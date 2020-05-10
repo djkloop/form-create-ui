@@ -2,7 +2,7 @@
  * @Author        : djkloop
  * @Date          : 2020-04-27 11:15:31
  * @LastEditors  : djkloop
- * @LastEditTime : 2020-05-08 23:07:34
+ * @LastEditTime : 2020-05-10 17:12:47
  * @Description   : 头部注释
  * @FilePath     : /form-create-ui/src/components/fc-render/form/fc-render-form-item/index.vue
  -->
@@ -15,6 +15,7 @@
         'fc-inactive': item.uniqueKey !== getSelectItem.uniqueKey,
       }"
     >
+      <!-- 这里再次点击触发父组件的fc-copy事件 -->
       <i class="el-icon-document-copy" @click.stop="context.emit('fc-on-form-item-copy', true, item)"></i>
       <i class="el-icon-delete"></i>
     </div>

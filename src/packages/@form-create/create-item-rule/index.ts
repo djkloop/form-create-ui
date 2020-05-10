@@ -1,10 +1,10 @@
 /*
  * @Author        : djkloop
  * @Date          : 2020-05-07 17:37:33
- * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-09 11:41:57
+ * @LastEditors  : djkloop
+ * @LastEditTime : 2020-05-10 17:08:55
  * @Description   : 处理规则类
- * @FilePath      : /form-create-ui/src/packages/@form-create/create-item-rule/index.ts
+ * @FilePath     : /form-create-ui/src/packages/@form-create/create-item-rule/index.ts
  */
 
 import { ComponentsItem, IDraggableComponentsItem } from "@/interface/components";
@@ -134,7 +134,14 @@ export default class CreateFormItemRule {
       props: {
         item: this.originProps,
       },
-      emit: ["copy-form-item", "drage-start", "add-col-item"],
+      emit: [
+        {
+          name: "copy",
+          inject: [this],
+        },
+        "drage-start",
+        "add-col-item",
+      ],
       emitPrefix: "fc",
       children: [this.originProps],
       native: true,

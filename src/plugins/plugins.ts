@@ -2,7 +2,7 @@
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
  * @LastEditors  : djkloop
- * @LastEditTime : 2020-05-08 23:13:33
+ * @LastEditTime : 2020-05-10 11:21:52
  * @Description  : 注册所有用到的插件
  * @FilePath     : /form-create-ui/src/plugins/plugins.ts
  */
