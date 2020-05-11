@@ -2,7 +2,7 @@
  * @Author        : djkloop
  * @Date          : 2020-05-07 17:37:33
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-11 12:10:28
+ * @LastEditTime  : 2020-05-11 14:46:36
  * @Description   : 处理规则类
  * @FilePath      : /form-create-ui/src/packages/@form-create/create-item-rule/index.ts
  */
@@ -58,6 +58,7 @@ export default class CreateFormItemRule {
       this.originProps["uniqueKey"] = Utils.generateUniqueKeyUtils(this.originProps.type);
     }
     this.originProps!["field"] = this.originProps!["uniqueKey"];
+    this.originProps!.slot = "formItem";
   }
 
   /// 生成布局组件
@@ -94,10 +95,10 @@ export default class CreateFormItemRule {
       emit: ["copy-form-item", "drage-start", "add-col-item"],
       emitPrefix: "fc",
       children: [this.originProps],
-      slot: "formItem",
       originRules: this.originProps,
       native: true,
     };
+    console.log(customComponentWraaperRule);
     this.props = customComponentWraaperRule;
   }
 }
