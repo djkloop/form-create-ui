@@ -1,10 +1,10 @@
 <!--
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
- * @LastEditors  : djkloop
- * @LastEditTime : 2020-05-10 21:55:51
+ * @LastEditors   : djkloop
+ * @LastEditTime  : 2020-05-11 10:56:23
  * @Description  : 主区域
- * @FilePath     : /form-create-ui/src/views/ui/element/index.vue
+ * @FilePath      : /form-create-ui/src/views/ui/element/index.vue
  -->
 <template>
   <div class="fc-main fc-main-element">
@@ -68,7 +68,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, toRefs, reactive, watch, watchEffect } from "@vue/composition-api";
+import { defineComponent, ref, toRefs, reactive, watch } from "@vue/composition-api";
 import { useToast } from "vue-toastification/composition";
 import { useGetters } from "@u3u/vue-hooks";
 import { AnyType } from "@/interface/common";
@@ -137,7 +137,7 @@ export default defineComponent({
           if (element.tag === "fc-grid") {
             // 栅格布局
             if (typeof element.children !== "undefined") {
-              element.children.forEach(item => {
+              element.children.forEach((item) => {
                 if (typeof item.children !== "undefined") {
                   traverse(item!.children);
                 }

@@ -1,10 +1,10 @@
 /*
  * @Author        : djkloop
  * @Date          : 2020-05-07 17:37:33
- * @LastEditors  : djkloop
- * @LastEditTime : 2020-05-10 22:10:35
+ * @LastEditors   : djkloop
+ * @LastEditTime  : 2020-05-11 12:00:51
  * @Description   : 处理规则类
- * @FilePath     : /form-create-ui/src/packages/@form-create/create-item-rule/index.ts
+ * @FilePath      : /form-create-ui/src/packages/@form-create/create-item-rule/index.ts
  */
 
 import { ComponentsItem, IDraggableComponentsItem } from "@/interface/components";
@@ -25,26 +25,34 @@ export default class CreateFormItemRule {
 
   constructor(props: ComponentsItem, fcInstance: AnyType) {
     this.originProps = clonedeep(props);
-    console.log(this.props, " new Rules");
     this.$f = fcInstance;
     this._setup();
   }
 
   ///先检查key
   _setup() {
-    /// 生成formitem
-    this._createFormItem();
-    /// 生成
+    this.generateUniqueKey();
+    /// 生成布局组件
+    if (this.originProps?.itemTag === "布局组件") {
+      this._createFormLyaout();
+    } else {
+      /// 生成formitem
+      this._createFormItem();
+    }
   }
 
+  /// 获取form-create需要的规则
+  /// 其实就是在外面包了一层自定义组件
   getRule() {
     return this.props;
   }
 
+  /// 获取原始的规则
   getOriginRule() {
     return this.originProps;
   }
 
+  /// 生成唯一key && 自动生成field
   generateUniqueKey() {
     if (this.originProps && !this.originProps.uniqueKey) {
       this.originProps["uniqueKey"] = Utils.generateUniqueKeyUtils(this.originProps.type);
@@ -52,14 +60,16 @@ export default class CreateFormItemRule {
     this.originProps!["field"] = this.originProps!["uniqueKey"];
   }
 
-  _createFormItem() {
-    this.generateUniqueKey();
-    /// 每个
-    const draggableRule: any = {
+  /// 生成布局组件
+  _createFormLyaout() {
+    console.log("_createFormLyaout__::");
+    const customComponentWraaperRule: any = {
       type: "form-create-item-wrapper",
       name: this.originProps?.field,
       class: "fc-drage-move",
       props: {
+        /// 把props传进去给组件用
+        /// 用于组件内部进化判断
         item: this.originProps,
       },
       emit: ["copy-form-item", "drage-start", "add-col-item"],
@@ -68,26 +78,26 @@ export default class CreateFormItemRule {
       originRules: this.originProps,
       native: true,
     };
-    console.log(this.originProps, "  生成的规则");
-    this.props = draggableRule;
   }
-
-  _renderFormItemToolsIconRule() {
-    const toolsIcons = [
-      { type: "i", class: "el-icon-document-copy" },
-      { type: "i", class: "el-icon-delete" },
-    ];
-
-    const toolsRules = toolsIcons.map(item => this._createElementRule(item));
-    return toolsRules;
-  }
-
-  _createElementRule(props: ComponentsItem) {
-    const _t = props.type;
-    const _c = props.className || props.class;
-    return {
-      type: _t,
-      class: _c,
+  /// 生成布局组件
+  _createFormItem() {
+    /// src/components/fc-render/form/form.vue
+    const customComponentWraaperRule: any = {
+      type: "form-create-item-wrapper",
+      name: this.originProps?.field,
+      class: "fc-drage-move",
+      props: {
+        /// 把props传进去给组件用
+        /// 用于组件内部进化判断
+        item: this.originProps,
+      },
+      emit: ["copy-form-item", "drage-start", "add-col-item"],
+      emitPrefix: "fc",
+      children: [this.originProps],
+      slot: "form-item",
+      originRules: this.originProps,
+      native: true,
     };
+    this.props = customComponentWraaperRule;
   }
 }

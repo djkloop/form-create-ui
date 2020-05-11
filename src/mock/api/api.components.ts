@@ -1,10 +1,10 @@
 /*
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
- * @LastEditors  : djkloop
- * @LastEditTime : 2020-05-10 21:26:50
+ * @LastEditors   : djkloop
+ * @LastEditTime  : 2020-05-11 11:26:39
  * @Description  : mocks数据
- * @FilePath     : /form-create-ui/src/mock/api/api.components.ts
+ * @FilePath      : /form-create-ui/src/mock/api/api.components.ts
  */
 import { ResponseWithMockJS } from "@/interface/response";
 import { ComponentsResult } from "@/interface/components";
@@ -35,18 +35,6 @@ const respose: Array<ResponseWithMockJS<ComponentsResult>> = [
             {
               type: "input",
               field: "",
-              label: "单行输入框1",
-              value: "iphone 8",
-              listIcon: "el-icon-edit",
-              itemTag: "基础组件",
-              props: {
-                type: "text",
-              },
-              validate: [{ required: true, message: "请输入goods_name", trigger: "blur" }],
-            },
-            {
-              type: "input",
-              field: "",
               label: "多行文本框",
               value: "",
               listIcon: "el-icon-edit",
@@ -63,12 +51,23 @@ const respose: Array<ResponseWithMockJS<ComponentsResult>> = [
               itemTag: "布局组件",
               children: [
                 {
-                  span: 12,
-                  children: [],
-                },
-                {
-                  span: 12,
-                  children: [],
+                  type: "el-row",
+                  children: [
+                    {
+                      type: "el-col",
+                      props: {
+                        span: 12,
+                      },
+                      children: [],
+                    },
+                    {
+                      type: "el-col",
+                      props: {
+                        span: 12,
+                      },
+                      children: [],
+                    },
+                  ],
                 },
               ],
             },

@@ -1,10 +1,10 @@
 <!--
  * @Author        : djkloop
  * @Date          : 2020-04-26 11:45:07
- * @LastEditors  : djkloop
- * @LastEditTime : 2020-05-10 17:31:43
- * @Description   : form-item
- * @FilePath     : /form-create-ui/src/components/fc-render/form/form.vue
+ * @LastEditors   : djkloop
+ * @LastEditTime  : 2020-05-11 12:03:45
+ * @Description   : 封装给form-create用的自定义组件
+ * @FilePath      : /form-create-ui/src/components/fc-render/form/form.vue
  -->
 <template>
   <div
@@ -45,6 +45,7 @@
                 name="fc-drage-list"
               >
                 <!-- 这里的和element那里要写一样要不然不能冒泡哦 -->
+                <template #render></template>
                 <fc-render-form
                   class="fc-drage-move"
                   :item="col"
@@ -68,14 +69,14 @@
         :item="item"
         @fc-on-form-item-copy="handleCopyItem"
       >
-        <slot></slot>
+        <slot name="form-item">1111</slot>
       </fc-render-form-item>
     </template>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, toRefs, ref, onMounted } from "@vue/composition-api";
+import { defineComponent, toRefs, ref } from "@vue/composition-api";
 import { FormItemProps, ComponentsItem } from "@/interface/components";
 import { useGetters } from "@u3u/vue-hooks";
 import { AnyType } from "@/interface/common";

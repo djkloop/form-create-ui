@@ -2,7 +2,7 @@
  * @Author        : djkloop
  * @Date          : 2020-04-26 11:45:07
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-08 11:21:37
+ * @LastEditTime  : 2020-05-11 11:05:48
  * @Description   : 头部注释
  * @FilePath      : /form-create-ui/src/components/fc-components-list/use-server-list.ts
  */
@@ -28,15 +28,14 @@ async function fetchServerList(state: IFcComponentsListState) {
     };
     setStoreList.setList(state.list);
 
-    state.tags.forEach(item => {
-      obj[item] = state.list.filter(k => k.itemTag === item);
+    state.tags.forEach((item) => {
+      obj[item] = state.list.filter((k) => k.itemTag === item);
     });
     state.filterData = obj;
     state.cacheData = cloneDeep(obj);
-
-    state.loading = false;
-  } else {
-    state.loading = true;
+    setTimeout(() => {
+      state.loading = false;
+    }, 1000);
   }
 }
 

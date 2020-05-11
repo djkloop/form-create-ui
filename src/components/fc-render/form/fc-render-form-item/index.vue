@@ -1,10 +1,10 @@
 <!--
  * @Author        : djkloop
  * @Date          : 2020-04-27 11:15:31
- * @LastEditors  : djkloop
- * @LastEditTime : 2020-05-10 17:12:47
- * @Description   : 头部注释
- * @FilePath     : /form-create-ui/src/components/fc-render/form/fc-render-form-item/index.vue
+ * @LastEditors   : djkloop
+ * @LastEditTime  : 2020-05-11 12:01:02
+ * @Description   : 表单最底层item
+ * @FilePath      : /form-create-ui/src/components/fc-render/form/fc-render-form-item/index.vue
  -->
 <template>
   <div class="fc-drage-components-form__container fc-drage-container" @click.stop="handleActiveSelectItem(item)">
@@ -20,7 +20,7 @@
       <i class="el-icon-delete"></i>
     </div>
     <div class="fc-drage-components-form__item fc-render-form-item__box">
-      <slot></slot>
+      <slot name="form-item"></slot>
     </div>
     <div class="fc-drage-components-form__keys" v-text="item.uniqueKey || '暂无key'"></div>
   </div>

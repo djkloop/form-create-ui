@@ -1,15 +1,15 @@
 <!--
  * @Author        : djkloop
  * @Date          : 2020-04-26 11:45:07
- * @LastEditors  : djkloop
- * @LastEditTime : 2020-05-10 20:34:21
+ * @LastEditors   : djkloop
+ * @LastEditTime  : 2020-05-11 11:05:30
  * @Description   : 头部注释
- * @FilePath     : /form-create-ui/src/components/fc-components-list/index.vue
+ * @FilePath      : /form-create-ui/src/components/fc-components-list/index.vue
  -->
 
 <template>
   <div class="fc-container-box">
-    <template v-if="loading && list.length === 0">正在加载...</template>
+    <template v-if="loading">正在加载...</template>
     <template v-else>
       <el-collapse v-model="defaultActive" class="fc-container-box__collapse">
         <el-collapse-item :title="key" :name="key" v-for="(item, key) in filterData" :key="key">
