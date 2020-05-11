@@ -2,7 +2,7 @@
  * @Author        : djkloop
  * @Date          : 2020-04-27 11:15:31
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-11 12:01:02
+ * @LastEditTime  : 2020-05-11 12:11:42
  * @Description   : 表单最底层item
  * @FilePath      : /form-create-ui/src/components/fc-render/form/fc-render-form-item/index.vue
  -->
@@ -20,7 +20,7 @@
       <i class="el-icon-delete"></i>
     </div>
     <div class="fc-drage-components-form__item fc-render-form-item__box">
-      <slot name="form-item"></slot>
+      <slot name="formItem"></slot>
     </div>
     <div class="fc-drage-components-form__keys" v-text="item.uniqueKey || '暂无key'"></div>
   </div>

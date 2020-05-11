@@ -2,7 +2,7 @@
  * @Author        : djkloop
  * @Date          : 2020-04-26 11:45:07
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-11 12:03:45
+ * @LastEditTime  : 2020-05-11 12:10:18
  * @Description   : 封装给form-create用的自定义组件
  * @FilePath      : /form-create-ui/src/components/fc-render/form/form.vue
  -->
@@ -69,7 +69,7 @@
         :item="item"
         @fc-on-form-item-copy="handleCopyItem"
       >
-        <slot name="form-item">1111</slot>
+        <template #formItem>1111</template>
       </fc-render-form-item>
     </template>
   </div>
