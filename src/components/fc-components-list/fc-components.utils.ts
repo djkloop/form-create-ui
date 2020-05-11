@@ -1,10 +1,10 @@
 /*
  * @Author       : djkloop
  * @Date         : 2020-04-25 01:21:14
- * @LastEditors  : djkloop
- * @LastEditTime : 2020-05-10 20:58:09
+ * @LastEditors   : djkloop
+ * @LastEditTime  : 2020-05-11 16:58:21
  * @Description  : fc-components工具方法(用来替代vue2中的methods的)
- * @FilePath     : /form-create-ui/src/components/fc-components-list/fc-components.utils.ts
+ * @FilePath      : /form-create-ui/src/components/fc-components-list/fc-components.utils.ts
  */
 import { ComponentsItem, IFcComponentsListState } from "@/interface/components";
 import { AnyType } from "@/interface/common";
@@ -124,17 +124,15 @@ export const handleActiveSelectItem = (item: Partial<ComponentsItem>) => {
   setStore.setCurrentItem(item);
 };
 
-export const handleColAdd = (e: AnyType, columns: Partial<ComponentsItem>[], isCopy = false, isNew = true) => {
+export const handleColAdd = (
+  fin: AnyType,
+  e: AnyType,
+  columns: Partial<ComponentsItem>[],
+  isCopy = false,
+  isNew = true
+) => {
   const newIndex = e.newIndex;
-  console.log(columns, " aaaaaaaa");
   const __item__ = columns[newIndex].children![0];
-  console.log(e, " aaaaaaaa");
-  console.log(newIndex, " aaaaaaaa");
-  console.log(columns, " aaaaaaaa");
-  console.log(isCopy, " aaaaaaaa");
-  console.log(isNew, " aaaaaaaa");
-  console.log(__item__);
-
   const uniqueKey = Utils.generateUniqueKeyUtils(__item__.type!);
   if (!__item__.uniqueKey || isCopy) {
     /// 如果item不深拷贝
@@ -144,11 +142,13 @@ export const handleColAdd = (e: AnyType, columns: Partial<ComponentsItem>[], isC
     __item__.field = uniqueKey;
     if (__item__.children) {
       __item__.children = clonedeep(__item__.children);
-      __item__.children!.forEach(item => {
+      __item__.children!.forEach((item) => {
         item.children = [];
       });
     }
   }
+  console.log(__item__);
+  console.log(columns);
   // const item = clonedeep(__item__);
   columns[newIndex].children![0] = __item__;
   /// 激活添加的
@@ -163,7 +163,7 @@ export const useColAdd = (e: AnyType, columns: ComponentsItem[], isCopy = false,
     columns[newIndex]["uniqueKey"] = uniqueKey;
     if (columns[newIndex].children) {
       columns[newIndex].children = clonedeep(columns[newIndex].children);
-      columns[newIndex].children!.forEach(item => {
+      columns[newIndex].children!.forEach((item) => {
         item.children = [];
       });
     }

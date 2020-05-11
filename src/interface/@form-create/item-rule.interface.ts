@@ -2,7 +2,7 @@
  * @Author        : djkloop
  * @Date          : 2020-05-07 17:40:28
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-11 14:20:43
+ * @LastEditTime  : 2020-05-11 16:20:24
  * @Description   : 创建item属性
  * @FilePath      : /form-create-ui/src/interface/@form-create/item-rule.interface.ts
  */
@@ -32,5 +32,6 @@ export interface IFormCreateItem extends IFormCreateItemBase {
   uniqueKey?: string;
   class?: string;
   slot?: string;
+  listTag?: string;
   [key: string]: AnyType;
 }

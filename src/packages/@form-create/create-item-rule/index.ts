@@ -2,7 +2,7 @@
  * @Author        : djkloop
  * @Date          : 2020-05-07 17:37:33
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-11 14:46:36
+ * @LastEditTime  : 2020-05-11 17:06:06
  * @Description   : 处理规则类
  * @FilePath      : /form-create-ui/src/packages/@form-create/create-item-rule/index.ts
  */
@@ -58,12 +58,10 @@ export default class CreateFormItemRule {
       this.originProps["uniqueKey"] = Utils.generateUniqueKeyUtils(this.originProps.type);
     }
     this.originProps!["field"] = this.originProps!["uniqueKey"];
-    this.originProps!.slot = "formItem";
   }
 
   /// 生成布局组件
   _createFormLyaout() {
-    console.log("_createFormLyaout__::");
     const customComponentWraaperRule: any = {
       type: "form-create-item-wrapper",
       name: this.originProps?.field,
@@ -79,6 +77,8 @@ export default class CreateFormItemRule {
       originRules: this.originProps,
       native: true,
     };
+    console.log("_createFormLyaout__::", customComponentWraaperRule);
+    this.props = customComponentWraaperRule;
   }
   /// 生成布局组件
   _createFormItem() {
@@ -98,7 +98,7 @@ export default class CreateFormItemRule {
       originRules: this.originProps,
       native: true,
     };
-    console.log(customComponentWraaperRule);
+    console.log("_createFormItem::", customComponentWraaperRule);
     this.props = customComponentWraaperRule;
   }
 }

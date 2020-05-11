@@ -2,7 +2,7 @@
  * @Author        : djkloop
  * @Date          : 2020-04-26 11:45:07
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-11 14:46:58
+ * @LastEditTime  : 2020-05-11 17:47:01
  * @Description   : 封装给form-create用的自定义组件
  * @FilePath      : /form-create-ui/src/components/fc-render/form/form.vue
  -->
@@ -10,12 +10,12 @@
   <div
     class="fc-drage-move-box"
     :class="{
-      'fc-layout-width': ['fc-grid', 'table', 'card', 'divider', 'html'].includes(item.tag),
+      'fc-layout-width': ['fc-grid', 'table', 'card', 'divider', 'html'].includes(item.listTag),
     }"
   >
     <!-- TODO: 这里可以想个更好的解决方法... -->
     <!-- 栅格布局 -->
-    <template v-if="item.tag === 'fc-grid'">
+    <template v-if="item.listTag === 'fc-grid'">
       <div
         class="fc-drage-components-form__container fc-drage-container fc-render-layout-grid"
         :class="{
@@ -24,7 +24,7 @@
         @click.stop="handleActiveItem"
       >
         <el-row :gutter="item.options.gutter" class="fc-render-form-grid-row">
-          <el-col v-for="(it, index) in item.children" :key="index" :span="it.span || 0">
+          <el-col v-for="(it, index) in item.children" :key="index" :span="it.props.span || 0">
             <draggable
               tag="div"
               class="fc-main-draggable-box"
@@ -45,16 +45,16 @@
                 name="fc-drage-list"
               >
                 <!-- 这里的和element那里要写一样要不然不能冒泡哦 -->
-                <template #render></template>
-                <fc-render-form
+                <form-create-item-wrapper
                   class="fc-drage-move"
-                  :item="col"
+                  :item="col.children[0]"
                   :data-key="col.uniqueKey"
-                  v-for="col in it.children"
-                  :key="col.uniqueKey + '__col__item__parent'"
+                  v-for="(col, idx) in it.children"
+                  :key="idx + '__col__item__parent'"
                   @fc-add-col-item="handleColAdd"
                   @fc-copy-form-item="handleCopyItem"
-                />
+                >
+                </form-create-item-wrapper>
               </transition-group>
             </draggable>
           </el-col>
@@ -69,8 +69,7 @@
         :item="item"
         @fc-on-form-item-copy="handleCopyItem"
       >
-        <!-- v-slot:formItem -->
-        <template #formItem></template>
+        <slot></slot>
       </fc-render-form-item>
     </template>
   </div>
