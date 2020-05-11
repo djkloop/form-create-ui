@@ -28,8 +28,8 @@ async function fetchServerList(state: IFcComponentsListState) {
     };
     setStoreList.setList(state.list);
 
-    state.tags.forEach((item) => {
-      obj[item] = state.list.filter((k) => k.itemTag === item);
+    state.tags.forEach(item => {
+      obj[item] = state.list.filter(k => k.itemTag === item);
     });
     state.filterData = obj;
     state.cacheData = cloneDeep(obj);

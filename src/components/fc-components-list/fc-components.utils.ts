@@ -142,7 +142,7 @@ export const handleColAdd = (
     __item__.field = uniqueKey;
     if (__item__.children) {
       __item__.children = clonedeep(__item__.children);
-      __item__.children!.forEach((item) => {
+      __item__.children!.forEach(item => {
         item.children = [];
       });
     }
@@ -163,7 +163,7 @@ export const useColAdd = (e: AnyType, columns: ComponentsItem[], isCopy = false,
     columns[newIndex]["uniqueKey"] = uniqueKey;
     if (columns[newIndex].children) {
       columns[newIndex].children = clonedeep(columns[newIndex].children);
-      columns[newIndex].children!.forEach((item) => {
+      columns[newIndex].children!.forEach(item => {
         item.children = [];
       });
     }
