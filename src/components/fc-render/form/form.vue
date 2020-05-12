@@ -1,10 +1,10 @@
 <!--
  * @Author        : djkloop
  * @Date          : 2020-04-26 11:45:07
- * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-12 18:26:02
+ * @LastEditors  : djkloop
+ * @LastEditTime : 2020-05-12 22:59:10
  * @Description   : 封装给form-create用的自定义组件
- * @FilePath      : /form-create-ui/src/components/fc-render/form/form.vue
+ * @FilePath     : /form-create-ui/src/components/fc-render/form/form.vue
  -->
 <template>
   <div
@@ -61,7 +61,7 @@
       </div>
     </template> -->
     <template v-if="item.listTag === 'fc-grid'">
-      <fc-render-form-grid :item="item" @fc-drage-start="() => console.log(1111)">
+      <fc-render-form-grid :item="item">
         <template #formItem>
           <slot></slot>
         </template>

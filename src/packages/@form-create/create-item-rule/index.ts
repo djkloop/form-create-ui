@@ -1,10 +1,10 @@
 /*
  * @Author        : djkloop
  * @Date          : 2020-05-07 17:37:33
- * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-12 19:13:54
+ * @LastEditors  : djkloop
+ * @LastEditTime : 2020-05-12 23:30:43
  * @Description   : 处理规则类
- * @FilePath      : /form-create-ui/src/packages/@form-create/create-item-rule/index.ts
+ * @FilePath     : /form-create-ui/src/packages/@form-create/create-item-rule/index.ts
  */
 
 import { ComponentsItem, IDraggableComponentsItem } from "@/interface/components";
@@ -12,6 +12,7 @@ import clonedeep from "lodash.clonedeep";
 import Utils from "@/utils/utils";
 import { AnyType } from "@/interface/common";
 import classnames from "classnames";
+import { handleColAdd } from "@/components/fc-components-list/fc-components.utils";
 
 export default class CreateFormItemRule {
   props?: IDraggableComponentsItem;
@@ -155,10 +156,12 @@ export default class CreateFormItemRule {
           },
         ],
         on: {
-          add: (f, e, it) => console.log(f, e, it),
+          add: ($f: AnyType, e: AnyType) => {
+            const tras = item.children[0].children[0];
+            const itemWrapper = tras.children; /// 这个地方要取它的所有子集
+            handleColAdd($f, e, itemWrapper);
+          },
         },
-        emit: ["drage-start", "add-col-item"],
-        emitPrefix: "fc",
       },
     ];
     // const p = [
