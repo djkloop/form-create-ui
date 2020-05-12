@@ -2,7 +2,7 @@
  * @Author        : djkloop
  * @Date          : 2020-04-27 11:26:48
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-12 16:30:35
+ * @LastEditTime  : 2020-05-12 18:22:14
  * @Description   : 属性区域
  * @FilePath      : /form-create-ui/src/components/fc-render/form/fc-render-form-grid/index.vue
  -->
@@ -26,18 +26,21 @@ import { AnyType } from "@/interface/common";
 import { handleActiveSelectItem } from "@/components/fc-components-list/fc-components.utils";
 import { useGetters } from "@u3u/vue-hooks";
 
-export default defineComponent<DeepRequired<DeepRequired<FormItemProps>>, AnyType>({
+export default defineComponent<
+  DeepRequired<DeepRequired<FormItemProps>>,
+  AnyType
+>({
   name: "fc-render-form-grid",
   props: {
     item: {
-      type: Object,
-    },
+      type: Object
+    }
   },
   setup(props) {
     const updateTime = ref(0);
 
     const storeGet = {
-      ...useGetters("common", ["getSelectItem"]),
+      ...useGetters("common", ["getSelectItem"])
     };
 
     console.log(props.item);
@@ -54,9 +57,9 @@ export default defineComponent<DeepRequired<DeepRequired<FormItemProps>>, AnyTyp
     };
     return {
       ...toRefs(storeGet),
-      handleActiveItem,
+      handleActiveItem
     };
-  },
+  }
 });
 </script>
 

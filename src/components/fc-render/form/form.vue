@@ -2,7 +2,7 @@
  * @Author        : djkloop
  * @Date          : 2020-04-26 11:45:07
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-12 16:37:10
+ * @LastEditTime  : 2020-05-12 18:26:02
  * @Description   : 封装给form-create用的自定义组件
  * @FilePath      : /form-create-ui/src/components/fc-render/form/form.vue
  -->
@@ -61,7 +61,10 @@
       </div>
     </template> -->
     <template v-if="item.listTag === 'fc-grid'">
-      <fc-render-form-grid :item="item">
+      <fc-render-form-grid
+        :item="item"
+        @fc-drage-start="() => console.log(1111)"
+      >
         <template #formItem>
           <slot></slot>
         </template>
@@ -98,30 +101,35 @@ export default defineComponent<FormItemProps, AnyType>({
   name: "form-create-item-wrapper",
   components: {
     FcRenderFormItem,
-    FcRenderFormGrid,
+    FcRenderFormGrid
   },
   props: {
     item: {
-      type: Object,
-    },
+      type: Object
+    }
   },
   setup(props, { emit, slots }) {
     const storeGet = {
-      ...useGetters("common", ["getSelectItem"]),
+      ...useGetters("common", ["getSelectItem"])
     };
 
-    const handleColAdd = (e: AnyType, list: ComponentsItem[], isc: boolean, isn: boolean) =>
-      emit("add-col-item", e, list, isc, isn);
-    const handleCopyItem = (isCopy: boolean, item: ComponentsItem) => emit("copy-form-item", isCopy, item);
+    const handleColAdd = (
+      e: AnyType,
+      list: ComponentsItem[],
+      isc: boolean,
+      isn: boolean
+    ) => emit("add-col-item", e, list, isc, isn);
+    const handleCopyItem = (isCopy: boolean, item: ComponentsItem) =>
+      emit("copy-form-item", isCopy, item);
 
     return {
       ...toRefs(storeGet),
       emit,
       slots,
       handleColAdd,
-      handleCopyItem,
+      handleCopyItem
     };
-  },
+  }
 });
 </script>
 

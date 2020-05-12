@@ -2,13 +2,16 @@
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-11 17:48:46
+ * @LastEditTime  : 2020-05-12 18:13:35
  * @Description  : 主区域
  * @FilePath      : /form-create-ui/src/views/ui/element/index.vue
  -->
 <template>
   <div class="fc-main fc-main-element">
-    <h1 class="no-fc-item" v-show="baseList.length === 0">
+    <h1
+      class="no-fc-item"
+      v-show="baseList.length === 0"
+    >
       从左侧控件列表添加
     </h1>
     <!-- fc-transfer-panel -->
@@ -68,19 +71,28 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, toRefs, reactive, watch } from "@vue/composition-api";
+import {
+  defineComponent,
+  ref,
+  toRefs,
+  reactive,
+  watch
+} from "@vue/composition-api";
 import { useToast } from "vue-toastification/composition";
 import { useGetters } from "@u3u/vue-hooks";
 import { AnyType } from "@/interface/common";
 import { ComponentsItem } from "@/interface/components";
-import { setClickHandleItem, handleColAdd } from "@/components/fc-components-list/fc-components.utils";
+import {
+  setClickHandleItem,
+  handleColAdd
+} from "@/components/fc-components-list/fc-components.utils";
 import FormItem from "@/components/fc-render/form/form.vue";
 import config from "@/configs/config";
 import cloneDeep from "lodash.clonedeep";
 
 export default defineComponent({
   components: {
-    FormItem,
+    FormItem
   },
   setup() {
     const toast = useToast();
@@ -90,11 +102,11 @@ export default defineComponent({
       group: "fc-draggable",
       ghostClass: "fc-drage-moving",
       animation: 180,
-      handle: ".fc-drage-move",
+      handle: ".fc-drage-move"
     });
 
     const storeGetters = reactive({
-      ...useGetters("common", ["getMainList", "getSelectItem"]),
+      ...useGetters("common", ["getMainList", "getSelectItem"])
     });
 
     watch(
@@ -104,7 +116,7 @@ export default defineComponent({
       },
       {
         deep: true,
-        lazy: true,
+        lazy: true
       }
     );
 
@@ -129,7 +141,7 @@ export default defineComponent({
               array.splice(index + 1, 0, item);
             }
             const e = {
-              newIndex: index + 1,
+              newIndex: index + 1
             };
             handleColAdd(void 0, e, array, true);
             break;
@@ -183,10 +195,10 @@ export default defineComponent({
           type: "draggable",
           props: {
             list: baseList.value,
-            tag: "div",
+            tag: "div"
           },
           attrs: {
-            ...draggableOptions.value,
+            ...draggableOptions.value
           },
           class: "fc-main-draggable-box",
           children: [
@@ -194,26 +206,26 @@ export default defineComponent({
               type: "transition-group",
               props: {
                 name: "fc-drage-list",
-                tag: "div",
+                tag: "div"
               },
               class: "fc-main-draggable-box-transition",
               children: baseList.value,
-              native: true,
-            },
+              native: true
+            }
           ],
           on: {
-            add: ($f: AnyType, e: AnyType) => handleAddItem(e, void 0, true),
+            add: ($f: AnyType, e: AnyType) => handleAddItem(e, void 0, true)
           },
-          native: true,
-        },
+          native: true
+        }
       ],
       formOptions: {
         submitBtn: false,
         injectEvent: true,
         form: {
-          col: false,
-        },
-      },
+          col: false
+        }
+      }
     });
 
     return {
@@ -223,9 +235,9 @@ export default defineComponent({
       baseList,
       handleCopyItem,
       ...toRefs(storeGetters),
-      ...toRefs(formCreateState),
+      ...toRefs(formCreateState)
     };
-  },
+  }
 });
 </script>
 

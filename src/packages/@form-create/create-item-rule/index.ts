@@ -2,7 +2,7 @@
  * @Author        : djkloop
  * @Date          : 2020-05-07 17:37:33
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-12 17:00:02
+ * @LastEditTime  : 2020-05-12 18:32:34
  * @Description   : 处理规则类
  * @FilePath      : /form-create-ui/src/packages/@form-create/create-item-rule/index.ts
  */
@@ -84,7 +84,10 @@ export default class CreateFormItemRule {
   //                   props: {
   //                     span: 12,
   //                   },
-  //                   children: [],
+  //                   children: [{
+  //                     type: "form-create-item-wrapper",
+
+  //                   }],
   //                 },
   //                 {
   //                   type: "el-col",
@@ -123,16 +126,61 @@ export default class CreateFormItemRule {
   }
 
   /// 创建col的下面的一级draggable组件
-  /// src/packages/@form-create/component/draggable-children/index.vue
   private __createColChildrenWrapper(item: AnyType) {
+    /// list
     const o = [
       {
-        type: "fc-draggable-children",
-        children: [],
+        type: "draggable",
+        props: {
+          list: item.children, /// 这里要添加item.children
+          tag: "div",
+        },
+        attrs: {
+          group: "fc-draggable",
+          ghostClass: "fc-drage-moving",
+          animation: 180,
+          handle: ".fc-drage-move",
+        },
+        class: "fc-main-draggable-box",
+        children: [
+          {
+            type: "transition-group",
+            props: {
+              name: "fc-drage-list",
+              tag: "div",
+            },
+            class: "fc-main-draggable-box-transition",
+            children: item.children, /// 这里要添加item.children
+            native: true,
+          },
+        ],
+        on: {
+          add: (f, e, it) => console.log(f, e, it),
+        },
+        emit: ["drage-start"],
+        emitPrefix: "fc",
       },
     ];
     console.log("__createColChildrenWrapper:: -- 2 --", this.originProps);
     return o;
+  }
+
+  __createFormItemWrapper() {
+    // form-create-item-wrapper
+    return {
+      type: "form-create-item-wrapper",
+      name: this.originProps?.field,
+      class: "fc-drage-move",
+      props: {
+        /// 把props传进去给组件用
+        /// 用于组件内部进化判断
+        item: this.originProps,
+      },
+      emit: ["copy-form-item", "drage-start", "add-col-item"],
+      emitPrefix: "fc",
+      children: [],
+      native: true,
+    };
   }
 
   /// 生成布局组件
