@@ -2,7 +2,7 @@
  * @Author       : djkloop
  * @Date         : 2020-04-25 01:21:14
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-11 16:58:21
+ * @LastEditTime  : 2020-05-11 18:35:15
  * @Description  : fc-components工具方法(用来替代vue2中的methods的)
  * @FilePath      : /form-create-ui/src/components/fc-components-list/fc-components.utils.ts
  */
@@ -142,7 +142,7 @@ export const handleColAdd = (
     __item__.field = uniqueKey;
     if (__item__.children) {
       __item__.children = clonedeep(__item__.children);
-      __item__.children!.forEach(item => {
+      __item__.children!.forEach((item) => {
         item.children = [];
       });
     }
@@ -163,7 +163,7 @@ export const useColAdd = (e: AnyType, columns: ComponentsItem[], isCopy = false,
     columns[newIndex]["uniqueKey"] = uniqueKey;
     if (columns[newIndex].children) {
       columns[newIndex].children = clonedeep(columns[newIndex].children);
-      columns[newIndex].children!.forEach(item => {
+      columns[newIndex].children!.forEach((item) => {
         item.children = [];
       });
     }

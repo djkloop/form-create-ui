@@ -1,10 +1,10 @@
 /*
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
- * @LastEditors  : djkloop
- * @LastEditTime : 2020-05-10 11:21:52
+ * @LastEditors   : djkloop
+ * @LastEditTime  : 2020-05-12 12:37:54
  * @Description  : 注册所有用到的插件
- * @FilePath     : /form-create-ui/src/plugins/plugins.ts
+ * @FilePath      : /form-create-ui/src/plugins/plugins.ts
  */
 import Vue from "vue";
 import VueCompositionApi from "@vue/composition-api";
@@ -26,11 +26,13 @@ import VueAxios from "vue-axios";
 import FcTips from "@/components/common/fc-tips/fc-tips.vue";
 /// form-create-item-wrapper custom component
 import FormCreateItemWrapper from "@/components/fc-render/form/form.vue";
+import FormCreateDraggableChildren from "@/packages/@form-create/component/draggable-children/index.vue";
 
 function installPlugins() {
   Vue.use(VueCompositionApi);
   Vue.use(ElementUI);
   Vue.component(FormCreateItemWrapper.name, FormCreateItemWrapper);
+  Vue.component(FormCreateDraggableChildren.name, FormCreateDraggableChildren);
   Vue.use(formCreate);
   Vue.component(Draggable.name, Draggable);
   Vue.component(FcTips.name, FcTips);

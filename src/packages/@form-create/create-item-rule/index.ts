@@ -2,7 +2,7 @@
  * @Author        : djkloop
  * @Date          : 2020-05-07 17:37:33
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-11 17:06:06
+ * @LastEditTime  : 2020-05-12 16:59:13
  * @Description   : 处理规则类
  * @FilePath      : /form-create-ui/src/packages/@form-create/create-item-rule/index.ts
  */
@@ -11,6 +11,7 @@ import { ComponentsItem, IDraggableComponentsItem } from "@/interface/components
 import clonedeep from "lodash.clonedeep";
 import Utils from "@/utils/utils";
 import { AnyType } from "@/interface/common";
+import classnames from "classnames";
 
 export default class CreateFormItemRule {
   props?: IDraggableComponentsItem;
@@ -60,9 +61,84 @@ export default class CreateFormItemRule {
     this.originProps!["field"] = this.originProps!["uniqueKey"];
   }
 
+  // <el-row :gutter="item.gutter || 0" class="fc-render-form-grid-row">
+  //         <el-col v-for="(it, index) in item.children" :key="index" :span="it.props.span || 0">
+  //               <form-create-item-wrapper
+  //                 class="fc-drage-move"
+  //                 :item="col.children[0]"
+  //                 :data-key="col.children[0].uniqueKey"
+  //                 v-for="col in it.children"
+  //                 :key="col.children[0].uniqueKey + '__col__item__parent'"
+  //                 @fc-add-col-item="handleColAdd"
+  //                 @fc-copy-form-item="handleCopyItem"
+  //               >
+  //               </form-create-item-wrapper>
+  //         </el-col>
+  //       </el-row>
+
+  // {
+  //               type: "el-row",
+  //               children: [
+  //                 {
+  //                   type: "el-col",
+  //                   props: {
+  //                     span: 12,
+  //                   },
+  //                   children: [],
+  //                 },
+  //                 {
+  //                   type: "el-col",
+  //                   props: {
+  //                     span: 12,
+  //                   },
+  //                   children: [],
+  //                 },
+  //               ],
+  //               label: "栅格布局",
+  //               listIcon: "el-icon-c-scale-to-original",
+  //               itemTag: "布局组件",
+  //               listTag: "fc-grid",
+  //             },
+
+  /// 创建el-row & mergeProps
+  private __createFormLayoutChildrenRowWithRule() {
+    if (this.originProps && this.originProps.type === "el-row") {
+      const cols = this.originProps.children;
+      this.originProps["class"] = classnames(this.originProps.class, "fc-render-form-grid-row");
+      console.log("__createFormLayoutChildrenRowWithRule:: -- 1 --", this.originProps);
+      if (cols && cols.length > 0) {
+        this.__createFormLayoutChildColWithRule();
+      }
+    }
+  }
+
+  private __createFormLayoutChildColWithRule() {
+    if (this.originProps) {
+      /// 这里一定会有children的并且会大于0因为在上一个方法已经判断过了
+      this.originProps.children!.forEach((item) => {
+        item.children = this.__createColChildrenWrapper(item);
+      });
+      console.log("__createFormLayoutChildColWithRule:: -- 3 --", this.originProps);
+    }
+  }
+
+  /// 创建col的下面的一级draggable组件
+  /// src/packages/@form-create/component/draggable-children/index.vue
+  private __createColChildrenWrapper(item: AnyType) {
+    const o = [
+      {
+        type: "fc-draggable-children",
+        children: [],
+      },
+    ];
+    console.log("__createColChildrenWrapper:: -- 2 --", this.originProps);
+    return o;
+  }
+
   /// 生成布局组件
   _createFormLyaout() {
-    const customComponentWraaperRule: any = {
+    this.__createFormLayoutChildrenRowWithRule();
+    const customComponentWrapperRule: any = {
       type: "form-create-item-wrapper",
       name: this.originProps?.field,
       class: "fc-drage-move",
@@ -77,13 +153,13 @@ export default class CreateFormItemRule {
       originRules: this.originProps,
       native: true,
     };
-    console.log("_createFormLyaout__::", customComponentWraaperRule);
-    this.props = customComponentWraaperRule;
+    console.log("_createFormLyaout__::", customComponentWrapperRule);
+    this.props = customComponentWrapperRule;
   }
   /// 生成布局组件
   _createFormItem() {
     /// src/components/fc-render/form/form.vue
-    const customComponentWraaperRule: any = {
+    const customComponentWrapperRule: any = {
       type: "form-create-item-wrapper",
       name: this.originProps?.field,
       class: "fc-drage-move",
@@ -98,7 +174,7 @@ export default class CreateFormItemRule {
       originRules: this.originProps,
       native: true,
     };
-    console.log("_createFormItem::", customComponentWraaperRule);
-    this.props = customComponentWraaperRule;
+    console.log("_createFormItem::", customComponentWrapperRule);
+    this.props = customComponentWrapperRule;
   }
 }

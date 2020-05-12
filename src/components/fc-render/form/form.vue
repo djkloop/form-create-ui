@@ -2,7 +2,7 @@
  * @Author        : djkloop
  * @Date          : 2020-04-26 11:45:07
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-11 17:47:01
+ * @LastEditTime  : 2020-05-12 16:37:10
  * @Description   : 封装给form-create用的自定义组件
  * @FilePath      : /form-create-ui/src/components/fc-render/form/form.vue
  -->
@@ -15,7 +15,7 @@
   >
     <!-- TODO: 这里可以想个更好的解决方法... -->
     <!-- 栅格布局 -->
-    <template v-if="item.listTag === 'fc-grid'">
+    <!-- <template v-if="item.listTag === 'fc-grid'">
       <div
         class="fc-drage-components-form__container fc-drage-container fc-render-layout-grid"
         :class="{
@@ -23,7 +23,7 @@
         }"
         @click.stop="handleActiveItem"
       >
-        <el-row :gutter="item.options.gutter" class="fc-render-form-grid-row">
+        <el-row :gutter="item.gutter || 0" class="fc-render-form-grid-row">
           <el-col v-for="(it, index) in item.children" :key="index" :span="it.props.span || 0">
             <draggable
               tag="div"
@@ -44,13 +44,12 @@
                 class="fc-main-draggable-box-transition"
                 name="fc-drage-list"
               >
-                <!-- 这里的和element那里要写一样要不然不能冒泡哦 -->
                 <form-create-item-wrapper
                   class="fc-drage-move"
                   :item="col.children[0]"
-                  :data-key="col.uniqueKey"
-                  v-for="(col, idx) in it.children"
-                  :key="idx + '__col__item__parent'"
+                  :data-key="col.children[0].uniqueKey"
+                  v-for="col in it.children"
+                  :key="col.children[0].uniqueKey + '__col__item__parent'"
                   @fc-add-col-item="handleColAdd"
                   @fc-copy-form-item="handleCopyItem"
                 >
@@ -60,6 +59,13 @@
           </el-col>
         </el-row>
       </div>
+    </template> -->
+    <template v-if="item.listTag === 'fc-grid'">
+      <fc-render-form-grid :item="item">
+        <template #formItem>
+          <slot></slot>
+        </template>
+      </fc-render-form-grid>
     </template>
     <!-- 普通的表单start -->
     <template v-else>
@@ -69,68 +75,58 @@
         :item="item"
         @fc-on-form-item-copy="handleCopyItem"
       >
-        <slot></slot>
+        <template #formItem>
+          <slot></slot>
+        </template>
       </fc-render-form-item>
     </template>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, toRefs, ref } from "@vue/composition-api";
+import { defineComponent, toRefs } from "@vue/composition-api";
 import { FormItemProps, ComponentsItem } from "@/interface/components";
 import { useGetters } from "@u3u/vue-hooks";
 import { AnyType } from "@/interface/common";
-import draggable from "vuedraggable";
-import { handleActiveSelectItem } from "@/components/fc-components-list/fc-components.utils";
 
 /// TODO: 后期是否可以考虑抽成单独的组件?
 /// fc-render-form-components
 import FcRenderFormItem from "./fc-render-form-item/index.vue";
-// import FcRenderFormGrid from "./fc-render-form-grid/index.vue";
+import FcRenderFormGrid from "./fc-render-form-grid/index.vue";
 
 export default defineComponent<FormItemProps, AnyType>({
   name: "form-create-item-wrapper",
   components: {
     FcRenderFormItem,
-    draggable,
+    FcRenderFormGrid
   },
   props: {
     item: {
-      type: Object,
-    },
+      type: Object
+    }
   },
   setup(props, { emit, slots }) {
-    const updateTime = ref(0);
-
     const storeGet = {
-      ...useGetters("common", ["getSelectItem"]),
+      ...useGetters("common", ["getSelectItem"])
     };
 
-    const handleActiveItem = () => {
-      const newTime = new Date().getTime();
-      if (newTime - updateTime.value < 400) {
-        return;
-      }
-      updateTime.value = newTime;
-      if (props.item) {
-        handleActiveSelectItem(props.item);
-      }
-    };
-
-    const handleColAdd = (e: AnyType, list: ComponentsItem[], isc: boolean, isn: boolean) =>
-      emit("add-col-item", e, list, isc, isn);
-    const handleCopyItem = (isCopy: boolean, item: ComponentsItem) => emit("copy-form-item", isCopy, item);
+    const handleColAdd = (
+      e: AnyType,
+      list: ComponentsItem[],
+      isc: boolean,
+      isn: boolean
+    ) => emit("add-col-item", e, list, isc, isn);
+    const handleCopyItem = (isCopy: boolean, item: ComponentsItem) =>
+      emit("copy-form-item", isCopy, item);
 
     return {
       ...toRefs(storeGet),
       emit,
       slots,
-      updateTime,
-      handleActiveItem,
       handleColAdd,
-      handleCopyItem,
+      handleCopyItem
     };
-  },
+  }
 });
 </script>
 
