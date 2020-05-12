@@ -26,21 +26,18 @@ import { AnyType } from "@/interface/common";
 import { handleActiveSelectItem } from "@/components/fc-components-list/fc-components.utils";
 import { useGetters } from "@u3u/vue-hooks";
 
-export default defineComponent<
-  DeepRequired<DeepRequired<FormItemProps>>,
-  AnyType
->({
+export default defineComponent<DeepRequired<DeepRequired<FormItemProps>>, AnyType>({
   name: "fc-render-form-grid",
   props: {
     item: {
-      type: Object
-    }
+      type: Object,
+    },
   },
   setup(props) {
     const updateTime = ref(0);
 
     const storeGet = {
-      ...useGetters("common", ["getSelectItem"])
+      ...useGetters("common", ["getSelectItem"]),
     };
 
     console.log(props.item);
@@ -57,9 +54,9 @@ export default defineComponent<
     };
     return {
       ...toRefs(storeGet),
-      handleActiveItem
+      handleActiveItem,
     };
-  }
+  },
 });
 </script>
 

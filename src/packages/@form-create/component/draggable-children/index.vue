@@ -20,12 +20,7 @@
     @start="$emit('drage-start', $event, item.children)"
     @add="$emit('add-col-item', $event, item.children)"
   >
-    <transition-group
-      tag="div"
-      type="transition"
-      class="fc-main-draggable-box-transition"
-      name="fc-drage-list"
-    >
+    <transition-group tag="div" type="transition" class="fc-main-draggable-box-transition" name="fc-drage-list">
       <slot></slot>
     </transition-group>
   </draggable>
@@ -37,9 +32,9 @@ export default defineComponent({
   name: "fc-draggable-children",
   props: {
     item: {
-      type: Object
-    }
-  }
+      type: Object,
+    },
+  },
 });
 </script>
 
