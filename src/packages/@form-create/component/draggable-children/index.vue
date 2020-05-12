@@ -2,7 +2,7 @@
  * @Author        : djkloop
  * @Date          : 2020-05-12 12:32:44
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-12 17:14:51
+ * @LastEditTime  : 2020-05-12 19:10:09
  * @Description   : 头部注释
  * @FilePath      : /form-create-ui/src/packages/@form-create/component/draggable-children/index.vue
  -->
@@ -20,9 +20,7 @@
     @start="$emit('drage-start', $event, item.children)"
     @add="$emit('add-col-item', $event, item.children)"
   >
-    <transition-group tag="div" type="transition" class="fc-main-draggable-box-transition" name="fc-drage-list">
-      <slot></slot>
-    </transition-group>
+    <slot></slot>
   </draggable>
 </template>
 
@@ -32,9 +30,9 @@ export default defineComponent({
   name: "fc-draggable-children",
   props: {
     item: {
-      type: Object,
-    },
-  },
+      type: Object
+    }
+  }
 });
 </script>
 

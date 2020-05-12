@@ -2,7 +2,7 @@
  * @Author        : djkloop
  * @Date          : 2020-05-07 17:37:33
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-12 18:32:34
+ * @LastEditTime  : 2020-05-12 19:13:54
  * @Description   : 处理规则类
  * @FilePath      : /form-create-ui/src/packages/@form-create/create-item-rule/index.ts
  */
@@ -118,7 +118,7 @@ export default class CreateFormItemRule {
   private __createFormLayoutChildColWithRule() {
     if (this.originProps) {
       /// 这里一定会有children的并且会大于0因为在上一个方法已经判断过了
-      this.originProps.children!.forEach(item => {
+      this.originProps.children!.forEach((item) => {
         item.children = this.__createColChildrenWrapper(item);
       });
       console.log("__createFormLayoutChildColWithRule:: -- 3 --", this.originProps);
@@ -157,10 +157,30 @@ export default class CreateFormItemRule {
         on: {
           add: (f, e, it) => console.log(f, e, it),
         },
-        emit: ["drage-start"],
+        emit: ["drage-start", "add-col-item"],
         emitPrefix: "fc",
       },
     ];
+    // const p = [
+    //   {
+    //     type: "fc-draggable-children",
+    //     props: {
+    //       item,
+    //     },
+    //     children: [
+    //       {
+    //         type: "transition-group",
+    //         props: {
+    //           name: "fc-drage-list",
+    //           tag: "div",
+    //         },
+    //         class: "fc-main-draggable-box-transition",
+    //         children: item.children, /// 这里要添加item.children
+    //         native: true,
+    //       },
+    //     ],
+    //   },
+    // ];
     console.log("__createColChildrenWrapper:: -- 2 --", this.originProps);
     return o;
   }
