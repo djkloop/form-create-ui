@@ -1,10 +1,10 @@
 <!--
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
- * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-12 18:13:35
+ * @LastEditors  : djkloop
+ * @LastEditTime : 2020-05-13 00:17:45
  * @Description  : 主区域
- * @FilePath      : /form-create-ui/src/views/ui/element/index.vue
+ * @FilePath     : /form-create-ui/src/views/ui/element/index.vue
  -->
 <template>
   <div class="fc-main fc-main-element">
@@ -163,6 +163,7 @@ export default defineComponent({
         console.log(item, "           -------------");
         console.log(baseList, "           -------------");
         console.log(idx, "           -------------");
+        debugger;
         if (!item) {
           toast.error(`不存在`);
           return;
