@@ -118,7 +118,7 @@ export default class CreateFormItemRule {
   private __createFormLayoutChildColWithRule() {
     if (this.originProps) {
       /// 这里一定会有children的并且会大于0因为在上一个方法已经判断过了
-      this.originProps.children!.forEach((item) => {
+      this.originProps.children!.forEach(item => {
         item.children = this.__createColChildrenWrapper(item);
       });
       console.log("__createFormLayoutChildColWithRule:: -- 3 --", this.originProps);

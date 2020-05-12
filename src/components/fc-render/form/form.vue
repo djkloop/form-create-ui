@@ -61,10 +61,7 @@
       </div>
     </template> -->
     <template v-if="item.listTag === 'fc-grid'">
-      <fc-render-form-grid
-        :item="item"
-        @fc-drage-start="() => console.log(1111)"
-      >
+      <fc-render-form-grid :item="item" @fc-drage-start="() => console.log(1111)">
         <template #formItem>
           <slot></slot>
         </template>
@@ -101,35 +98,30 @@ export default defineComponent<FormItemProps, AnyType>({
   name: "form-create-item-wrapper",
   components: {
     FcRenderFormItem,
-    FcRenderFormGrid
+    FcRenderFormGrid,
   },
   props: {
     item: {
-      type: Object
-    }
+      type: Object,
+    },
   },
   setup(props, { emit, slots }) {
     const storeGet = {
-      ...useGetters("common", ["getSelectItem"])
+      ...useGetters("common", ["getSelectItem"]),
     };
 
-    const handleColAdd = (
-      e: AnyType,
-      list: ComponentsItem[],
-      isc: boolean,
-      isn: boolean
-    ) => emit("add-col-item", e, list, isc, isn);
-    const handleCopyItem = (isCopy: boolean, item: ComponentsItem) =>
-      emit("copy-form-item", isCopy, item);
+    const handleColAdd = (e: AnyType, list: ComponentsItem[], isc: boolean, isn: boolean) =>
+      emit("add-col-item", e, list, isc, isn);
+    const handleCopyItem = (isCopy: boolean, item: ComponentsItem) => emit("copy-form-item", isCopy, item);
 
     return {
       ...toRefs(storeGet),
       emit,
       slots,
       handleColAdd,
-      handleCopyItem
+      handleCopyItem,
     };
-  }
+  },
 });
 </script>
 
