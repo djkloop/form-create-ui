@@ -30,9 +30,9 @@ export default defineComponent({
   name: "fc-draggable-children",
   props: {
     item: {
-      type: Object
-    }
-  }
+      type: Object,
+    },
+  },
 });
 </script>
 
