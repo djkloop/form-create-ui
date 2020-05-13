@@ -2,7 +2,7 @@
  * @Author        : djkloop
  * @Date          : 2020-05-07 17:37:33
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-12 19:13:54
+ * @LastEditTime  : 2020-05-13 15:45:03
  * @Description   : 处理规则类
  * @FilePath      : /form-create-ui/src/packages/@form-create/create-item-rule/index.ts
  */
@@ -12,6 +12,8 @@ import clonedeep from "lodash.clonedeep";
 import Utils from "@/utils/utils";
 import { AnyType } from "@/interface/common";
 import classnames from "classnames";
+import { handleColAdd, setClickHandleItem } from "@/components/fc-components-list/fc-components.utils";
+import { IFormCreateItem } from "@/interface/@form-create/item-rule.interface";
 
 export default class CreateFormItemRule {
   props?: IDraggableComponentsItem;
@@ -118,15 +120,30 @@ export default class CreateFormItemRule {
   private __createFormLayoutChildColWithRule() {
     if (this.originProps) {
       /// 这里一定会有children的并且会大于0因为在上一个方法已经判断过了
-      this.originProps.children!.forEach(item => {
-        item.children = this.__createColChildrenWrapper(item);
+      this.originProps.children!.forEach((item, idx) => {
+        item.children = this.__createColChildrenWrapper(item, idx);
       });
       console.log("__createFormLayoutChildColWithRule:: -- 3 --", this.originProps);
     }
   }
 
+  /// 获取item
+  __getFormItemWrapper(list: Partial<IFormCreateItem>[]): Partial<IFormCreateItem> | undefined {
+    for (let i = 0; i < list.length; i++) {
+      const element = list[i];
+      console.log(element);
+      if (element.type === "form-create-item-wrapper") {
+        console.log(element, " -----------------element判断");
+        return element;
+      }
+      if (element.children && element.children.length > 0) {
+        return this.__getFormItemWrapper(element.children);
+      }
+    }
+  }
+
   /// 创建col的下面的一级draggable组件
-  private __createColChildrenWrapper(item: AnyType) {
+  private __createColChildrenWrapper(item: AnyType, colIdx: number) {
     /// list
     const o = [
       {
@@ -141,7 +158,7 @@ export default class CreateFormItemRule {
           animation: 180,
           handle: ".fc-drage-move",
         },
-        class: "fc-main-draggable-box",
+        class: "fc-main-draggable-box" + ` fc-main-draggable-box-col-${colIdx}`,
         children: [
           {
             type: "transition-group",
@@ -155,10 +172,24 @@ export default class CreateFormItemRule {
           },
         ],
         on: {
-          add: (f, e, it) => console.log(f, e, it),
+          add: ($f: AnyType, e: AnyType) => {
+            console.log($f, e);
+            const newIndex = e.newIndex;
+            console.log(item.children);
+            const trans = item.children[0].children[newIndex];
+            const itemWrapper = trans.children;
+            const deepItemWrapper = clonedeep(itemWrapper);
+            console.log("on-add", trans);
+            handleColAdd($f, e, deepItemWrapper);
+          },
+          start: ($f: AnyType, e: AnyType) => {
+            console.log($f, e);
+            console.log(item.children);
+            const oldIndex = e.oldIndex;
+            const itemWrapper = this.__getFormItemWrapper(item.children[oldIndex].children);
+            setClickHandleItem((itemWrapper as AnyType).children[0], item.children[oldIndex].children);
+          },
         },
-        emit: ["drage-start", "add-col-item"],
-        emitPrefix: "fc",
       },
     ];
     // const p = [
