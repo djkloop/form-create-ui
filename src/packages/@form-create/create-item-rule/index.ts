@@ -2,7 +2,7 @@
  * @Author        : djkloop
  * @Date          : 2020-05-07 17:37:33
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-13 15:45:03
+ * @LastEditTime  : 2020-05-14 13:06:12
  * @Description   : 处理规则类
  * @FilePath      : /form-create-ui/src/packages/@form-create/create-item-rule/index.ts
  */
@@ -105,142 +105,12 @@ export default class CreateFormItemRule {
   //               listTag: "fc-grid",
   //             },
 
-  /// 创建el-row & mergeProps
-  private __createFormLayoutChildrenRowWithRule() {
-    if (this.originProps && this.originProps.type === "el-row") {
-      const cols = this.originProps.children;
-      this.originProps["class"] = classnames(this.originProps.class, "fc-render-form-grid-row");
-      console.log("__createFormLayoutChildrenRowWithRule:: -- 1 --", this.originProps);
-      if (cols && cols.length > 0) {
-        this.__createFormLayoutChildColWithRule();
-      }
-    }
-  }
-
-  private __createFormLayoutChildColWithRule() {
-    if (this.originProps) {
-      /// 这里一定会有children的并且会大于0因为在上一个方法已经判断过了
-      this.originProps.children!.forEach((item, idx) => {
-        item.children = this.__createColChildrenWrapper(item, idx);
-      });
-      console.log("__createFormLayoutChildColWithRule:: -- 3 --", this.originProps);
-    }
-  }
-
-  /// 获取item
-  __getFormItemWrapper(list: Partial<IFormCreateItem>[]): Partial<IFormCreateItem> | undefined {
-    for (let i = 0; i < list.length; i++) {
-      const element = list[i];
-      console.log(element);
-      if (element.type === "form-create-item-wrapper") {
-        console.log(element, " -----------------element判断");
-        return element;
-      }
-      if (element.children && element.children.length > 0) {
-        return this.__getFormItemWrapper(element.children);
-      }
-    }
-  }
-
-  /// 创建col的下面的一级draggable组件
-  private __createColChildrenWrapper(item: AnyType, colIdx: number) {
-    /// list
-    const o = [
-      {
-        type: "draggable",
-        props: {
-          list: item.children, /// 这里要添加item.children
-          tag: "div",
-        },
-        attrs: {
-          group: "fc-draggable",
-          ghostClass: "fc-drage-moving",
-          animation: 180,
-          handle: ".fc-drage-move",
-        },
-        class: "fc-main-draggable-box" + ` fc-main-draggable-box-col-${colIdx}`,
-        children: [
-          {
-            type: "transition-group",
-            props: {
-              name: "fc-drage-list",
-              tag: "div",
-            },
-            class: "fc-main-draggable-box-transition",
-            children: item.children, /// 这里要添加item.children
-            native: true,
-          },
-        ],
-        on: {
-          add: ($f: AnyType, e: AnyType) => {
-            console.log($f, e);
-            const newIndex = e.newIndex;
-            console.log(item.children);
-            const trans = item.children[0].children[newIndex];
-            const itemWrapper = trans.children;
-            const deepItemWrapper = clonedeep(itemWrapper);
-            console.log("on-add", trans);
-            handleColAdd($f, e, deepItemWrapper);
-          },
-          start: ($f: AnyType, e: AnyType) => {
-            console.log($f, e);
-            console.log(item.children);
-            const oldIndex = e.oldIndex;
-            const itemWrapper = this.__getFormItemWrapper(item.children[oldIndex].children);
-            setClickHandleItem((itemWrapper as AnyType).children[0], item.children[oldIndex].children);
-          },
-        },
-      },
-    ];
-    // const p = [
-    //   {
-    //     type: "fc-draggable-children",
-    //     props: {
-    //       item,
-    //     },
-    //     children: [
-    //       {
-    //         type: "transition-group",
-    //         props: {
-    //           name: "fc-drage-list",
-    //           tag: "div",
-    //         },
-    //         class: "fc-main-draggable-box-transition",
-    //         children: item.children, /// 这里要添加item.children
-    //         native: true,
-    //       },
-    //     ],
-    //   },
-    // ];
-    console.log("__createColChildrenWrapper:: -- 2 --", this.originProps);
-    return o;
-  }
-
   __createFormItemWrapper() {
     // form-create-item-wrapper
     return {
       type: "form-create-item-wrapper",
-      name: this.originProps?.field,
       class: "fc-drage-move",
-      props: {
-        /// 把props传进去给组件用
-        /// 用于组件内部进化判断
-        item: this.originProps,
-      },
-      emit: ["copy-form-item", "drage-start", "add-col-item"],
-      emitPrefix: "fc",
-      children: [],
-      native: true,
-    };
-  }
-
-  /// 生成布局组件
-  _createFormLyaout() {
-    this.__createFormLayoutChildrenRowWithRule();
-    const customComponentWrapperRule: any = {
-      type: "form-create-item-wrapper",
       name: this.originProps?.field,
-      class: "fc-drage-move",
       props: {
         /// 把props传进去给组件用
         /// 用于组件内部进化判断
@@ -249,8 +119,29 @@ export default class CreateFormItemRule {
       emit: ["copy-form-item", "drage-start", "add-col-item"],
       emitPrefix: "fc",
       children: [this.originProps],
-      originRules: this.originProps,
       native: true,
+    };
+  }
+
+  /// 生成布局组件
+  _createFormLyaout() {
+    this.originProps = Object.assign({}, this.originProps, {
+      emit: ["copy-form-item", "drage-start", "add-col-item"],
+      emitPrefix: "fc",
+    });
+    const customComponentWrapperRule: any = {
+      ///
+
+      type: "form-create-item-wrapper",
+      originRules: this.originProps,
+      props: {
+        /// 把props传进去给组件用
+        /// 用于组件内部进化判断
+        item: this.originProps,
+      },
+      emit: ["copy-form-item", "drage-start", "add-col-item"],
+      emitPrefix: "fc",
+      children: [this.originProps],
     };
     console.log("_createFormLyaout__::", customComponentWrapperRule);
     this.props = customComponentWrapperRule;

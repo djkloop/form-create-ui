@@ -2,10 +2,13 @@
  * @Author        : djkloop
  * @Date          : 2020-04-26 11:45:07
  * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-12 18:26:02
+ * @LastEditTime  : 2020-05-14 13:18:22
  * @Description   : 封装给form-create用的自定义组件
  * @FilePath      : /form-create-ui/src/components/fc-render/form/form.vue
  -->
+<style lang="scss">
+@import "form.scss";
+</style>
 <template>
   <div
     class="fc-drage-move-box"
@@ -61,7 +64,7 @@
       </div>
     </template> -->
     <template v-if="item.listTag === 'fc-grid'">
-      <fc-render-form-grid :item="item" @fc-drage-start="() => console.log(1111)">
+      <fc-render-form-grid :item="item" @fc-add-col-item="handleColAdd" @fc-copy-form-item="handleCopyItem">
         <template #formItem>
           <slot></slot>
         </template>
@@ -92,13 +95,11 @@ import { AnyType } from "@/interface/common";
 /// TODO: 后期是否可以考虑抽成单独的组件?
 /// fc-render-form-components
 import FcRenderFormItem from "./fc-render-form-item/index.vue";
-import FcRenderFormGrid from "./fc-render-form-grid/index.vue";
 
 export default defineComponent<FormItemProps, AnyType>({
   name: "form-create-item-wrapper",
   components: {
     FcRenderFormItem,
-    FcRenderFormGrid,
   },
   props: {
     item: {
@@ -124,7 +125,3 @@ export default defineComponent<FormItemProps, AnyType>({
   },
 });
 </script>
-
-<style lang="scss">
-@import "form.scss";
-</style>
