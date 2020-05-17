@@ -1,10 +1,10 @@
 /*
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
- * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-14 12:45:21
+ * @LastEditors  : djkloop
+ * @LastEditTime : 2020-05-17 12:12:27
  * @Description  : mocks数据
- * @FilePath      : /form-create-ui/src/mock/api/api.components.ts
+ * @FilePath     : /form-create-ui/src/mock/api/api.components.ts
  */
 import { ResponseWithMockJS } from "@/interface/response";
 import { ComponentsResult } from "@/interface/components";
@@ -45,13 +45,23 @@ const respose: Array<ResponseWithMockJS<ComponentsResult>> = [
               validate: [{ required: true, message: "请输入goods_name", trigger: "blur" }],
             },
             {
-              type: "fc-render-form-grid",
+              type: "el-row",
               label: "栅格布局",
               listIcon: "el-icon-c-scale-to-original",
               itemTag: "布局组件",
+              emit: ["copy-form-item", "drage-start", "add-col-item"],
+              emitPrefix: "fc",
               children: [
-                { type: "el-col", props: { span: 12 }, children: [] },
-                { type: "el-col", props: { span: 12 }, children: [] },
+                {
+                  type: "el-col",
+                  props: { span: 12 },
+                  children: [],
+                },
+                {
+                  type: "el-col",
+                  props: { span: 12 },
+                  children: [],
+                },
               ],
               listTag: "fc-grid",
             },

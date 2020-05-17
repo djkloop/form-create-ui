@@ -1,13 +1,14 @@
 /*
  * @Author        : djkloop
  * @Date          : 2020-05-07 17:40:28
- * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-11 16:20:24
+ * @LastEditors  : djkloop
+ * @LastEditTime : 2020-05-16 16:49:37
  * @Description   : 创建item属性
- * @FilePath      : /form-create-ui/src/interface/@form-create/item-rule.interface.ts
+ * @FilePath     : /form-create-ui/src/interface/@form-create/item-rule.interface.ts
  */
 import { IFormCreateItemBase } from "./item-base.interface";
 import { AnyType } from "../common";
+import { IDraggableComponentsItem } from "../components";
 
 export interface IFormCreateItem extends IFormCreateItemBase {
   validate?: AnyType[];
@@ -26,7 +27,7 @@ export interface IFormCreateItem extends IFormCreateItemBase {
   className?: AnyType;
   defaultSlot?: AnyType;
   visibility?: boolean;
-  children?: Partial<IFormCreateItem>[];
+  children?: IDraggableComponentsItem[];
   listIcon?: string;
   itemTag?: string;
   uniqueKey?: string;

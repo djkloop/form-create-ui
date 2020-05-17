@@ -1,10 +1,10 @@
 /*
  * @Author        : djkloop
  * @Date          : 2020-04-26 11:45:07
- * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-08 11:24:56
+ * @LastEditors  : djkloop
+ * @LastEditTime : 2020-05-16 12:08:27
  * @Description   : 全局store
- * @FilePath      : /form-create-ui/src/store/modules/common/common.ts
+ * @FilePath     : /form-create-ui/src/store/modules/common/common.ts
  */
 import { Module } from "vuex";
 import { ICommonState } from "./common.interface";
@@ -15,12 +15,12 @@ const commonModule: Module<ICommonState, AnyType> = {
   state: {
     list: [],
     selectCurrentItem: {},
-    mainList: [],
+    baseList: [],
     selectType: "",
   },
   getters: {
     getMainList(state) {
-      return state.mainList;
+      return state.baseList;
     },
     getSelectItem(state) {
       return state.selectCurrentItem;
@@ -52,7 +52,7 @@ const commonModule: Module<ICommonState, AnyType> = {
      * @param item
      */
     pushMainList(state, item) {
-      state.mainList.push(item);
+      state.baseList.push(item);
     },
     /**
      * 设置主区域列表
@@ -61,7 +61,7 @@ const commonModule: Module<ICommonState, AnyType> = {
      * @param list
      */
     setMainList(state, list) {
-      state.mainList = list;
+      state.baseList = list;
     },
     setSelectType(state, type) {
       state.selectType = type;

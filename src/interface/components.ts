@@ -1,10 +1,10 @@
 /*
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
- * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-08 12:37:46
+ * @LastEditors  : djkloop
+ * @LastEditTime : 2020-05-17 12:35:04
  * @Description  : 组件相关的interface
- * @FilePath      : /form-create-ui/src/interface/components.ts
+ * @FilePath     : /form-create-ui/src/interface/components.ts
  */
 import { IDraggableOptions, AnyType } from "./common";
 import { IFormCreateItem } from "./@form-create/item-rule.interface";
@@ -20,11 +20,11 @@ export interface IDraggableComponentsItem extends ComponentsItem {
 }
 
 export interface FormItemProps {
-  item?: ComponentsItem;
+  item?: IDraggableComponentsItem;
 }
 
 export interface ComponentsResult {
-  list: ComponentsItem[];
+  list: IDraggableComponentsItem[];
   tags: string[];
 }
 
@@ -33,11 +33,11 @@ export interface IFcComponentsListState extends ComponentsResult {
   defaultActive: string | string[];
   chooseType: string;
   draggableOptions: IDraggableOptions;
-  selectCurrentItem: Partial<ComponentsItem>;
+  selectCurrentItem: Partial<IDraggableComponentsItem>;
   filterData: {
-    [props: string]: ComponentsItem[];
+    [props: string]: IDraggableComponentsItem[];
   };
   cacheData: {
-    [props: string]: ComponentsItem[];
+    [props: string]: IDraggableComponentsItem[];
   };
 }

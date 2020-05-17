@@ -1,10 +1,10 @@
 <!--
  * @Author        : djkloop
  * @Date          : 2020-04-26 11:45:07
- * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-14 13:18:22
+ * @LastEditors  : djkloop
+ * @LastEditTime : 2020-05-17 12:30:16
  * @Description   : 封装给form-create用的自定义组件
- * @FilePath      : /form-create-ui/src/components/fc-render/form/form.vue
+ * @FilePath     : /form-create-ui/src/components/fc-render/form/form.vue
  -->
 <style lang="scss">
 @import "form.scss";
@@ -18,7 +18,7 @@
   >
     <!-- TODO: 这里可以想个更好的解决方法... -->
     <!-- 栅格布局 -->
-    <!-- <template v-if="item.listTag === 'fc-grid'">
+    <template v-if="item.listTag === 'fc-grid'">
       <div
         class="fc-drage-components-form__container fc-drage-container fc-render-layout-grid"
         :class="{
@@ -26,7 +26,8 @@
         }"
         @click.stop="handleActiveItem"
       >
-        <el-row :gutter="item.gutter || 0" class="fc-render-form-grid-row">
+        <slot></slot>
+        <!-- <el-row :gutter="item.gutter || 0" class="fc-render-form-grid-row">
           <el-col v-for="(it, index) in item.children" :key="index" :span="it.props.span || 0">
             <draggable
               tag="div"
@@ -47,41 +48,35 @@
                 class="fc-main-draggable-box-transition"
                 name="fc-drage-list"
               >
-                <form-create-item-wrapper
-                  class="fc-drage-move"
-                  :item="col.children[0]"
-                  :data-key="col.children[0].uniqueKey"
-                  v-for="col in it.children"
-                  :key="col.children[0].uniqueKey + '__col__item__parent'"
-                  @fc-add-col-item="handleColAdd"
-                  @fc-copy-form-item="handleCopyItem"
-                >
-                </form-create-item-wrapper>
               </transition-group>
             </draggable>
           </el-col>
-        </el-row>
+        </el-row> -->
       </div>
-    </template> -->
-    <template v-if="item.listTag === 'fc-grid'">
-      <fc-render-form-grid :item="item" @fc-add-col-item="handleColAdd" @fc-copy-form-item="handleCopyItem">
-        <template #formItem>
-          <slot></slot>
-        </template>
-      </fc-render-form-grid>
     </template>
     <!-- 普通的表单start -->
     <template v-else>
-      <fc-render-form-item
-        class="fc-render-form-item"
+      <div
         :class="{ 'fc-active': item.uniqueKey === getSelectItem.uniqueKey }"
-        :item="item"
-        @fc-on-form-item-copy="handleCopyItem"
+        class="fc-drage-components-form__container fc-drage-container fc-render-form-item"
+        @click.stop="handleActiveSelectItem(item)"
       >
-        <template #formItem>
+        <div
+          class="fc-drage-components-form__tools fc-render-form-item__tools"
+          :class="{
+            'fc-active': item.uniqueKey === getSelectItem.uniqueKey,
+            'fc-inactive': item.uniqueKey !== getSelectItem.uniqueKey,
+          }"
+        >
+          <!-- 这里再次点击触发父组件的fc-copy事件 -->
+          <i class="el-icon-document-copy" @click.stop="context.emit('fc-on-form-item-copy', true, item)"></i>
+          <i class="el-icon-delete"></i>
+        </div>
+        <div class="fc-drage-components-form__item fc-render-form-item__box">
           <slot></slot>
-        </template>
-      </fc-render-form-item>
+        </div>
+        <div class="fc-drage-components-form__keys" v-text="item.uniqueKey || '暂无key'"></div>
+      </div>
     </template>
   </div>
 </template>

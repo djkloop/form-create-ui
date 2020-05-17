@@ -1,10 +1,10 @@
 <!--
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
- * @LastEditors   : djkloop
- * @LastEditTime  : 2020-04-29 18:30:59
+ * @LastEditors  : djkloop
+ * @LastEditTime : 2020-05-16 12:12:29
  * @Description  : 基础布局
- * @FilePath      : /form-create-ui/src/layouts/basic-layout.vue
+ * @FilePath     : /form-create-ui/src/layouts/basic-layout.vue
  -->
 <template>
   <el-container class="fc-container">
@@ -73,6 +73,7 @@ export default defineComponent({
     const viewRefs = ref<FCUIElementRefs>("");
 
     /// 左侧菜单点击添加到主区域
+    /// 调用组件里面的click方法
     const handleItemClick = (it: ComponentsItem) => {
       viewRefs.value.handleAddItem(void 0, it);
     };

@@ -13,7 +13,7 @@ import { AnyType } from "@/interface/common";
 export interface ICommonState {
   list: ComponentsItem[];
   selectCurrentItem: Partial<ComponentsItem>;
-  mainList: AnyType[];
+  baseList: AnyType[];
   selectType: string;
 }
 

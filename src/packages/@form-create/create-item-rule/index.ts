@@ -1,10 +1,10 @@
 /*
  * @Author        : djkloop
  * @Date          : 2020-05-07 17:37:33
- * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-14 13:06:12
+ * @LastEditors  : djkloop
+ * @LastEditTime : 2020-05-17 12:35:17
  * @Description   : 处理规则类
- * @FilePath      : /form-create-ui/src/packages/@form-create/create-item-rule/index.ts
+ * @FilePath     : /form-create-ui/src/packages/@form-create/create-item-rule/index.ts
  */
 
 import { ComponentsItem, IDraggableComponentsItem } from "@/interface/components";
@@ -12,28 +12,30 @@ import clonedeep from "lodash.clonedeep";
 import Utils from "@/utils/utils";
 import { AnyType } from "@/interface/common";
 import classnames from "classnames";
-import { handleColAdd, setClickHandleItem } from "@/components/fc-components-list/fc-components.utils";
-import { IFormCreateItem } from "@/interface/@form-create/item-rule.interface";
 
 export default class CreateFormItemRule {
-  props?: IDraggableComponentsItem;
+  props!: IDraggableComponentsItem;
   /// 原始数据
-  originProps?: ComponentsItem;
+  originProps?: IDraggableComponentsItem;
   ///
   isActiveClass = false;
   ///
+  baseList: IDraggableComponentsItem[] = [];
+  ///
   $f: AnyType;
 
-  themeClass = "fc-render-form-item";
+  themeRenderItemClass = "fc-render-form-item";
+  themeRenderFormGridRowClass = "fc-render-form-grid-row";
 
-  constructor(props: ComponentsItem, fcInstance: AnyType) {
+  constructor(props: IDraggableComponentsItem, baseList: IDraggableComponentsItem[], fcInstance: AnyType) {
     this.originProps = clonedeep(props);
     this.$f = fcInstance;
+    this.baseList = baseList;
     this._setup();
   }
 
-  ///先检查key
   _setup() {
+    ///先生成组件唯一key
     this.generateUniqueKey();
     /// 生成布局组件
     if (this.originProps?.itemTag === "布局组件") {
@@ -60,7 +62,14 @@ export default class CreateFormItemRule {
     if (this.originProps && !this.originProps.uniqueKey) {
       this.originProps["uniqueKey"] = Utils.generateUniqueKeyUtils(this.originProps.type);
     }
-    this.originProps!["field"] = this.originProps!["uniqueKey"];
+
+    if (this.originProps && this.originProps.listTag === "基础组件") {
+      /// 如果后台没有传field就自动创建
+      /// 这里可以到时候可以存到一个map里面如果重复就自动重建
+      if (!this.originProps.field) {
+        this.originProps.field = this.originProps!["uniqueKey"];
+      }
+    }
   }
 
   // <el-row :gutter="item.gutter || 0" class="fc-render-form-grid-row">
@@ -105,6 +114,7 @@ export default class CreateFormItemRule {
   //               listTag: "fc-grid",
   //             },
 
+  /// 这里需要在外层嵌套一层
   __createFormItemWrapper() {
     // form-create-item-wrapper
     return {
@@ -123,36 +133,67 @@ export default class CreateFormItemRule {
     };
   }
 
+  private __createLayoutColChildren(item: IDraggableComponentsItem) {
+    Utils.logs("__createLayoutColChildren", this.baseList);
+    const draggableOptions = {
+      type: "draggable",
+      props: {
+        tag: "div",
+        list: item.children,
+      },
+      attrs: {
+        group: "fc-draggable",
+        ghostClass: "fc-drage-moving",
+        animation: 180,
+        handle: ".fc-drage-move",
+      },
+      class: classnames("fc-main-draggable-box"),
+      children: [
+        {
+          type: "transition-group",
+          props: { tag: "div" },
+          attrs: { name: "fc-drage-list" },
+          class: classnames("fc-main-draggable-box-transition"),
+          children: item.children,
+        },
+      ],
+    };
+    return [draggableOptions];
+  }
+
+  private __createFormLayoutChildren() {
+    /// 生成col
+    const children = this.originProps?.children;
+    children?.forEach(item => {
+      item.children = this.__createLayoutColChildren(item);
+    });
+    return children;
+  }
+
   /// 生成布局组件
   _createFormLyaout() {
-    this.originProps = Object.assign({}, this.originProps, {
-      emit: ["copy-form-item", "drage-start", "add-col-item"],
-      emitPrefix: "fc",
-    });
     const customComponentWrapperRule: any = {
-      ///
-
       type: "form-create-item-wrapper",
       originRules: this.originProps,
+      isFormLayout: true,
       props: {
         /// 把props传进去给组件用
         /// 用于组件内部进化判断
         item: this.originProps,
       },
-      emit: ["copy-form-item", "drage-start", "add-col-item"],
-      emitPrefix: "fc",
-      children: [this.originProps],
+      children: this.__createFormLayoutChildren(),
     };
     console.log("_createFormLyaout__::", customComponentWrapperRule);
     this.props = customComponentWrapperRule;
   }
-  /// 生成布局组件
+  /// 生成表单组件
   _createFormItem() {
     /// src/components/fc-render/form/form.vue
     const customComponentWrapperRule: any = {
       type: "form-create-item-wrapper",
       name: this.originProps?.field,
       class: "fc-drage-move",
+      isFormItem: true,
       props: {
         /// 把props传进去给组件用
         /// 用于组件内部进化判断

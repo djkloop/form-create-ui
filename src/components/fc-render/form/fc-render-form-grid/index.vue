@@ -1,10 +1,10 @@
 <!--
  * @Author        : djkloop
  * @Date          : 2020-04-27 11:26:48
- * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-14 12:55:27
+ * @LastEditors  : djkloop
+ * @LastEditTime : 2020-05-17 12:20:47
  * @Description   : 属性区域
- * @FilePath      : /form-create-ui/src/components/fc-render/form/fc-render-form-grid/index.vue
+ * @FilePath     : /form-create-ui/src/components/fc-render/form/fc-render-form-grid/index.vue
  -->
 <template>
   <div
@@ -14,7 +14,8 @@
     }"
     @click.stop="handleActiveItem"
   >
-    <el-row :gutter="item.gutter || 0" class="fc-render-form-grid-row">
+    <slot></slot>
+    <!-- <el-row :gutter="item.gutter || 0" class="fc-render-form-grid-row">
       <el-col v-for="(it, index) in item.children" :key="index" :span="it.props.span || 0">
         <draggable
           tag="div"
@@ -45,7 +46,7 @@
           </transition-group>
         </draggable>
       </el-col>
-    </el-row>
+    </el-row> -->
   </div>
 </template>
 

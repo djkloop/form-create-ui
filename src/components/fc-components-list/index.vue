@@ -1,10 +1,10 @@
 <!--
  * @Author        : djkloop
  * @Date          : 2020-04-26 11:45:07
- * @LastEditors   : djkloop
- * @LastEditTime  : 2020-05-11 11:05:30
+ * @LastEditors  : djkloop
+ * @LastEditTime : 2020-05-16 12:11:27
  * @Description   : 头部注释
- * @FilePath      : /form-create-ui/src/components/fc-components-list/index.vue
+ * @FilePath     : /form-create-ui/src/components/fc-components-list/index.vue
  -->
 
 <template>
@@ -23,7 +23,7 @@
                     : 'fc-drage-component-item__disabled'
                 "
                 v-for="(it, idx) in item"
-                @click="setClickItem(it)"
+                @click="useClickItem(it)"
                 :title="cfgs.disabledConfigComponents.includes(it.tag) && '暂不支持当前组件'"
                 :key="it.label"
                 :data-obj="JSON.stringify(it)"
@@ -80,16 +80,16 @@ export default defineComponent({
       generateUniqueKey(state, idx, list, item);
     /// 设置当前选中的type
     const setType = (e: AnyType, item: ComponentsItem[]) => setChooseType(e, state, item);
-    /// 设置click的item
-    /// setClickHandleItem(it, state);
-    const setClickItem = (it: ComponentsItem) => ctx.emit("fc-click-item", it);
+
+    /// 点击左侧的某一个组件会在主区域添加一个
+    const useClickItem = (it: ComponentsItem) => ctx.emit("fc-click-item", it);
 
     return {
       ...toRefs(state),
       cfgs,
       genKey,
       setType,
-      setClickItem,
+      useClickItem,
     };
   },
 });
