@@ -2,12 +2,12 @@
  * @Author        : djkloop
  * @Date          : 2020-05-07 17:37:33
  * @LastEditors  : djkloop
- * @LastEditTime : 2020-05-17 12:35:17
+ * @LastEditTime : 2020-05-17 13:56:49
  * @Description   : 处理规则类
  * @FilePath     : /form-create-ui/src/packages/@form-create/create-item-rule/index.ts
  */
 
-import { ComponentsItem, IDraggableComponentsItem } from "@/interface/components";
+import { IDraggableComponentsItem } from "@/interface/components";
 import clonedeep from "lodash.clonedeep";
 import Utils from "@/utils/utils";
 import { AnyType } from "@/interface/common";
@@ -22,10 +22,13 @@ export default class CreateFormItemRule {
   ///
   baseList: IDraggableComponentsItem[] = [];
   ///
+  reactiveBaseList?: IDraggableComponentsItem[];
+  ///
   $f: AnyType;
 
   themeRenderItemClass = "fc-render-form-item";
   themeRenderFormGridRowClass = "fc-render-form-grid-row";
+  themeMainDraggableBoxTransition = "fc-main-draggable-box-transition";
 
   constructor(props: IDraggableComponentsItem, baseList: IDraggableComponentsItem[], fcInstance: AnyType) {
     this.originProps = clonedeep(props);
@@ -37,6 +40,7 @@ export default class CreateFormItemRule {
   _setup() {
     ///先生成组件唯一key
     this.generateUniqueKey();
+
     /// 生成布局组件
     if (this.originProps?.itemTag === "布局组件") {
       this._createFormLyaout();
@@ -63,7 +67,7 @@ export default class CreateFormItemRule {
       this.originProps["uniqueKey"] = Utils.generateUniqueKeyUtils(this.originProps.type);
     }
 
-    if (this.originProps && this.originProps.listTag === "基础组件") {
+    if (this.originProps && this.originProps.itemTag === "基础组件") {
       /// 如果后台没有传field就自动创建
       /// 这里可以到时候可以存到一个map里面如果重复就自动重建
       if (!this.originProps.field) {
@@ -151,23 +155,37 @@ export default class CreateFormItemRule {
       children: [
         {
           type: "transition-group",
-          props: { tag: "div" },
-          attrs: { name: "fc-drage-list" },
-          class: classnames("fc-main-draggable-box-transition"),
+          props: { tag: "div", name: "fc-drage-list" },
+          class: classnames(this.themeMainDraggableBoxTransition),
           children: item.children,
         },
       ],
+      on: {
+        add: ($f: AnyType, $event: AnyType) => {
+          Utils.logs("on-add::event", $event);
+          Utils.logs("on-add::baseList", this.baseList);
+          Utils.logs("on-add::children", item.children);
+        },
+      },
     };
     return [draggableOptions];
   }
 
   private __createFormLayoutChildren() {
     /// 生成col
-    const children = this.originProps?.children;
-    children?.forEach(item => {
-      item.children = this.__createLayoutColChildren(item);
-    });
-    return children;
+    if (this.originProps) {
+      const children = this.originProps.children;
+      this.originProps.class = classnames(this.themeRenderFormGridRowClass);
+      if (children) {
+        children.forEach(item => {
+          item.children = this.__createLayoutColChildren(item);
+        });
+        this.originProps.children = children;
+      }
+      return [this.originProps];
+    } else {
+      return [];
+    }
   }
 
   /// 生成布局组件

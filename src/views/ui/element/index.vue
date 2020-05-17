@@ -2,7 +2,7 @@
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
  * @LastEditors  : djkloop
- * @LastEditTime : 2020-05-16 16:56:51
+ * @LastEditTime : 2020-05-17 12:56:40
  * @Description  : 主区域
  * @FilePath     : /form-create-ui/src/views/ui/element/index.vue
  -->
@@ -94,16 +94,16 @@ export default defineComponent({
             useColAdd(void 0, e, array, true);
             break;
           }
-          // if (element.listTag === "fc-grid") {
-          //   // 栅格布局
-          //   if (typeof element.children !== "undefined") {
-          //     element.children.forEach(item => {
-          //       if (typeof item.children !== "undefined") {
-          //         traverse(item.children);
-          //       }
-          //     });
-          //   }
-          // }
+          if (element.listTag === "fc-grid") {
+            // 栅格布局
+            if (typeof element.children !== "undefined") {
+              element.children.forEach(item => {
+                if (typeof item.children !== "undefined") {
+                  traverse(item.children);
+                }
+              });
+            }
+          }
         }
       };
       traverse(baseList.value);
@@ -116,7 +116,7 @@ export default defineComponent({
         /// 这里有个回调函数
         useMainAddItem(item, baseList.value, useCopyItem);
       } else {
-        const idx = e.newIndex;
+        const idx = isNew ? e.newIndex : e.oldIndex;
         const item = baseList.value[idx];
         console.log(item, "           -------------");
         console.log(baseList, "           -------------");

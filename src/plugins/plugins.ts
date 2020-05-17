@@ -2,14 +2,14 @@
  * @Author       : djkloop
  * @Date         : 2020-04-24 23:25:04
  * @LastEditors  : djkloop
- * @LastEditTime : 2020-05-16 11:53:45
+ * @LastEditTime : 2020-05-17 13:51:41
  * @Description  : 注册所有用到的插件
  * @FilePath     : /form-create-ui/src/plugins/plugins.ts
  */
 import Vue from "vue";
 import VueCompositionApi from "@vue/composition-api";
 import hooks from "@u3u/vue-hooks";
-import Draggable from "vuedraggable";
+import Draggable from "@/components/draggable/index.js";
 
 /// element-ui
 import ElementUI from "element-ui";

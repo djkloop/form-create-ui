@@ -10,34 +10,16 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "baseUrl": ".",
-    "types": [
-      "webpack-env",
-      "element-ui",
-      "jest"
-    ],
-    "typeRoots": [
-      "./node_modules/element-ui/types"
-    ],
-     "paths": {
+    "allowJs": true,
+    "types": ["webpack-env", "element-ui", "jest"],
+    "typeRoots": ["./node_modules/element-ui/types"],
+    "paths": {
       "@/*": ["src/*"],
       "@/views/*": ["src/views/*"],
       "@/views/choose-ui/*": ["src/views/choose-ui/*"]
     },
-    "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable",
-      "scripthost"
-    ]
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-    "tests/**/*.ts",
-    "tests/**/*.tsx"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "tests/**/*.ts", "tests/**/*.tsx"],
+  "exclude": ["node_modules"]
 }
